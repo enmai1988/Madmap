@@ -38,9 +38,12 @@
 From within the root directory:
 
 ```sh
-npm install -g bower
 npm install
-bower install
+```
+
+### Installing Dev Dependencies
+```
+curl -s https://raw.githubusercontent.com/hackreactor-labs/pomander/master/bin/install | bash
 ```
 
 ### Roadmap
