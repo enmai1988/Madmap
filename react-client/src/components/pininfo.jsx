@@ -1,15 +1,16 @@
 import React from 'react';
 
-class PinInfo extends React.Component{
+class PinInfo extends React.Component {
 
   constructor(props) {
     super(props);
   }
   render() {
     return (
-    <div className="pinInfo">
-      <div>PinInfo</div>
-    </div>)
+      <div className="pinInfo">
+        <div>PinInfo</div>
+      </div>
+    );
   }
 }
 
