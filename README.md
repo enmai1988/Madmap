@@ -4,10 +4,10 @@
 
 ## Team
 
-  - teamMember
-  - teamMember
-  - teamMember
-  - teamMember
+  - dandersonstack
+  - cosorio94
+  - JKwon823
+  - AlexanderPoet
 
 ## Table of Contents
 
@@ -21,15 +21,15 @@
 
 ## Usage
 
-> Some usage instructions
+To launch the app:
+    1. Simply Install the dependencies
+    2. Prep the app for developement
+    3. And visit localhost:3000
 
 ## Requirements
 
 - Node 6.4.x
-- Redis 2.6.x
 - Postgresql 9.1.x
-- etc
-- etc
 
 ## Development
 
@@ -41,14 +41,25 @@ From within the root directory:
 npm install
 ```
 
-### Installing Dev Dependencies
+### Running Tests
+
+From within the root directory:
+
+```sh
+npm test
 ```
-curl -s https://raw.githubusercontent.com/hackreactor-labs/pomander/master/bin/install | bash
+
+
+### Preparing ENV for Developement
+```
+npm run react-dev
+npm run server-dev
+npm run eslint-pom
 ```
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_DOC)
+View the project roadmap [here](https://docs.google.com/document/d/1CZSA1uOjatrw7APjXyAfUWOJxZ6SDLWhr-nDvroBXkI/edit?ts=594b3694)
 
 
 ## Contributing
