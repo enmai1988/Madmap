@@ -6,13 +6,13 @@ import IconButton from 'material-ui/IconButton';
 //import FlatButton from 'material-ui/FlatButton';
 import TocIcon from 'material-ui/svg-icons/action/toc';
 import FileCloudUpload from 'material-ui/svg-icons/file/cloud-upload';
-import LoggedIn from './loggedIn.jsx';
+import LoggedIn from './loggedin.jsx';
 import Login from './login.jsx';
 import Toc from './toc.jsx'; 
 
 class Header extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       loggedIn: false
     };
