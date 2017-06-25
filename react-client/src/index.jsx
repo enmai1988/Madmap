@@ -1,30 +1,34 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import MainMap from './components/map.jsx';
-import PinCreator from './components/pincreator.jsx';
-import PinInfo from './components/pininfo.jsx';
-// var ButtonToolbar = ReactBootstrap.ButtonToolbar;
-
-import NavBar from './components/navbar.jsx';
+import React, { Component }from 'react';
+import { render } from 'react-dom';
+import injectTapEventPlugin from "react-tap-event-plugin";
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import MainMap from './components/map.jsx'
+import PinCreator from './components/pincreator.jsx'
+import PinInfo from './components/pininfo.jsx'
+import Header from './components/header.jsx'; 
 // import axios from 'axios';
 
-class App extends React.Component {
+injectTapEventPlugin();
+
+class App extends Component {
   constructor(props) {
     super(props);
   }
 
   render () {
     return (
-      <div>
-        <NavBar/>
+      <MuiThemeProvider>
         <div>
-          <PinCreator/>
-          <MainMap/>
+          <Header />
+            <div>
+              <PinCreator/>
+              <MainMap/>
+            </div>
+          <PinInfo/>
         </div>
-        <PinInfo/>
-      </div>
-    );
+      </MuiThemeProvider>
+    )
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+render(<App />, document.getElementById('app'));
