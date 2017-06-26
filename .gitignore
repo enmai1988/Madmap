@@ -16,6 +16,9 @@ coverage
 build/
 dist/
 
+# Google API Key 
+*/googleAPI.js
+
 # Dependency directorys
 # Deployed apps should consider commenting these lines out:
 # see https://npmjs.org/doc/faq.html#Should-I-check-my-node_modules-folder-into-git
