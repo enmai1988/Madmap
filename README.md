@@ -48,6 +48,11 @@ From within the root directory:
 ```sh
 npm test
 ```
+OR
+
+Upon Pull Request:
+
+TravisCI(automatically)
 
 
 ### Preparing ENV for Developement
