@@ -1,5 +1,7 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Map from 'google-maps-react';
+import AutocompleteInput from './autocomplete.jsx';
 import {GoogleApiWrapper} from 'google-maps-react';
 import GOOGLE_API_KEY from '../google/googleAPI.js';
 import Paper from 'material-ui/Paper';
@@ -19,7 +21,15 @@ export class MapContainer extends React.Component {
     super(props);
     this.state = {
       drawerIsOpen: true,
-      searchIsOpen: false
+      searchIsOpen: false,
+      currentCenter: {
+        lat: 44,
+        lng: -122
+      },
+      zoom: 15,
+      centerAroundCurrentLocation: true,
+      currentPlace: null,
+      currentPlacePosition: null
     };
     this.styles = {
       refresh: {
@@ -35,25 +45,64 @@ export class MapContainer extends React.Component {
       },
       searchButton: {
         position: 'fixed',
-        bottom: '1em',
+        bottom: '5em',
         right: '1em'
       }
     };
   }
 
-  handleSearchTap = (event) => {
+  handleSearchTap(event) {
     event.preventDefault();
     this.setState({
       searchIsOpen: !this.state.searchIsOpen,
       searchAnchorEl: event.currentTarget
-    })
+    });
   }
 
-  handleRequestClose = () => {
+  handleRequestClose() {
     this.setState({
       searchIsOpen: false,
     });
-  };
+  }
+
+  setMapStateCenter() {
+    this.setState({
+      currentCenter: window.map.getCenter(),
+      zoom: window.map.getZoom()
+    });
+  }
+  
+  searchLocation(place, map) {
+    if (!place.geometry) { return; }
+    
+    if (place.geometry.viewport) {
+      map.fitBounds(place.geometry.viewport);
+    } else {
+      map.setCenter(place.geometry.location);
+      map.setZoom(17);
+    }
+    
+    this.setMapStateCenter();
+    this.setState({
+      currentPlace: place,
+      currentPlacePosition: place.geometry.location
+    });
+  }
+
+  handleClick(mapProps, map, clickEvent) {
+    console.log('event: ', clickEvent);
+  }
+
+  mapReady(mapProps, map) {
+    window.map = map;
+    this.setMapStateCenter();
+    console.log('center: ', this.state.zoom);
+  }
+
+  centerMoved(mapProps, map) {
+    this.setMapStateCenter();
+    console.log('center: ', this.state.zoom);
+  }
 
   render() {
     if (!this.props.loaded) {
@@ -75,24 +124,29 @@ export class MapContainer extends React.Component {
         >
           <PinCreator style={{opacity: 1}}/>
         </Drawer>
-        <Map google={this.props.google} style={this.styles.mapFlexBox} />
+        <AutocompleteInput
+          google={this.props.google} 
+          searchPlace={this.searchLocation.bind(this)}/>
+        <Map google={this.props.google} style={this.styles.mapFlexBox}
+          onClick={this.handleClick.bind(this)}
+          centerAroundCurrentLocation={this.state.centerAroundCurrentLocation}
+          onReady={this.mapReady.bind(this)}
+          onDragend={this.centerMoved.bind(this)}/>
         <Popover
           open={this.state.searchIsOpen}
           anchorEl={this.state.searchAnchorEl}
-          anchorOrigin={{"horizontal":"left","vertical":"bottom"}}
-          targetOrigin={{"horizontal":"right","vertical":"bottom"}}
-          onRequestClose={this.handleRequestClose}
+          anchorOrigin={{'horizontal': 'left', 'vertical': 'bottom'}}
+          targetOrigin={{'horizontal': 'right', 'vertical': 'bottom'}}
+          onRequestClose={this.handleRequestClose.bind(this)}
+          style={{height: 250}}
         >
           <Menu>
-            <MenuItem>
-              <TextField hintText="Address" />
-            </MenuItem>
           </Menu>
         </Popover>
         <FloatingSearchButton 
           style={this.styles.searchButton}
           mini={true}
-          onTouchTap={this.handleSearchTap}
+          onTouchTap={this.handleSearchTap.bind(this)}
         >
           <Sherlock/>
         </FloatingSearchButton>

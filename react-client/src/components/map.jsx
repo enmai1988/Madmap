@@ -1,9 +1,11 @@
+// component not being used anywhere - Think of deleting it
+
 import React from 'react';
 import Paper from 'material-ui/Paper';
 import ReactDOM from 'react-dom';
 
 
-class Map extends React.Component{ 
+class Map extends React.Component { 
 
   constructor(props) {
     super(props);
@@ -41,9 +43,9 @@ class Map extends React.Component{
 
   render() {
     return (
-    <div className="mainMap" ref='map'>
-      Loading map...
-    </div>
+      <div className="mainMap" ref='map'>
+        Loading map...
+      </div>
     );
   }
 }
