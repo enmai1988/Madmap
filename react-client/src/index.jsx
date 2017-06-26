@@ -6,7 +6,7 @@ import MainMap from './components/map.jsx';
 import PinCreator from './components/pincreator.jsx';
 import PinInfo from './components/pininfo.jsx';
 import Header from './components/header.jsx'; 
-import MapContainer from './components/mapContainer.jsx'; 
+import MapContainer from './components/mapContainer.jsx';
 // import axios from 'axios';
 
 injectTapEventPlugin();
@@ -21,11 +21,8 @@ class App extends Component {
       <MuiThemeProvider>
         <div>
           <Header />
-            <div>
-              <PinCreator/>
-              
-            </div>
-          <PinInfo/>
+          <div style={{height: '0.5em'}}>
+          </div>
           <MapContainer/>
         </div>
       </MuiThemeProvider>

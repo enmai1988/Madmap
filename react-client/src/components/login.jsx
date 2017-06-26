@@ -44,7 +44,7 @@ class Login extends Component {
               <TextField hintText="Username" />
             </MenuItem>
             <MenuItem>
-              <TextField hintText="Password" />
+              <TextField hintText="Password" type="password" />
             </MenuItem>
             <MenuItem>
               <FlatButton label="Login" primary={true} />

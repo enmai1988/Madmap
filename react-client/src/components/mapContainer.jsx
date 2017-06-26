@@ -1,29 +1,49 @@
 import React from 'react';
 import Map from 'google-maps-react';
-// import Map from './map.jsx';
 import {GoogleApiWrapper} from 'google-maps-react';
 import GOOGLE_API_KEY from '../google/googleAPI.js';
 import Paper from 'material-ui/Paper';
+import RefreshIndicator from 'material-ui/Refreshindicator';
 
 
 export class MapContainer extends React.Component { 
 
   constructor(props) {
     super(props);
+    this.state = {
+      hi: 'hi'
+    }
+    this.styles = {
+      refresh: {
+        position: 'relative'
+      },
+      mapFlexBox: {
+        postition: 'relative',
+        display: 'flex',
+        width: '95%',
+        height: '25em',
+        paddingTop: '5em',
+        paddingRight: '2em', 
+      }
+    }
   }
 
   render() {
     if (!this.props.loaded) {
-      return <div>Loading...</div>;
+      return (
+        <RefreshIndicator 
+          size={40} 
+          left={10} 
+          top={0} 
+          status='loading'
+          style={this.styles.refresh}
+        />
+      );
     }
-    const style = {
-      width: '400px',
-      height: '400px'
-    };
     return (
-    <Paper zDepth={4} className="mapContainer" style={style}>
-      <Map google={this.props.google} style={style}/>
-    </Paper>
+      <Paper zDepth={4} >
+        <Map google={this.props.google} style={this.styles.mapFlexBox}/>
+      </Paper>
     );
   }
 }
