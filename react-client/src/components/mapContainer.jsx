@@ -3,7 +3,7 @@ import Map from 'google-maps-react';
 import {GoogleApiWrapper} from 'google-maps-react';
 import GOOGLE_API_KEY from '../google/googleAPI.js';
 import Paper from 'material-ui/Paper';
-import RefreshIndicator from 'material-ui/Refreshindicator';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 
 export class MapContainer extends React.Component { 
@@ -12,7 +12,7 @@ export class MapContainer extends React.Component {
     super(props);
     this.state = {
       hi: 'hi'
-    }
+    };
     this.styles = {
       refresh: {
         position: 'relative'
@@ -25,7 +25,7 @@ export class MapContainer extends React.Component {
         paddingTop: '5em',
         paddingRight: '2em', 
       }
-    }
+    };
   }
 
   render() {
