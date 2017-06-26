@@ -3,7 +3,7 @@ import Map from 'google-maps-react';
 import {GoogleApiWrapper} from 'google-maps-react';
 import GOOGLE_API_KEY from '../google/googleAPI.js';
 import Paper from 'material-ui/Paper';
-import RefreshIndicator from 'material-ui/Refreshindicator';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 import Drawer from 'material-ui/Drawer';
 import PinCreator from './pincreator.jsx';
 import Popover from 'material-ui/Popover';
