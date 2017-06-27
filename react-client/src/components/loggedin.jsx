@@ -4,6 +4,7 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Divider from 'material-ui/Divider'; 
+import { Link } from 'react-router-dom';
 
 const LoggedIn = (props) => (
   <IconMenu
@@ -14,7 +15,9 @@ const LoggedIn = (props) => (
     targetOrigin={{horizontal: 'right', vertical: 'top'}}
     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
   >
-    <MenuItem primaryText="Profile" />
+    <Link to='/user'>
+      <MenuItem primaryText="Profile" />
+    </Link>
     <MenuItem primaryText="Help" />
     <Divider />
     <MenuItem primaryText="Sign out" />

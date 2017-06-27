@@ -8,11 +8,29 @@ import PinInfo from './components/pininfo.jsx';
 import Header from './components/header.jsx'; 
 import MapContainer from './components/mapContainer.jsx';
 import Paper from 'material-ui/Paper';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import UserPage from './components/userpage.jsx';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 // import axios from 'axios';
 
 injectTapEventPlugin();
+
+const mapView = ({match}) => (
+  <MuiThemeProvider>
+    <div>
+      <Header />
+      <div style={{height: '0.5em'}}>
+      </div>
+      <MapContainer />
+    </div>
+  </MuiThemeProvider>
+);
+
+const userView = ({match}) => (
+  <MuiThemeProvider>
+    <UserPage />
+  </MuiThemeProvider>
+);
 
 class App extends Component {
   constructor(props) {
@@ -21,16 +39,15 @@ class App extends Component {
 
   render () {
     return (
-      <MuiThemeProvider>
+      <Router>
         <div>
-          <Header />
-          <div style={{height: '0.5em'}}>
-          </div>
-          <MapContainer />
+          <Route exact path='/' component={mapView} />
+          <Route path='/user' component={userView} />
         </div>
-      </MuiThemeProvider>
+      </Router>
     );
   }
 }
+
 
 render(<App />, document.getElementById('app'));
