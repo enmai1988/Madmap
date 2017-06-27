@@ -1,6 +1,6 @@
 # Project Name
 
-> Pithy project description
+![Alt text](https://travis-ci.org/ResponsibleRhinos/ResponsibleRhinos.svg?branch=master)
 
 ## Team
 
@@ -48,12 +48,6 @@ From within the root directory:
 ```sh
 npm test
 ```
-OR
-
-Upon Pull Request:
-
-TravisCI(automatically)
-
 
 ### Preparing ENV for Developement
 ```
