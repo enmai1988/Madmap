@@ -27,7 +27,7 @@ const styles = {
     overflowY: 'auto',
     border: '1px solid black'
   },
-}
+};
 
 const tiles = [
   <ActionFlightTakeoff />,
@@ -42,7 +42,7 @@ const tiles = [
   <Train />,
   <Mall />,
   <Grocery />
-]
+];
 
 class PinCreator extends Component {
   constructor(props) {
@@ -52,26 +52,27 @@ class PinCreator extends Component {
 
   handle(e) {
     e.preventDefault();
-    console.log('123', e.target)
+    console.log('123', e.target);
+    this.props.onPinClick(e);
   }
 
   render() {
     return (
       <div style={styles.root}>
-      <GridList
-        cellHeight={24}
-        style={styles.gridList} 
-      >
-        {tiles.map((tile, index) => {
-          return (
-            <GridTile key={index} onTouchTap={this.handle} >
-              {tile}
-            </GridTile>
-          )
-        })}
-      </GridList>
+        <GridList
+          cellHeight={24}
+          style={styles.gridList} 
+        >
+          {tiles.map((tile, index) => {
+            return (
+              <GridTile key={index} onTouchTap={this.handle.bind(this)} >
+                {tile}
+              </GridTile>
+            );
+          })}
+        </GridList>
       </div>
-    )
+    );
   }
 }
 
