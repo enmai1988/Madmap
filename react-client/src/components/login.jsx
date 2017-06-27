@@ -4,6 +4,8 @@ import Popover from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField'; 
+import GitHub from '../svg/github.jsx';
+import {lightBlack} from 'material-ui/styles/colors'
 
 
 class Login extends Component {
@@ -50,6 +52,13 @@ class Login extends Component {
             <MenuItem>
               <FlatButton label="Login" primary={true} />
               <FlatButton label="Sign Up" secondary={true} />
+              <FlatButton
+                href="/auth/github"
+                target="_blank"
+                color={lightBlack}
+                icon={<GitHub />}
+                style={{margin: 12}}
+              />
             </MenuItem>
           </Menu>
         </Popover>
