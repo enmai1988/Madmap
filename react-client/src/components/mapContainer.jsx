@@ -45,7 +45,7 @@ export class MapContainer extends React.Component {
       },
       searchButton: {
         position: 'fixed',
-        bottom: '5em',
+        bottom: '1em',
         right: '1em'
       }
     };
@@ -102,7 +102,22 @@ export class MapContainer extends React.Component {
   centerMoved(mapProps, map) {
     this.setMapStateCenter();
     console.log('center: ', this.state.zoom);
+
   }
+
+  handleSearchTap = (event) => {
+    event.preventDefault();
+    this.setState({
+      searchIsOpen: !this.state.searchIsOpen,
+      searchAnchorEl: event.currentTarget
+    })
+  }
+
+  handleRequestClose = () => {
+    this.setState({
+      searchIsOpen: false,
+    });
+  };
 
   render() {
     if (!this.props.loaded) {
@@ -147,6 +162,7 @@ export class MapContainer extends React.Component {
           style={this.styles.searchButton}
           mini={true}
           onTouchTap={this.handleSearchTap.bind(this)}
+
         >
           <Sherlock/>
         </FloatingSearchButton>
