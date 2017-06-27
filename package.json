@@ -49,6 +49,7 @@
     "react-addons-css-transition-group": "^15.6.0",
     "react-addons-transition-group": "^15.6.0",
     "react-dom": "^15.6.1",
+    "react-router-dom": "^4.1.1",
     "react-tap-event-plugin": "^2.0.1",
     "style-loader": "^0.18.2",
     "webpack": "^2.6.1"

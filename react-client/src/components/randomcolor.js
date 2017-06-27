@@ -22,7 +22,7 @@ const getAllColorNames = (colorObj) => {
   return possibleColors;
 };
 
-const allColors = getAllColorNames(colorTable);
+const allColors = getAllColorNames(colorTable).slice(0, -10);
 
 const RandomColorPicker = () => {
   let possibilities = allColors.length;

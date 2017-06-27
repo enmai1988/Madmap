@@ -8,6 +8,8 @@ import PinInfo from './components/pininfo.jsx';
 import Header from './components/header.jsx'; 
 import MapContainer from './components/mapContainer.jsx';
 import Paper from 'material-ui/Paper';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
+
 // import axios from 'axios';
 
 injectTapEventPlugin();

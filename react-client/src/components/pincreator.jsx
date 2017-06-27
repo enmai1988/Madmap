@@ -13,35 +13,38 @@ import Pizza from 'material-ui/svg-icons/maps/local-pizza';
 import Train from 'material-ui/svg-icons/maps/train';
 import Mall from 'material-ui/svg-icons/maps/local-mall';
 import Grocery from 'material-ui/svg-icons/maps/local-grocery-store'; 
+import {cyan500} from 'material-ui/styles/colors';
+import randomColorPicker from './randomcolor.js';
 
 const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
-    width: 75
+    width: 75,
+    marginTop: '1.5em',
+    marginLeft: '0.5em'
   },
   gridList: {
     width: 60,
     height: 200,
-    overflowY: 'auto',
-    border: '1px solid black'
+    overflowY: 'auto'
   },
 };
 
 const tiles = [
-  <ActionFlightTakeoff />,
-  <ActionHome />,
-  <BeenHere />,
-  <Hotel />,
-  <Camera />,
-  <Terrain />,
-  <Restaurant />,
-  <Bar />,
-  <Pizza />,
-  <Train />,
-  <Mall />,
-  <Grocery />
+  <ActionFlightTakeoff color={cyan500}/>,
+  <ActionHome color={cyan500}/>,
+  <BeenHere color={cyan500}/>,
+  <Hotel color={cyan500}/>,
+  <Camera color={cyan500}/>,
+  <Terrain color={cyan500}/>,
+  <Restaurant color={cyan500}/>,
+  <Bar color={cyan500}/>,
+  <Pizza color={cyan500}/>,
+  <Train color={cyan500}/>,
+  <Mall color={cyan500}/>,
+  <Grocery color={cyan500}/>
 ];
 
 class PinCreator extends Component {
@@ -52,8 +55,10 @@ class PinCreator extends Component {
 
   handle(e) {
     e.preventDefault();
-    console.log('123', e.target);
     this.props.onPinClick(e);
+    this.props.close();
+    console.log('123', e.target);
+
   }
 
   render() {
@@ -65,7 +70,7 @@ class PinCreator extends Component {
         >
           {tiles.map((tile, index) => {
             return (
-              <GridTile key={index} onTouchTap={this.handle.bind(this)} >
+              <GridTile key={index} onTouchTap={(e) => this.handle(e)} >
                 {tile}
               </GridTile>
             );
