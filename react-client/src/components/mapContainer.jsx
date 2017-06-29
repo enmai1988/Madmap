@@ -25,7 +25,9 @@ export class MapContainer extends React.Component {
       centerAroundCurrentLocation: true,
       currentPlace: null,
       markers: [],
-      markerOn: false
+      markerOn: false,
+      // zoom: props.zoom,
+      // currentCenter: props.currentCenter
     };
     this.styles = {
       refresh: {
@@ -48,14 +50,9 @@ export class MapContainer extends React.Component {
   }
 
   centerMoved(mapProps, map) {
-    this.setMapStateCenter();
+    this.props.updateCenter(map.getCenter());
   }
 
-  setMapStateCenter() {
-    this.props.updateCenter(window.map.getCenter());
-    this.props.updateZoom(window.map.getZoom());
-  }
-  
   searchLocation(place, map) {
     if (!place.geometry) { return; }
     
@@ -66,11 +63,16 @@ export class MapContainer extends React.Component {
       map.setZoom(17);
     }
     
-    this.setMapStateCenter();
+    this.props.updateCenter(window.map.getCenter());    
+    this.props.updateZoom(window.map.getZoom());
   }
 
   handleClick(mapProps, map, clickEvent) {
+    //need to check if the marker is currently there
+    //and update the current marker selected.
+    //ie need to find that marker selected
     if (this.state.markerOn) {
+      console.log("The lat long is:",clickEvent.latLng);
       this.props.addMarker(clickEvent.latLng);         
       this.setState({
         markerOn: false
@@ -80,10 +82,11 @@ export class MapContainer extends React.Component {
 
   mapReady(mapProps, map) {
     window.map = map;
-    this.setMapStateCenter();
+    this.props.updateCenter(window.map.getCenter());    
+    map.setZoom(this.props.zoom);
+
+    console.log(map);
   }
-
-
 
   handleSearchTap(event) {
     event.preventDefault();
