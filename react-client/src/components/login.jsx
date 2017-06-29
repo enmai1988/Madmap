@@ -10,14 +10,17 @@ import {lightBlack} from 'material-ui/styles/colors'
 
 class Login extends Component {
   static muiName = 'FlatButton';
-  
-  state = {
-    open: false,
-    username: '',
-    password: ''
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      open: false,
+      username: '',
+      password: ''
+    };
+  }
 
-  handleTouchTap = (event) => {
+
+  handleTouchTap(event) {
     event.preventDefault();
     this.setState({
       open: true,
@@ -25,7 +28,7 @@ class Login extends Component {
     });
   };
 
-  handleRequestClose = () => {
+  handleRequestClose() {
     this.setState({
       open: false,
     });
