@@ -10,6 +10,9 @@ import {grey50} from 'material-ui/styles/colors';
 
 class Toc extends Component {
   static muiName = "IconMenu"
+  print = () => {
+    console.log('hi');
+  }
 
   render() {
     return (
@@ -21,7 +24,7 @@ class Toc extends Component {
         anchorOrigin={{horizontal:"left", vertical:"bottom"}}
         targetOrigin={{horizontal:"left", vertical:"top"}}
       >
-        <MenuItem>
+        <MenuItem onTouchTap={this.props.save}>
           <SaveIcon /> &nbsp;Save
         </MenuItem>
         <MenuItem>

@@ -11,8 +11,8 @@ import Login from './login.jsx';
 import Toc from './toc.jsx'; 
 
 class Header extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       loggedIn: false
     };
@@ -23,8 +23,8 @@ class Header extends Component {
       <div>
         <AppBar
           title="Map Maps"
-          iconElementLeft={<Toc />}
-          iconElementRight={this.state.loggedIn ? <LoggedIn /> : <Login />}
+          iconElementLeft={<Toc save={this.props.save} />}
+          iconElementRight={this.state.loggedIn ? <LoggedIn /> : <Login git={this.props.git}/>}
         />
       </div>
     );

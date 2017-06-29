@@ -17,6 +17,8 @@ class Login extends Component {
       username: '',
       password: ''
     };
+    this.handleTouchTap = this.handleTouchTap.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
   }
 
 
@@ -56,7 +58,7 @@ class Login extends Component {
               <FlatButton label="Login" primary={true} />
               <FlatButton label="Sign Up" secondary={true} />
               <FlatButton
-                href="/auth/github"
+                onTouchTap={this.props.git}
                 target="_blank"
                 color={lightBlack}
                 icon={<GitHub />}

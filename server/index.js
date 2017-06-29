@@ -44,7 +44,7 @@ app.get('/auth/github/callback',
   function(req, res) {
     console.log("successful sign in");
     console.log("The user id is", req.user);
-    res.send(req.user);
+    res.send();
     //res.redirect('/');
   });
 
