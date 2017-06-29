@@ -21,12 +21,7 @@ export class MapContainer extends React.Component {
     this.state = {
       drawerIsOpen: true,
       searchIsOpen: false,
-      pin: false,
-      currentCenter: {
-        lat: 44,
-        lng: -122
-      },
-      zoom: 15,
+      pin: false,   
       centerAroundCurrentLocation: true,
       currentPlace: null,
       markers: [],
@@ -65,12 +60,14 @@ export class MapContainer extends React.Component {
       searchIsOpen: false,
     });
   }
+  
+  centerMoved(mapProps, map) {
+    this.setMapStateCenter();
+  }
 
   setMapStateCenter() {
-    this.setState({
-      currentCenter: window.map.getCenter(),
-      zoom: window.map.getZoom()
-    });
+    this.props.updateCenter(window.map.getCenter());
+    this.props.updateZoom(window.map.getZoom());
   }
   
   searchLocation(place, map) {
@@ -84,44 +81,23 @@ export class MapContainer extends React.Component {
     }
     
     this.setMapStateCenter();
-    this.setState({
-      currentPlace: place,
-      currentPlacePosition: place.geometry.location
-    });
   }
 
   handleClick(mapProps, map, clickEvent) {
-    // console.log('event: ', clickEvent);
     if (this.state.markerOn) {
-      // console.log(this.props.children);
-      var markers = this.state.markers;
-      markers.push({
-        position: clickEvent.latLng
-        // icon: {
-        //   path: 
-        // }
-      });
+      this.props.addMarker(clickEvent.latLng);         
       this.setState({
-        markers: markers,
         markerOn: false
       });
-      // console.log(this.state.markers);
     }
   }
 
   mapReady(mapProps, map) {
     window.map = map;
     this.setMapStateCenter();
-    this.setState({
-      currentPlacePosition: this.state.currentCenter
-    });
-    // console.log('center: ', this.state.zoom);
   }
 
-  centerMoved(mapProps, map) {
-    this.setMapStateCenter();
-    console.log('center: ', this.state.zoom);
-  }
+
 
   handleSearchTap(event) {
     event.preventDefault();
@@ -165,7 +141,7 @@ export class MapContainer extends React.Component {
           centerAroundCurrentLocation={this.state.centerAroundCurrentLocation}
           onReady={this.mapReady.bind(this)}
           onDragend={this.centerMoved.bind(this)}>
-          {this.state.markers.map((marker, index, markers) => {
+          {this.props.markers.map((marker, index, markers) => {
             console.log('markers: ', index, marker);
             return (
               <Marker
@@ -173,8 +149,6 @@ export class MapContainer extends React.Component {
                 position={marker.position}/>
             );
           })}
-          <Marker position={this.state.currentPlacePosition}
-            name={'Joes sandwich'}/>
         </Map>
         <PinSelection onPinClick={this.selectPin.bind(this)} />
       </div>

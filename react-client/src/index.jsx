@@ -15,16 +15,62 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 injectTapEventPlugin();
 
-const mapView = ({match}) => (
-  <MuiThemeProvider>
-    <div>
-      <Header />
-      <div style={{height: '0.5em'}}>
-      </div>
-      <MapContainer />
-    </div>
-  </MuiThemeProvider>
-);
+class mapView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentCenter: {
+        lat: 44,
+        lng: -122
+      },
+      zoom: 15,
+      currentUser: null,
+      markers:[]
+    };
+    this.updateCenter = this.updateCenter.bind(this);
+    this.updateZoom = this.updateZoom.bind(this);
+    this.addMarker = this.addMarker.bind(this);
+  }
+
+  addMarker(position){
+    console.log("About to add the following position", position);
+    var markers = this.state.markers;
+    markers.push({
+      position: position
+    });
+    this.setState({
+      markers: markers
+    });
+  }
+
+  updateCenter(center) {
+    this.setState({
+      currentCenter: center
+    });
+  }
+
+  updateZoom(zoom) {
+    this.setState( {
+      zoom: zoom
+    });
+  }
+  render() {
+    return (
+      <MuiThemeProvider>
+        <div>
+          <Header currentUser={this.state.currentUser}/>
+          <div style={{height: '0.5em'}}>
+          </div>
+          <MapContainer currentCenter={this.state.currentCenter}
+                        updateCenter={this.updateCenter}
+                        updateZoom={this.updateZoom}
+                        markers={this.state.markers}
+                        addMarker={this.addMarker}/>
+        </div>
+      </MuiThemeProvider>
+    );
+  }
+}
 
 const userView = ({match}) => (
   <MuiThemeProvider>
