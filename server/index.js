@@ -29,6 +29,52 @@ app.get('/users', function(req, res) {
   });
 });
 
+app.post('/map', function(req, res) {
+  console.log("got to the post for map");
+  console.log(req.body);
+  Models.maps.create(req.body)
+  .then((result)=>{
+    console.log("Result form Maps.create:",result);
+    //need to grab the Id from the result for the URI
+    //Promise.map(on all the markers)
+    //then at then end we need to have res.end
+    res.send(4); //TODO: Send back the MapId
+  })
+  .catch((err)=>{
+    console.log("There was an error:", err);
+    console.log("I didnt add the app or any markers");
+    res.end();
+  });
+});
+
+app.get('/map/:mapId', function(req, res) {
+  console.log("got to the post for map");
+  Models.maps.get(req.params.mapId)
+  .then((result)=>{
+    console.log("Result from grabbing a map and its markers:", result);
+    res.send(); //TODO figure out how to send back the hash with all the data.
+  })
+  .catch((err)=>{
+    console.log("There was an error:", err);
+    console.log("Not able to get the map requested.");
+    res.end();
+  });
+});
+
+app.put('/map/:mapId', function(req, res) {
+  console.log(req.body);
+  Models.maps.update()
+  .then((result)=>{
+    console.log("Result form Maps.create:",result);
+    res.end();
+  })
+  .catch((err)=>{
+    console.log("There was an error:", err);
+    console.log("I didnt add the app or any markers");
+    res.end();
+  });
+});
+
 //---PASSPORT----
 
 app.use(passport.initialize());
