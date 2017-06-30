@@ -16,7 +16,7 @@ coverage
 build/
 dist/
 
-# Google API Key 
+# Google API Key
 */googleAPI.js
 
 # Dependency directorys
