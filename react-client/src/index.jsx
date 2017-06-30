@@ -27,30 +27,40 @@ class mapView extends React.Component {
     this.addMarker = this.addMarker.bind(this);
     this.save = this.save.bind(this);
     this.github = this.github.bind(this);
+    this.serializeMarkers = this.serializeMarkers.bind(this);
+    this.replaceURL = (id) => props.history.push(`?=${id}`);
   }
 
   componentDidMount() {
+    let mapId = window.location.href.split('=')[1];
     this.setState({
       zoom: 13
     });
-    // this.addMarker({lat: ()=>{return 44.0001},
-    //                 lng: ()=>{return -122.0024}
-    //               })
+    if (mapId) {
+      this.fetch(mapId);
+    }
   }
 
-  addMarker(position){
-    // console.log("Current marker is:", position.toString());
-    // console.log("Current position is:", position.toJSON());
-    console.log(position.lng());
-    var pos = {lat: ()=>{ position.lat(); }, lng: ()=>{ position.lng(); } };
-    var markers = this.state.markers;
+  serializeMarkers(arr) {
+    const stringMarkers = (arrOfMarkers) => {
+      return arrOfMarkers.map(marker => JSON.stringify(marker));
+    };
+    const parseMarkers = (arrOfMarkers) => {
+      return arrOfMarkers.map(marker => JSON.parse(marker));
+    };
+    return typeof arr[0] === 'string' ? parseMarkers(arr) : stringMarkers(arr);
+  }
+
+  addMarker(position) {
+    let markers = this.state.markers;
     markers.push({
-      position: pos
+      position: position
     });
     this.setState({
       markers: markers
     });
   }
+
 
   github() {
     console.log('hello');
@@ -62,10 +72,25 @@ class mapView extends React.Component {
   }
 
   save() {
-    console.log('hi');
-    // axios.post('/map/save', {state: 'state'})
-    //   .then(res => console.log(res))
-    //   .catch(err => console.log(err));
+    let marks = this.serializeMarkers(this.state.markers);
+    let state = this.state;
+    state.markers = marks;
+    axios.post('/map/save', {state: state})
+      .then(res => {
+        this.replaceURL(res.data.id);
+      })
+      .catch(err => console.log(err));
+  }
+
+  fetch(id) {
+    axios.get(`/map/${id}`)
+      .then(res => {
+        res.data.markers = this.serializeMarkers(res.data.markers);
+        console.log('go go ');
+        this.setState(res.data);
+      })
+      .catch(err => console.log('get error:', err));
+
   }
 
   updateCenter(center) {
@@ -116,7 +141,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Route exact path='/' component={mapView} />
+          <Route path='/' component={mapView} />
           <Route path='/user' component={userView} />
         </div>
       </Router>
