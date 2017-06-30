@@ -3,14 +3,14 @@ var GitHubStrategy = require('passport-github2').Strategy;
 var Models = require('../models');
 
 passport.serializeUser(function(user, done) {
-  console.log("running serializeUser:", user.id);
+  // console.log("running serializeUser:", user.id);
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
   Models.users.findById(id)
   .then((result)=>{
-    console.log("deserializeing the user", result);
+    // console.log("deserializeing the user", result);
     done(err, result);
   })
   .catch((err)=>{
@@ -24,11 +24,11 @@ passport.use(new GitHubStrategy({
   callbackURL: `${process.env.HOST_URL}/auth/github/callback`
 },
   function(accessToken, refreshToken, profile, cb) {
-    console.log("The profile is:", profile);
+    // console.log("The profile is:", profile);
     //id, user_email
     Models.users.findOrCreate(profile.username)
     .then((result)=>{
-      console.log("running cb with", result[0]);
+      // console.log("running cb with", result[0]);
       cb(null, result[0]);
     })
     .catch((err)=>{

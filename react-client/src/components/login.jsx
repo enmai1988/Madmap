@@ -58,7 +58,7 @@ class Login extends Component {
               <FlatButton label="Login" primary={true} />
               <FlatButton label="Sign Up" secondary={true} />
               <FlatButton
-                onTouchTap={this.props.git}
+                href="/auth/github"
                 target="_blank"
                 color={lightBlack}
                 icon={<GitHub />}

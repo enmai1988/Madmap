@@ -81,17 +81,17 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //---Github Authentication--
+app.get('/auth/github', function(req, res, next) {
+  console.log(req.headers);
+  next();
+});
 
-app.get('/auth/github',
-  passport.authenticate('github', { scope: [ 'user:email' ] }));
+app.get('/auth/github', passport.authenticate('github', { scope: [ 'user:email' ] }) );
 
 app.get('/auth/github/callback', 
   passport.authenticate('github', { failureRedirect: '/' }),
   function(req, res) {
-    console.log("successful sign in");
-    console.log("The user id is", req.user);
-    res.send();
-    //res.redirect('/');
+    res.redirect('/');
   });
 
 //--Passport--
