@@ -44,7 +44,7 @@ app.post('/map', function(req, res) {
       var mark = {
         'lat': marker.position.lat,
         'lng': marker.position.lng,
-        'mapId': 2,
+        'mapId': parseInt(mapId),
         'info': mapId,
         'icon': Math.floor(Math.random() * 10)
       };
@@ -65,18 +65,10 @@ app.post('/map', function(req, res) {
 app.get('/map/:mapId', function(req, res) {
   console.log("got to the post for map");
   console.log("Map Id should be:", req.params.mapId);
-  var state = {};
   Models.maps.get(req.params.mapId)
   .then((result)=>{
-    console.log("Result from grabbing a map", result);
-    var latLng = result[0]['current_center'].split('/');
-    state['currentCenter']= {
-      'lat': latLng[0],
-      'lng': latLng[1]
-    };
-    state['zoom'] = result[0]['zoom'];
-    //TODO grab all markers
-    res.send(state); //TODO figure out how to send back the hash with all the data.
+    console.log("The state is,", result);
+    res.send(result); //TODO figure out how to send back the hash with all the data.
   })
   .catch((err)=>{
     console.log("There was an error:", err);

@@ -1,4 +1,5 @@
 var db = require('../db');
+var Promise = require('bluebird');
 
 module.exports = {
   users: {  
@@ -34,7 +35,34 @@ module.exports = {
          SELECT currval('mad_map_maps_id_seq');`);
     },
     get: function (mapId) {
-      return db.query(`select * from mad_map_maps where id=${mapId}`);   
+      var state = {};
+      return db.query(`select * from mad_map_maps where id=${mapId}`)
+      .then((result)=>{
+        console.log("Result from grabbing a map", result);
+        var latLng = result[0]['current_center'].split('/');
+        state['currentCenter']= {
+          'lat': latLng[0],
+          'lng': latLng[1]
+        };
+        state['zoom'] = result[0]['zoom'];
+        state['markers'] = [];
+        return module.exports.markers.getbyMapId(mapId);
+      })
+      .then((results)=>{
+        console.log("The results from markers.get", results);
+        return Promise.map(results, result => {
+          var marker = {
+            'position': {'lat': result['lat'], 'lng': result['lng']},
+            'icon': result['icon'],
+            'info': result['info']
+          };
+          state.markers.push(marker);
+        })
+        .then((result)=>{
+          return Promise.resolve(state);
+        });
+        
+      });
     },
     update: function ({mapId, userId, zoom, currentCenter}) {
       return db.query(
@@ -54,7 +82,7 @@ module.exports = {
          VALUES (${lat}, ${lng}, ${icon}, ${mapId});`);
     },
     //INSERT INTO mad_map_markers (lat, lng, icon, info, map_id) VALUES (50, -129, 3,'some info about our pin', 1);
-    getbyMapId: function(mapId){
+    getbyMapId: function(mapId) {
       return db.query(`select * from mad_map_markers where map_id=${mapId};`);   
     },
     get: function (markerId) {
