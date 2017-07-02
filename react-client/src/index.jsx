@@ -43,10 +43,10 @@ class mapView extends React.Component {
 
   serializeMarkers(arr) {
     const stringMarkers = (arrOfMarkers) => {
-      return arrOfMarkers.map(marker => JSON.stringify(marker));
+      return JSON.stringify(arrOfMarkers);
     };
     const parseMarkers = (arrOfMarkers) => {
-      return arrOfMarkers.map(marker => JSON.parse(marker));
+      return JSON.parse(arrOfMarkers);
     };
     return typeof arr[0] === 'string' ? parseMarkers(arr) : stringMarkers(arr);
   }
@@ -72,21 +72,23 @@ class mapView extends React.Component {
   }
 
   save() {
-    let marks = this.serializeMarkers(this.state.markers);
-    let state = this.state;
-    state.markers = marks;
-    axios.post('/map/save', {state: state})
+    let state = JSON.stringify(this.state);
+    console.log("State is:", state);
+    axios.post('/map', {state: state})
       .then(res => {
-        this.replaceURL(res.data.id);
+        console.log(res);
+        //this.replaceURL(res.data.id);
       })
       .catch(err => console.log(err));
   }
 
   fetch(id) {
+    console.log("About to run a get request for the state");
     axios.get(`/map/${id}`)
       .then(res => {
-        res.data.markers = this.serializeMarkers(res.data.markers);
+        // res.data.markers = this.serializeMarkers(res.data.markers);
         console.log('go go ');
+        console.log("got the data:", res.data);
         this.setState(res.data);
       })
       .catch(err => console.log('get error:', err));
