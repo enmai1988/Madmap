@@ -15,12 +15,13 @@ class mapView extends React.Component {
     super(props);
     this.state = {
       currentCenter: {
-        lat: 44,
-        lng: -122
+        lat: 37.774929,
+        lng: -122.41941600000001
       },
       zoom: 15,
       currentUser: null,
-      markers:[]
+      markers: [],
+      mapId: null
     };
     this.updateCenter = this.updateCenter.bind(this);
     this.updateZoom = this.updateZoom.bind(this);
@@ -33,9 +34,6 @@ class mapView extends React.Component {
 
   componentDidMount() {
     let mapId = window.location.href.split('=')[1];
-    this.setState({
-      zoom: 13
-    });
     if (mapId) {
       this.fetch(mapId);
     }
@@ -71,13 +69,26 @@ class mapView extends React.Component {
       .catch(err => console.log('ERROR:', err));
   }
 
+  update() {
+    let state = JSON.stringify(this.state);
+    let mapId = window.location.href.split('=')[1];
+    axios.put(`/map/${id}`, {state: state})
+      .then((res) => {
+        console.log(res);
+      })
+      .catch(err => console.log('put error:', err));
+  }
+
   save() {
     let state = JSON.stringify(this.state);
     console.log("State is:", state);
     axios.post('/map', {state: state})
       .then(res => {
         console.log(res);
-        //this.replaceURL(res.data.id);
+        this.setState({
+          mapId: res.data.mapId
+        });
+        this.replaceURL(res.data.mapId);
       })
       .catch(err => console.log(err));
   }
@@ -120,7 +131,7 @@ class mapView extends React.Component {
             updateZoom={this.updateZoom}
             markers={this.state.markers}
             addMarker={this.addMarker}
-            zoom={this.state.zoom}/>
+            zoom={this.state.zoom}
           />
         </div>
       </MuiThemeProvider>

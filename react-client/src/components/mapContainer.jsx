@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import Map from 'google-maps-react';
 import AutocompleteInput from './autocomplete.jsx';
 import {GoogleApiWrapper, Marker} from 'google-maps-react';
-import GOOGLE_API_KEY from '../google/googleAPI.js';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import PinCreator from './pincreator.jsx';
 import Popover from 'material-ui/Popover';
@@ -26,8 +25,6 @@ export class MapContainer extends React.Component {
       currentPlace: null,
       markers: [],
       markerOn: false,
-      // zoom: props.zoom,
-      // currentCenter: props.currentCenter
     };
     this.styles = {
       refresh: {
@@ -71,8 +68,8 @@ export class MapContainer extends React.Component {
     //need to check if the marker is currently there
     //and update the current marker selected.
     //ie need to find that marker selected
+    console.log("The click event is:", clickEvent);
     if (this.state.markerOn) {
-      console.log("The lat long is:",clickEvent.latLng);
       this.props.addMarker(clickEvent.latLng);         
       this.setState({
         markerOn: false
@@ -84,8 +81,6 @@ export class MapContainer extends React.Component {
     window.map = map;
     this.props.updateCenter(window.map.getCenter());    
     map.setZoom(this.props.zoom);
-
-    console.log(map);
   }
 
   handleSearchTap(event) {
@@ -146,5 +141,5 @@ export class MapContainer extends React.Component {
 
 
 export default GoogleApiWrapper({
-  apiKey: GOOGLE_API_KEY
+  apiKey: process.env.GOOGLE_API_KEY
 })(MapContainer);

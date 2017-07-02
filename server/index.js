@@ -53,7 +53,7 @@ app.post('/map', function(req, res) {
     })
     .then((result)=>{
       console.log("results from marker create", result);
-      res.end(mapId);
+      res.send({'mapId': mapId});
     });
   })
   .catch((err)=>{
@@ -78,7 +78,7 @@ app.get('/map/:mapId', function(req, res) {
 
 app.put('/map/:mapId', function(req, res) {
   console.log(req.body);
-  Models.maps.update()
+  Models.maps.update(req.params.mapId)
   .then((result)=>{
     console.log("Result form Maps.create:",result);
     res.end();

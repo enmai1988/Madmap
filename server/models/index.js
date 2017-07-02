@@ -46,6 +46,7 @@ module.exports = {
         };
         state['zoom'] = result[0]['zoom'];
         state['markers'] = [];
+        state['mapId'] = mapId;
         return module.exports.markers.getbyMapId(mapId);
       })
       .then((results)=>{
