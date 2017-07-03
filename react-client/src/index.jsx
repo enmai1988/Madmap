@@ -110,14 +110,7 @@ class mapView extends React.Component {
     axios.get(`/map/${id}`)
       .then(res => {
         console.log("got the data:", res.data);
-        this.setState({
-          position: {
-            lat: res.data.position.lat,
-            lng: res.data.position.lng
-          },
-          zoom: 12,
-          markers: res.data.markers
-        });
+        this.setState(res.data);
       })
       .catch(err => console.log('get error:', err));
 

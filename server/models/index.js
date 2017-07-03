@@ -41,8 +41,8 @@ module.exports = {
         console.log("Result from grabbing a map", result);
         var latLng = result[0]['current_center'].split('/');
         state['currentCenter']= {
-          'lat': latLng[0],
-          'lng': latLng[1]
+          'lat': Number(latLng[0]),
+          'lng': Number(latLng[1])
         };
         state['zoom'] = result[0]['zoom'];
         state['markers'] = [];

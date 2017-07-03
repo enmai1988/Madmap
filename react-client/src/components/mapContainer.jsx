@@ -23,11 +23,7 @@ export class MapContainer extends React.Component {
       pin: false,
       centerAroundCurrentLocation: true,
       currentPlace: {},
-      markers: [],
-      markerOn: false,
-      // zoom: props.zoom,
-      // currentCenter: props.currentCenter
-      currentIcon: {}
+      markerOn: false
     };
     this.styles = {
       refresh: {
@@ -61,26 +57,18 @@ export class MapContainer extends React.Component {
       map.setCenter(place.geometry.location);
       map.setZoom(17);
     }
-
     this.props.updateCenter(window.map.getCenter());
     this.props.updateZoom(window.map.getZoom());
   }
 
   handleClick(mapProps, map, clickEvent) {
     if (this.state.markerOn) {
-      // this.props.addMarker(clickEvent.latLng);
       console.log("The lat long is:",clickEvent.latLng);
-      // this.props.addMarker(clickEvent.latLng);
       var marker = {
         position: clickEvent.latLng,
         icon: this.state.currentIcon
       };
       this.props.addMarker(marker);
-      // var markers = this.state.markers;
-      // markers.push({
-      //   position: clickEvent.latLng,
-      //   icon: this.state.currentIcon
-      // });
       this.setState({
         markerOn: false
       });
@@ -89,8 +77,12 @@ export class MapContainer extends React.Component {
 
   mapReady(mapProps, map) {
     window.map = map;
-    this.props.updateCenter(window.map.getCenter());
+    this.props.updateCenter(this.props.currentCenter);
     map.setZoom(this.props.zoom);
+    map.setCenter(this.props.currentCenter);
+    map.addListener('zoom_changed', ()=>{
+      this.props.updateZoom(map.getZoom());
+    });
   }
 
   handleSearchTap(event) {
@@ -134,9 +126,9 @@ export class MapContainer extends React.Component {
         />
         <Map google={this.props.google} style={this.styles.mapFlexBox}
           onClick={this.handleClick.bind(this)}
-          centerAroundCurrentLocation={this.state.centerAroundCurrentLocation}
           onReady={this.mapReady.bind(this)}
           onDragend={this.centerMoved.bind(this)}
+          zoom={this.props.zoom}
         >
           {this.props.markers.map((marker, index, markers) => {
             return (
