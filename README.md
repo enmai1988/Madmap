@@ -2,6 +2,17 @@
 
 ![Alt text](https://travis-ci.org/ResponsibleRhinos/ResponsibleRhinos.svg?branch=master)
 
+## TODO
+- [ ] Fix Bug With Securing the Google API Key
+- [ ] Change Marker Colors
+- [ ] Clean Console.logs
+- [ ] Add additional content to Marker Info (media)
+- [ ] Add marker info to sit above the marker on the map
+- [ ] Expand the tests to include server side functions
+- [ ] Implement update map so it updates rather than adds a new one
+- [ ] Seperate the schema files for deployment and local
+
+
 ## Team
 
   - dandersonstack
