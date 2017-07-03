@@ -49,9 +49,9 @@ class mapView extends React.Component {
         console.log("Setting window api key", window.GOOGLE_API_KEY);
         window.GOOGLE_API_KEY = res.data.GOOGLE_API_KEY;
         // import MapContainer from './components/mapContainer.jsx';
-        this.MapContainer2 = GoogleApiWrapper({
-          apiKey: window.GOOGLE_API_KEY
-        })(MapContainer);
+        // this.MapContainer2 = GoogleApiWrapper({
+        //   apiKey: window.GOOGLE_API_KEY
+        // })(MapContainer);
       })
       .catch(err => {
         console.log('Cannot get api key:', err);
@@ -165,7 +165,7 @@ class mapView extends React.Component {
           <div style={{height: '0.5em'}}>
           </div>
           {window.GOOGLE_API_KEY &&
-            <this.MapContainer2
+            <MapContainer
               currentCenter={this.state.currentCenter}
               updateCenter={this.updateCenter}
               updateZoom={this.updateZoom}

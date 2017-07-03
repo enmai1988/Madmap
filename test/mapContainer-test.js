@@ -58,14 +58,6 @@ describe('MapContainer', () => {
       );
       expect(MapContainer.prototype.render.calledOnce).to.equal(true);
     });
-    it('contains a div for a map', () => {
-      const wrapper = mount(
-        <MuiThemeProvider>
-          <MapContainer />
-        </MuiThemeProvider>
-      );
-      expect(wrapper.containsMatchingElement(<div></div>)).to.equal(true);
-    });
     it('map renders correctly and adds to our html', () => {
       const wrapper = mount(
         <div>
