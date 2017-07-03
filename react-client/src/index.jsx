@@ -103,10 +103,15 @@ class mapView extends React.Component {
     console.log("About to run a get request for the state");
     axios.get(`/map/${id}`)
       .then(res => {
-        // res.data.markers = this.serializeMarkers(res.data.markers);
-        console.log('go go ');
         console.log("got the data:", res.data);
-        this.setState(res.data);
+        this.setState({
+          position: {
+            lat: res.data.position.lat,
+            lng: res.data.position.lng
+          },
+          zoom: 12,
+          markers: res.data.markers
+        });
       })
       .catch(err => console.log('get error:', err));
 
@@ -119,17 +124,19 @@ class mapView extends React.Component {
   }
 
   updateZoom(zoom) {
-    console.log("zoom is:", zoom);
     this.setState( {
       zoom: zoom
     });
   }
-
   render() {
     return (
       <MuiThemeProvider>
         <div>
-          <Header save={this.save} git={this.github} currentUser={this.state.currentUser}/>
+          <Header
+            save={this.save}
+            git={this.github}
+            currentUser={this.state.currentUser}
+          />
           <div style={{height: '0.5em'}}>
           </div>
           <MapContainer
@@ -162,7 +169,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Route path='/' component={mapView} />
+          <Route exact path='/' component={mapView} />
           <Route path='/user' component={userView} />
         </div>
       </Router>
