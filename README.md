@@ -12,6 +12,8 @@
 - [ ] Implement update map so it updates rather than adds a new one
 - [ ] Seperate the schema files for deployment and local
 - [ ] Add Wiki Through Github
+- [ ] Implement User Page so you can have access to your maps
+- [ ] Implement map sharing details (mutable, able to see, etc.)
 
 
 ## Team
