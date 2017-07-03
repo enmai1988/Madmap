@@ -26,7 +26,6 @@ import MenuItem from 'material-ui/MenuItem';
 //google stuff
 import Map from 'google-maps-react';
 import {GoogleApiWrapper, Marker} from 'google-maps-react';
-import GOOGLE_API_KEY from '../react-client/src/google/googleAPI.js';
 
 describe('MapContainer', () => {
   describe('mounting type tests', () => {

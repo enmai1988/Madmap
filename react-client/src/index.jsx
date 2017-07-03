@@ -3,9 +3,10 @@ import { render } from 'react-dom';
 import axios from 'axios';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Header from './components/header.jsx'; 
+import Header from './components/header.jsx';
 import MapContainer from './components/mapContainer.jsx';
 import UserPage from './components/userpage.jsx';
+import PinInfo from './components/pininfo.jsx';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 injectTapEventPlugin();
@@ -125,7 +126,7 @@ class mapView extends React.Component {
           <Header save={this.save} git={this.github} savecurrentUser={this.state.currentUser}/>
           <div style={{height: '0.5em'}}>
           </div>
-          <MapContainer 
+          <MapContainer
             currentCenter={this.state.currentCenter}
             updateCenter={this.updateCenter}
             updateZoom={this.updateZoom}
@@ -133,6 +134,7 @@ class mapView extends React.Component {
             addMarker={this.addMarker}
             zoom={this.state.zoom}
           />
+        <PinInfo />
         </div>
       </MuiThemeProvider>
     );

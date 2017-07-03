@@ -22,11 +22,7 @@ describe('Autocomplete', () => {
     });
     it('mounts onto DOM', () => {
       const wrapper = mount(<Autocomplete />);
-      expect(mount(<Autocomplete />).contains(
-        <input
-        type="text"
-        ref="autocomplete"/>
-      )).to.equal(true);
+      expect(wrapper.containsMatchingElement(<input />)).to.equal(true);
     });
     it('should be an input bar', () => {
       expect(shallow(<Autocomplete />).is('input')).to.equal(true);
