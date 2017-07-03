@@ -5,6 +5,7 @@ import AutocompleteInput from './autocomplete.jsx';
 import {GoogleApiWrapper, Marker} from 'google-maps-react';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import PinCreator from './pincreator.jsx';
+import GOOGLE_API_KEY from '../google/google.js';
 import Popover from 'material-ui/Popover';
 import FloatingSearchButton from 'material-ui/FloatingActionButton';
 import Sherlock from 'material-ui/svg-icons/action/search';
@@ -17,6 +18,7 @@ export class MapContainer extends React.Component {
 
   constructor(props) {
     super(props);
+    console.log(GOOGLE_API_KEY);
     this.state = {
       drawerIsOpen: true,
       searchIsOpen: false,
@@ -52,7 +54,6 @@ export class MapContainer extends React.Component {
 
   searchLocation(place, map) {
     if (!place.geometry) { return; }
-    
     if (place.geometry.viewport) {
       map.fitBounds(place.geometry.viewport);
     } else {
@@ -139,7 +140,6 @@ export class MapContainer extends React.Component {
   }
 }
 
-
 export default GoogleApiWrapper({
-  apiKey: process.env.GOOGLE_API_KEY
+  apiKey: GOOGLE_API_KEY
 })(MapContainer);

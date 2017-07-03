@@ -59,7 +59,6 @@ class mapView extends React.Component {
 
 
   github() {
-    console.log('hello');
     axios.get('/auth/github')
       .then(res => {
         console.log('github response:', res);
