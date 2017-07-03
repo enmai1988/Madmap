@@ -1,4 +1,4 @@
-# Project Name
+# Mad Map Apps
 
 ![Alt text](https://travis-ci.org/ResponsibleRhinos/ResponsibleRhinos.svg?branch=master)
 
@@ -11,6 +11,7 @@
 - [ ] Expand the tests to include server side functions
 - [ ] Implement update map so it updates rather than adds a new one
 - [ ] Seperate the schema files for deployment and local
+- [ ] Add Wiki Through Github
 
 
 ## Team
