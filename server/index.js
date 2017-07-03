@@ -66,7 +66,7 @@ app.post('/map', (req, res) => {
           'lat': marker.position.lat,
           'lng': marker.position.lng,
           'mapId': parseInt(mapId),
-          'info': mapId,
+          'info': marker.info,
           'iconPath': marker.icon.path,
           'fillColor': marker.icon.fillColor,
           'strokeColor': marker.icon.strokeColor

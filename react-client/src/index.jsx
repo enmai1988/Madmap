@@ -22,7 +22,8 @@ class mapView extends React.Component {
       zoom: 15,
       currentUser: null,
       markers: [],
-      mapId: null
+      mapId: null,
+      currPin: null
     };
     this.updateCenter = this.updateCenter.bind(this);
     this.updateZoom = this.updateZoom.bind(this);
@@ -30,6 +31,14 @@ class mapView extends React.Component {
     this.save = this.save.bind(this);
     this.github = this.github.bind(this);
     this.replaceURL = (id) => props.history.push(`?=${id}`);
+    this.setCurrPin = this.setCurrPin.bind(this);
+    this.updateCurrPinInfo = this.updateCurrPinInfo.bind(this);
+  }
+  setCurrPin(index) {
+    console.log("updating curr pin in app");
+    this.setState({
+      currPin: index
+    });
   }
 
   componentWillMount() {
@@ -127,6 +136,16 @@ class mapView extends React.Component {
       zoom: zoom
     });
   }
+  updateCurrPinInfo(text){
+    console.log("Update the curr pin with", text);
+
+    let markers = this.state.markers;
+    markers[this.state.currPin].info = text;
+    this.setState({
+      markers: markers
+    });
+  }
+
   render() {
     return (
       <MuiThemeProvider>
@@ -145,8 +164,13 @@ class mapView extends React.Component {
             markers={this.state.markers}
             addMarker={this.addMarker}
             zoom={this.state.zoom}
+            setCurrPin={this.setCurrPin}
           />
-          <PinInfo />
+          {this.state.currPin !== null &&
+            <PinInfo text={this.state.markers[this.state.currPin].info}
+                     updateCurrPinInfo={this.updateCurrPinInfo}/>
+          }
+          
         </div>
       </MuiThemeProvider>
     );

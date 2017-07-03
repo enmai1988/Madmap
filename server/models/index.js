@@ -89,8 +89,8 @@ module.exports = {
     create: function ({lat, lng, iconPath, fillColor, strokeColor, info, mapId}) {
       return db.query(
         `INSERT INTO mad_map_markers
-            (lat, lng, icon_path, fill_color, stroke_color, map_id)
-         VALUES (${lat}, ${lng}, '${iconPath}', '${fillColor}', '${strokeColor}', ${mapId});`);
+            (lat, lng, icon_path, info, fill_color, stroke_color, map_id)
+         VALUES (${lat}, ${lng}, '${iconPath}', '${info}', '${fillColor}', '${strokeColor}', ${mapId});`);
     },
     //INSERT INTO mad_map_markers (lat, lng, icon, info, map_id) VALUES (50, -129, 3,'some info about our pin', 1);
     getbyMapId: function(mapId) {

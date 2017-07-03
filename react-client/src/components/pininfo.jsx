@@ -6,10 +6,7 @@ class PinInfo extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      text: props.text || ''
-    };
-    this.textChange = (e) => (this.setState({text: e.target.value}));
+    this.textChange = (e) => (this.props.updateCurrPinInfo(e.target.value));
     this.styles = {
       paper: {
         postition: 'relative',
@@ -23,6 +20,11 @@ class PinInfo extends React.Component {
       }
     };
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('props: ', this.props);
+  }
+
   render() {
     return (
       <Paper
@@ -34,7 +36,7 @@ class PinInfo extends React.Component {
             multiLine={true}
             rows={1}
             onChange={this.textChange}
-            defaultValue={this.state.text}
+            value={this.props.text}
             style={this.styles.textBox}
           />
         }
