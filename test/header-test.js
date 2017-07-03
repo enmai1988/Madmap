@@ -17,9 +17,6 @@ import Toc from '../react-client/src/components/toc.jsx';
 //material-ui
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
-import TocIcon from 'material-ui/svg-icons/action/toc';
-import FileCloudUpload from 'material-ui/svg-icons/file/cloud-upload';
 
 describe('Header', () => {
   describe('mounting type tests', () => {
@@ -38,18 +35,9 @@ describe('Header', () => {
     it('mounting adds AppBar to our html', () => {
       expect(mount(
         <MuiThemeProvider>
-        <Header />
-        </MuiThemeProvider>
-      ).find('AppBar').length).to.equal(1);
-    });
-    it('calls render when mounting', () => {
-      spy(Header.prototype, 'render');
-      const wrapper = mount(
-        <MuiThemeProvider>
           <Header />
         </MuiThemeProvider>
-      );
-      expect(Header.prototype.render.calledOnce).to.equal(true);
+      ).find('AppBar').length).to.equal(1);
     });
   });
 });

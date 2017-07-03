@@ -29,7 +29,6 @@ class mapView extends React.Component {
     this.addMarker = this.addMarker.bind(this);
     this.save = this.save.bind(this);
     this.github = this.github.bind(this);
-    this.serializeMarkers = this.serializeMarkers.bind(this);
     this.replaceURL = (id) => props.history.push(`?=${id}`);
   }
 
@@ -38,16 +37,14 @@ class mapView extends React.Component {
     if (mapId) {
       this.fetch(mapId);
     }
-  }
-
-  serializeMarkers(arr) {
-    const stringMarkers = (arrOfMarkers) => {
-      return JSON.stringify(arrOfMarkers);
-    };
-    const parseMarkers = (arrOfMarkers) => {
-      return JSON.parse(arrOfMarkers);
-    };
-    return typeof arr[0] === 'string' ? parseMarkers(arr) : stringMarkers(arr);
+    axios.get('/user/signedIn')
+      .then((res) => {
+        console.log(res.data[0].user_name);
+        this.setState({
+          currentUser: res.data[0].user_name
+        });
+      })
+      .catch(err => console.log('signedIn error:', err));
   }
 
   addMarker(position) {
@@ -123,7 +120,7 @@ class mapView extends React.Component {
     return (
       <MuiThemeProvider>
         <div>
-          <Header save={this.save} git={this.github} savecurrentUser={this.state.currentUser}/>
+          <Header save={this.save} git={this.github} currentUser={this.state.currentUser}/>
           <div style={{height: '0.5em'}}>
           </div>
           <MapContainer
