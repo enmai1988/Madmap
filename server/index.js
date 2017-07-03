@@ -32,6 +32,10 @@ const isAuth = (req, res, next) => {
   }
 };
 
+app.get('/api', (req, res ) => {
+  res.send({GOOGLE_API_KEY: process.env.GOOGLE_API_KEY});
+});
+
 app.get('/user/signedIn', isAuth, (req, res) => {
   res.send(req.user);
 });

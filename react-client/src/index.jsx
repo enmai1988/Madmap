@@ -32,6 +32,16 @@ class mapView extends React.Component {
     this.replaceURL = (id) => props.history.push(`?=${id}`);
   }
 
+  componentWillMount() {
+    axios.get('/api')
+      .then((res) => {
+        window.GOOGLE_API_KEY = res.data.GOOGLE_API_KEY;
+      })
+      .catch(err => {
+        console.log('Cannot get api key:', err);
+      });
+  }
+
   componentDidMount() {
     let mapId = window.location.href.split('=')[1];
     if (mapId) {
@@ -39,7 +49,6 @@ class mapView extends React.Component {
     }
     axios.get('/user/signedIn')
       .then((res) => {
-        console.log(res.data[0].user_name);
         this.setState({
           currentUser: res.data[0].user_name
         });
@@ -115,6 +124,7 @@ class mapView extends React.Component {
       zoom: zoom
     });
   }
+
   render() {
     return (
       <MuiThemeProvider>
@@ -130,7 +140,7 @@ class mapView extends React.Component {
             addMarker={this.addMarker}
             zoom={this.state.zoom}
           />
-        <PinInfo />
+          <PinInfo />
         </div>
       </MuiThemeProvider>
     );

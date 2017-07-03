@@ -5,7 +5,6 @@ import AutocompleteInput from './autocomplete.jsx';
 import {GoogleApiWrapper, Marker} from 'google-maps-react';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import PinCreator from './pincreator.jsx';
-import GOOGLE_API_KEY from '../google/google.js';
 import Popover from 'material-ui/Popover';
 import FloatingSearchButton from 'material-ui/FloatingActionButton';
 import Sherlock from 'material-ui/svg-icons/action/search';
@@ -18,7 +17,6 @@ export class MapContainer extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log(GOOGLE_API_KEY);
     this.state = {
       drawerIsOpen: true,
       searchIsOpen: false,
@@ -66,10 +64,6 @@ export class MapContainer extends React.Component {
   }
 
   handleClick(mapProps, map, clickEvent) {
-    //need to check if the marker is currently there
-    //and update the current marker selected.
-    //ie need to find that marker selected
-    console.log("The click event is:", clickEvent);
     if (this.state.markerOn) {
       this.props.addMarker(clickEvent.latLng);         
       this.setState({
@@ -120,12 +114,14 @@ export class MapContainer extends React.Component {
       <div>
         <AutocompleteInput
           google={this.props.google} 
-          searchPlace={this.searchLocation.bind(this)}/>
+          searchPlace={this.searchLocation.bind(this)}
+        />
         <Map google={this.props.google} style={this.styles.mapFlexBox}
           onClick={this.handleClick.bind(this)}
           centerAroundCurrentLocation={this.state.centerAroundCurrentLocation}
           onReady={this.mapReady.bind(this)}
-          onDragend={this.centerMoved.bind(this)}>
+          onDragend={this.centerMoved.bind(this)}
+        >
           {this.props.markers.map((marker, index, markers) => {
             return (
               <Marker
@@ -141,5 +137,5 @@ export class MapContainer extends React.Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: GOOGLE_API_KEY
+  apiKey: window.GOOGLE_API_KEY
 })(MapContainer);
