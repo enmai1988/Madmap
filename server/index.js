@@ -8,6 +8,8 @@ var passport = require('./authentication/passport');
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+const randomBytes = Promise.promisify(require('crypto').randomBytes);
+const createHash = require('crypto').createHash;
 
 var port = process.env.PORT || 3000;
 var app = express();
@@ -131,6 +133,37 @@ app.get('/auth/github/callback',
   });
 
 //--Passport--
+
+app.post('/login', passport.authenticate('local'), 
+  ((req, res) => {
+    res.send(req.body.username);
+  })
+);
+
+const registerUser = (req, res, next) => {
+  console.log(req.body);
+  let username = req.body.username;
+  let password = req.body.password;
+  let salt;
+  randomBytes(256)
+    .then(buf => {
+      salt = buf.toString('hex');
+      console.log(salt);
+      return Promise.resolve(createHash('sha256').update(password + salt));
+    })
+    .then(hashObj => {
+      return Models.users.saveUser(username, hashObj.digest('hex'), salt);
+    })
+    .then(success => {
+      console.log('in in in');
+      next();
+    })
+    .catch(err => console.log('err in registering:', err));
+};
+
+app.post('/signup', registerUser, (req, res) => {
+  res.send('saved');
+});
 
 
 app.listen(port, function() {

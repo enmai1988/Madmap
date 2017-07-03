@@ -22,7 +22,9 @@ DROP TABLE if exists mad_map_markers;
 CREATE TABLE mad_map_users
 (
   id SERIAL PRIMARY KEY,
-  user_name text
+  user_name text,
+  password text,
+  salt text 
 );
 
 CREATE TABLE mad_map_maps

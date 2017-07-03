@@ -19,8 +19,15 @@ module.exports = {
     get: function () {
       return db.query('select * from mad_map_users');
     },
+    saveUser: function(username, password, salt) {
+      return db.query(`insert into mad_map_users (user_name, password, salt)
+      values ('${username}', '${password}', '${salt}');`);
+    },
+    findByUserName: function(username) {
+      return db.query(`select * from mad_map_users where user_name='${username}';`);
+    },
     findById: function (id) {
-      return db.query(`select * from mad_map_users where id='${id}'`);
+      return db.query(`select * from mad_map_users where id='${id}';`);
     }
   },
   maps: {

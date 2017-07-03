@@ -6,7 +6,7 @@ import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField'; 
 import GitHub from '../svg/github.jsx';
 import {lightBlack} from 'material-ui/styles/colors'
-
+import axios from 'axios';
 
 class Login extends Component {
   static muiName = 'FlatButton';
@@ -19,8 +19,37 @@ class Login extends Component {
     };
     this.handleTouchTap = this.handleTouchTap.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleSignUp = this.handleSignUp.bind(this);
+    this.textChangePassword = this.textChangePassword.bind(this);
+    this.textChangeUsername = this.textChangeUsername.bind(this);
   }
+  textChangeUsername (e) {
+   e.preventDefault();
+   this.setState({username: e.target.value});
+ }  textChangePassword (e) {
+   e.preventDefault();
+   this.setState({password: e.target.value});
+ }
 
+  handleLogin() {
+    axios.post('/login', {username: this.state.username, password: this.state.password})
+      .then((res) => {
+        console.log('axios request to /Login comlete');
+      })
+      .catch(err => {
+        console.log('Cannot handle login:', err);
+      });
+  }
+  handleSignUp() {
+    axios.post('/SignUp', {username: this.state.username, password: this.state.password})
+      .then((res) => {
+        console.log('axios request to /SignUp complete')
+      })
+      .catch(err => {
+        console.log('Cannot handle SignUp:', err);
+      });
+  }
 
   handleTouchTap(event) {
     event.preventDefault();
@@ -49,14 +78,14 @@ class Login extends Component {
         >
           <Menu>
             <MenuItem>
-              <TextField hintText="Username" />
+              <TextField hintText="Username" onBlur={this.textChangeUsername}/>
             </MenuItem>
             <MenuItem>
-              <TextField hintText="Password" type="password" />
+              <TextField hintText="Password" type="password" onBlur={this.textChangePassword}/>
             </MenuItem>
             <MenuItem>
-              <FlatButton label="Login" primary={true} />
-              <FlatButton label="Sign Up" secondary={true} />
+              <FlatButton label="Login" primary={true} onTouchTap={this.handleLogin}/>
+              <FlatButton label="Sign Up" secondary={true} onTouchTap={this.handleSignUp}/>
               <FlatButton
                 href="/auth/github"
                 target="_blank"

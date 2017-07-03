@@ -7,7 +7,7 @@ import Toc from './toc.jsx';
 const Header = (props) => (
   <div>
     <AppBar
-      title="Map Maps"
+      title="Mad Maps"
       iconElementLeft={<Toc save={props.save} />}
       iconElementRight={props.currentUser ? <LoggedIn /> : <Login git={props.git}/>}
     />
