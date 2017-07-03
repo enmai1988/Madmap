@@ -26,7 +26,7 @@ class mapView extends React.Component {
       mapId: null,
       currPin: null
     };
-    this.MapContainer2;
+    // this.MapContainer2;
     this.updateCenter = this.updateCenter.bind(this);
     this.updateZoom = this.updateZoom.bind(this);
     this.addMarker = this.addMarker.bind(this);
@@ -43,20 +43,20 @@ class mapView extends React.Component {
     });
   }
 
-  componentWillMount() {
-    axios.get('/api')
-      .then((res) => {
-        console.log("Setting window api key", window.GOOGLE_API_KEY);
-        window.GOOGLE_API_KEY = res.data.GOOGLE_API_KEY;
-        // import MapContainer from './components/mapContainer.jsx';
-        // this.MapContainer2 = GoogleApiWrapper({
-        //   apiKey: window.GOOGLE_API_KEY
-        // })(MapContainer);
-      })
-      .catch(err => {
-        console.log('Cannot get api key:', err);
-      });
-  }
+  // componentWillMount() {
+  //   axios.get('/api')
+  //     .then((res) => {
+  //       console.log("Setting window api key", window.GOOGLE_API_KEY);
+  //       //window.GOOGLE_API_KEY = res.data.GOOGLE_API_KEY;
+  //       // import MapContainer from './components/mapContainer.jsx';
+  //       // this.MapContainer2 = GoogleApiWrapper({
+  //       //   apiKey: window.GOOGLE_API_KEY
+  //       // })(MapContainer);
+  //     })
+  //     .catch(err => {
+  //       console.log('Cannot get api key:', err);
+  //     });
+  // }
 
   componentDidMount() {
     let mapId = window.location.href.split('=')[1];
@@ -164,16 +164,15 @@ class mapView extends React.Component {
           />
           <div style={{height: '0.5em'}}>
           </div>
-          {window.GOOGLE_API_KEY &&
-            <MapContainer
-              currentCenter={this.state.currentCenter}
-              updateCenter={this.updateCenter}
-              updateZoom={this.updateZoom}
-              markers={this.state.markers}
-              addMarker={this.addMarker}
-              zoom={this.state.zoom}
-              setCurrPin={this.setCurrPin}
-            />}
+          <MapContainer
+            currentCenter={this.state.currentCenter}
+            updateCenter={this.updateCenter}
+            updateZoom={this.updateZoom}
+            markers={this.state.markers}
+            addMarker={this.addMarker}
+            zoom={this.state.zoom}
+            setCurrPin={this.setCurrPin}
+          />
           {this.state.currPin !== null &&
             <PinInfo text={this.state.markers[this.state.currPin].info}
                      updateCurrPinInfo={this.updateCurrPinInfo}/>
