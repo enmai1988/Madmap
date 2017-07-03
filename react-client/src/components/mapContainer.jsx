@@ -13,18 +13,21 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import PinSelection from './pindrawer.jsx';
 
-export class MapContainer extends React.Component { 
+export class MapContainer extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       drawerIsOpen: true,
       searchIsOpen: false,
-      pin: false,   
+      pin: false,
       centerAroundCurrentLocation: true,
-      currentPlace: null,
+      currentPlace: {},
       markers: [],
       markerOn: false,
+      // zoom: props.zoom,
+      // currentCenter: props.currentCenter
+      currentIcon: {}
     };
     this.styles = {
       refresh: {
@@ -35,8 +38,8 @@ export class MapContainer extends React.Component {
         display: 'flex',
         width: '95%',
         height: '25em',
-        paddingTop: '5em', 
-        paddingRight: '2em' 
+        paddingTop: '5em',
+        paddingRight: '2em'
       },
       searchButton: {
         position: 'fixed',
@@ -58,14 +61,26 @@ export class MapContainer extends React.Component {
       map.setCenter(place.geometry.location);
       map.setZoom(17);
     }
-    
-    this.props.updateCenter(window.map.getCenter());    
+
+    this.props.updateCenter(window.map.getCenter());
     this.props.updateZoom(window.map.getZoom());
   }
 
   handleClick(mapProps, map, clickEvent) {
     if (this.state.markerOn) {
-      this.props.addMarker(clickEvent.latLng);         
+      // this.props.addMarker(clickEvent.latLng);
+      console.log("The lat long is:",clickEvent.latLng);
+      // this.props.addMarker(clickEvent.latLng);
+      var marker = {
+        position: clickEvent.latLng,
+        icon: this.state.currentIcon
+      };
+      this.props.addMarker(marker);
+      // var markers = this.state.markers;
+      // markers.push({
+      //   position: clickEvent.latLng,
+      //   icon: this.state.currentIcon
+      // });
       this.setState({
         markerOn: false
       });
@@ -74,7 +89,7 @@ export class MapContainer extends React.Component {
 
   mapReady(mapProps, map) {
     window.map = map;
-    this.props.updateCenter(window.map.getCenter());    
+    this.props.updateCenter(window.map.getCenter());
     map.setZoom(this.props.zoom);
   }
 
@@ -91,20 +106,21 @@ export class MapContainer extends React.Component {
       searchIsOpen: false,
     });
   }
-  
-  selectPin(e) {
+
+  selectPin(pin) {
     this.setState({
-      markerOn: !this.state.markerOn
+      markerOn: !this.state.markerOn,
+      currentIcon: pin
     });
   }
 
   render() {
     if (!this.props.loaded) {
       return (
-        <RefreshIndicator 
-          size={40} 
-          left={10} 
-          top={0} 
+        <RefreshIndicator
+          size={40}
+          left={10}
+          top={0}
           status='loading'
           style={this.styles.refresh}
         />
@@ -113,7 +129,7 @@ export class MapContainer extends React.Component {
     return (
       <div>
         <AutocompleteInput
-          google={this.props.google} 
+          google={this.props.google}
           searchPlace={this.searchLocation.bind(this)}
         />
         <Map google={this.props.google} style={this.styles.mapFlexBox}
@@ -127,6 +143,7 @@ export class MapContainer extends React.Component {
               <Marker
                 key={index}
                 position={marker.position}
+                icon={marker.icon}
               />
             );
           })}

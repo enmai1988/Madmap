@@ -56,11 +56,17 @@ class mapView extends React.Component {
       .catch(err => console.log('signedIn error:', err));
   }
 
-  addMarker(position) {
-    let markers = this.state.markers;
-    markers.push({
-      position: position
-    });
+  // addMarker(position) {
+  //   let markers = this.state.markers;
+  //   markers.push({
+  //     position: position
+  //   });
+
+  // Changed this function to accept a marker object instead of only a position.
+  addMarker(marker){
+    console.log("Currently the marker list is:", this.state.markers);
+    var markers = this.state.markers;
+    markers.push(marker);
     this.setState({
       markers: markers
     });
@@ -92,9 +98,9 @@ class mapView extends React.Component {
       .then(res => {
         console.log(res);
         this.setState({
-          mapId: res.data.mapId
+          mapId: res.data
         });
-        this.replaceURL(res.data.mapId);
+        this.replaceURL(res.data);
       })
       .catch(err => console.log(err));
   }

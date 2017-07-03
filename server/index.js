@@ -56,7 +56,7 @@ app.post('/map', (req, res) => {
   var state = JSON.parse(req.body.state);
   state.currentCenter = `${state.currentCenter.lat}/${state.currentCenter.lng}`;
   console.log(state);
-  var mapId = null; 
+  var mapId = null;
   Models.maps.create(state)
     .then((result) => {
       mapId = result[0]['currval'];
@@ -67,13 +67,16 @@ app.post('/map', (req, res) => {
           'lng': marker.position.lng,
           'mapId': parseInt(mapId),
           'info': mapId,
-          'icon': Math.floor(Math.random() * 10)
+          'iconPath': marker.icon.path,
+          'fillColor': marker.icon.fillColor,
+          'strokeColor': marker.icon.strokeColor
         };
         console.log('the mark is:', mark);
         return Models.markers.create(mark);
       })
         .then((result) => {
           console.log('results from marker create', result);
+          console.log('mapId: ', mapId);
           res.end(mapId);
         });
     })
@@ -120,7 +123,7 @@ app.get('/auth/github', function(req, res, next) {
 
 app.get('/auth/github', passport.authenticate('github', { scope: [ 'user:email' ] }) );
 
-app.get('/auth/github/callback', 
+app.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/' }),
   function(req, res) {
     console.log(req.headers);

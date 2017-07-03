@@ -12,7 +12,7 @@ import Bar from 'material-ui/svg-icons/maps/local-bar';
 import Pizza from 'material-ui/svg-icons/maps/local-pizza';
 import Train from 'material-ui/svg-icons/maps/train';
 import Mall from 'material-ui/svg-icons/maps/local-mall';
-import Grocery from 'material-ui/svg-icons/maps/local-grocery-store'; 
+import Grocery from 'material-ui/svg-icons/maps/local-grocery-store';
 import {cyan500} from 'material-ui/styles/colors';
 import randomColorPicker from './randomcolor.js';
 
@@ -55,10 +55,59 @@ class PinCreator extends Component {
 
   handle(e) {
     e.preventDefault();
-    this.props.onPinClick(e);
+    this.props.onPinClick(this.getPinAttributes(e.target));
     this.props.close();
-    console.log('123', e.target);
+    console.log('123', this.getPinAttributes(e.target));
+    console.log('4: ', e.target.tagName);
+    console.log('pin: ', e.target);
+  }
 
+  getPinAttributes(node) {
+    if (node.tagName === 'svg') {
+      return this.getAttributesFromSvg(node);
+    } else if (node.tagName === 'path') {
+      return this.getAttributesFromPath(node);
+    }
+  }
+
+  getAttributesFromSvg(node) {
+    console.log('hey:', this.parsePinStyle(node));
+    var styles = this.parsePinStyle(node);
+    var pinAttributes = {
+      path: node.firstChild.getAttribute('d'),
+      fillOpacity: 1.0,
+      fillColor: styles.fill,
+      strokeColor: styles.color,
+      strokeOpacity: 0.0,
+      anchor: new window.google.maps.Point(10, 10)
+    };
+    return pinAttributes;
+  }
+
+  getAttributesFromPath(node) {
+    var styles = this.parsePinStyle(node.parentNode);
+    var pinAttributes = {
+      path: node.getAttribute('d'),
+      fillOpacity: 1.0,
+      fillColor: styles.fill,
+      strokeColor: styles.color,
+      strokeOpacity: 0,
+      anchor: {
+        x: 10,
+        y: 10
+      }
+    };
+    return pinAttributes;
+  }
+
+  parsePinStyle(node) {
+    var stylesArray = node.getAttribute('style').split('; ');
+    var styles = {};
+    stylesArray.forEach((style, index, stylesArray) => {
+      var currentStyle = style.split(': ');
+      styles[currentStyle[0]] = currentStyle[1];
+    });
+    return styles;
   }
 
   render() {
@@ -66,7 +115,7 @@ class PinCreator extends Component {
       <div style={styles.root}>
         <GridList
           cellHeight={24}
-          style={styles.gridList} 
+          style={styles.gridList}
         >
           {tiles.map((tile, index) => {
             return (
