@@ -44,6 +44,7 @@ class mapView extends React.Component {
   componentWillMount() {
     axios.get('/api')
       .then((res) => {
+        console.log("Setting window api key", window.GOOGLE_API_KEY);
         window.GOOGLE_API_KEY = res.data.GOOGLE_API_KEY;
       })
       .catch(err => {
