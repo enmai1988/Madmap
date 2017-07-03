@@ -109,13 +109,12 @@ class mapView extends React.Component {
 
   save() {
     let state = JSON.stringify(this.state);
-    console.log("State is:", state);
     axios.post('/map', {state: state})
       .then(res => {
-        console.log(res);
         this.setState({
           mapId: res.data
         });
+        console.log("Data is:", res.data);
         this.replaceURL(res.data);
       })
       .catch(err => console.log(err));

@@ -60,14 +60,17 @@
 
 -- * FOR Heroku DEPLOYMENT
 
--- DROP TABLE if exists mad_map_users;
--- DROP TABLE if exists mad_map_maps;
--- DROP TABLE if exists mad_map_markers;
+
+DROP TABLE if exists mad_map_markers;
+DROP TABLE if exists mad_map_maps;
+DROP TABLE if exists mad_map_users;
 
 -- CREATE TABLE mad_map_users
 -- (
 --   id SERIAL PRIMARY KEY,
---   user_name text
+--   user_name text,
+--   password text,
+--   salt text 
 -- );
 
 -- CREATE TABLE mad_map_maps
@@ -83,8 +86,10 @@
 --   id SERIAL PRIMARY KEY,
 --   lat double precision,
 --   lng double precision,
---   icon int,
+--   icon_path text,
 --   info text,
+--   fill_color text,
+--   stroke_color text,
 --   map_id int REFERENCES mad_map_maps (id)
 -- );
 
