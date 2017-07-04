@@ -6,7 +6,6 @@ var Promise = require('bluebird');
 var Models = require('./models');
 var passport = require('./authentication/passport');
 var morgan = require('morgan');
-var cookieParser = require('cookie-parser');
 var session = require('express-session');
 const randomBytes = Promise.promisify(require('crypto').randomBytes);
 const createHash = require('crypto').createHash;
@@ -19,8 +18,7 @@ app.use(express.static(process.env.PWD + '/react-client/dist'));
 app.use(bodyParser.json());
 
 app.use(morgan('combined'));
-app.use(cookieParser());
-app.use(session({secret: process.env.SESSION_SECRET}));
+app.use(session({ secret: process.env.SESSION_SECRET, resave: true, saveUninitialized: true }));
 //---PASSPORT----
 
 app.use(passport.initialize());

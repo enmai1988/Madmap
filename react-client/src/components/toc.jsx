@@ -6,13 +6,13 @@ import TocIcon from 'material-ui/svg-icons/action/toc';
 import SaveIcon from 'material-ui/svg-icons/file/cloud-upload';
 import CreateIcon from 'material-ui/svg-icons/content/create';
 //import Divider from 'material-ui/Divider';
-import {grey50} from 'material-ui/styles/colors'; 
+import {grey50} from 'material-ui/styles/colors';
 
 class Toc extends Component {
-  static muiName = "IconMenu"
-  print = () => {
-    console.log('hi');
-  }
+  // static muiName = "IconMenu"
+  // print = () => {
+  //   console.log('hi');
+  // }
 
   render() {
     return (
@@ -21,8 +21,8 @@ class Toc extends Component {
         iconButtonElement={
           <IconButton><TocIcon color={grey50}/></IconButton>
         }
-        anchorOrigin={{horizontal:"left", vertical:"bottom"}}
-        targetOrigin={{horizontal:"left", vertical:"top"}}
+        anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+        targetOrigin={{horizontal: 'left', vertical: 'top'}}
       >
         <MenuItem onTouchTap={this.props.save}>
           <SaveIcon /> &nbsp;Save
@@ -31,8 +31,8 @@ class Toc extends Component {
           <CreateIcon /> &nbsp;New
         </MenuItem>
       </IconMenu>
-    )
+    );
   }
-};
+}
 
 export default Toc;

@@ -1,6 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-var GitHubStrategy = require('passport-github2').Strategy;
+var GitHubStrategy = require('passport-github').Strategy;
 var Models = require('../models');
 const createHash = require('crypto').createHash;
 
