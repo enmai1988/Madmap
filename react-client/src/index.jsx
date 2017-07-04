@@ -36,8 +36,8 @@ class mapView extends React.Component {
     this.setCurrPin = this.setCurrPin.bind(this);
     this.updateCurrPinInfo = this.updateCurrPinInfo.bind(this);
   }
+
   setCurrPin(index) {
-    console.log('updating curr pin in app');
     this.setState({
       currPin: index
     });
@@ -142,6 +142,7 @@ class mapView extends React.Component {
       zoom: zoom
     });
   }
+
   updateCurrPinInfo(text) {
     console.log('Update the curr pin with', text);
 
@@ -174,7 +175,21 @@ class mapView extends React.Component {
           />
           {this.state.currPin !== null &&
             <PinInfo text={this.state.markers[this.state.currPin].info}
-              updateCurrPinInfo={this.updateCurrPinInfo}/>
+              updateCurrPinInfo={this.updateCurrPinInfo}
+              friends={[{
+                id: 1,
+                firstName: 'David',
+                lastName: 'Vasset',
+                username: 'davidvasset'
+              },
+              {
+                id: 2,
+                firstName: 'David',
+                lastName: 'Gould',
+                username: 'david.gould112'
+              }
+              ]}
+            />
           }
 
         </div>

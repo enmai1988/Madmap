@@ -68,7 +68,6 @@ class Login extends Component {
   }
 
   render() {
-    console.log('login: ', this.props);
     return (
       <div>
         <FlatButton onTouchTap={this.handleTouchTap} label="Login" />

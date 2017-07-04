@@ -125,7 +125,7 @@ export class MapContainer extends React.Component {
       );
     }
     return (
-      <div>
+      <div id="map_container" className="clearfix">
         <AutocompleteInput
           google={this.props.google}
           searchPlace={this.searchLocation.bind(this)}
@@ -139,7 +139,7 @@ export class MapContainer extends React.Component {
           {this.props.markers.map((marker, index) => {
             return (
               <Marker
-                onClick={(props, marker, e) => { this.handleMarkerClicker(index); }}
+                onClick={() => { this.handleMarkerClicker(index); }}
                 key={index}
                 position={marker.position}
                 iconStyle={marker.icon}
