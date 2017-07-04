@@ -37,7 +37,7 @@ class mapView extends React.Component {
     this.updateCurrPinInfo = this.updateCurrPinInfo.bind(this);
   }
   setCurrPin(index) {
-    console.log("updating curr pin in app");
+    console.log('updating curr pin in app');
     this.setState({
       currPin: index
     });
@@ -79,8 +79,8 @@ class mapView extends React.Component {
   //   });
 
   // Changed this function to accept a marker object instead of only a position.
-  addMarker(marker){
-    console.log("Currently the marker list is:", this.state.markers);
+  addMarker(marker) {
+    console.log('Currently the marker list is:', this.state.markers);
     var markers = this.state.markers;
     markers.push(marker);
     this.setState({
@@ -114,17 +114,17 @@ class mapView extends React.Component {
         this.setState({
           mapId: res.data
         });
-        console.log("Data is:", res.data);
+        console.log('Data is:', res.data);
         this.replaceURL(res.data);
       })
       .catch(err => console.log(err));
   }
 
   fetch(id) {
-    console.log("About to run a get request for the state");
+    console.log('About to run a get request for the state');
     axios.get(`/map/${id}`)
       .then(res => {
-        console.log("got the data:", res.data);
+        console.log('got the data:', res.data);
         this.setState(res.data);
       })
       .catch(err => console.log('get error:', err));
@@ -142,8 +142,8 @@ class mapView extends React.Component {
       zoom: zoom
     });
   }
-  updateCurrPinInfo(text){
-    console.log("Update the curr pin with", text);
+  updateCurrPinInfo(text) {
+    console.log('Update the curr pin with', text);
 
     let markers = this.state.markers;
     markers[this.state.currPin].info = text;
@@ -174,9 +174,9 @@ class mapView extends React.Component {
           />
           {this.state.currPin !== null &&
             <PinInfo text={this.state.markers[this.state.currPin].info}
-                     updateCurrPinInfo={this.updateCurrPinInfo}/>
+              updateCurrPinInfo={this.updateCurrPinInfo}/>
           }
-          
+
         </div>
       </MuiThemeProvider>
     );

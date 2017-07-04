@@ -32,7 +32,7 @@ module.exports = {
   },
   maps: {
     create: function ({userId, zoom, currentCenter}) {
-      if(!userId) {
+      if (!userId) {
         userId = null;
       }
       return db.query(
@@ -44,43 +44,41 @@ module.exports = {
     get: function (mapId) {
       var state = {};
       return db.query(`select * from mad_map_maps where id=${mapId}`)
-      .then((result)=>{
-        console.log("Result from grabbing a map", result);
-        var latLng = result[0]['current_center'].split('/');
-        state['currentCenter']= {
-          'lat': Number(latLng[0]),
-          'lng': Number(latLng[1])
-        };
-        state['zoom'] = result[0]['zoom'];
-        state['markers'] = [];
-        state['mapId'] = mapId;
-        return module.exports.markers.getbyMapId(mapId);
-      })
-      .then((results)=>{
-        console.log("The results from markers.get", results);
-        return Promise.map(results, result => {
-          var marker = {
-            'position': {'lat': result['lat'], 'lng': result['lng']},
-            'icon': {
-              'path': result['icon_path'],
-              'fillOpacity': 1.0,
-              'fillColor': result['fill_color'],
-              'strokeColor': result['stroke_color'],
-              'strokeOpacity': 0.0,
-              'anchor': {
-                x: 10,
-                y: 10
-              }
-            },
-            'info': result['info']
-          };
-          state.markers.push(marker);
-        })
         .then((result)=>{
-          return Promise.resolve(state);
-        });
+          var latLng = result[0]['current_center'].split('/');
+          state['currentCenter'] = {
+            'lat': Number(latLng[0]),
+            'lng': Number(latLng[1])
+          };
+          state['zoom'] = result[0]['zoom'];
+          state['markers'] = [];
+          state['mapId'] = mapId;
+          return module.exports.markers.getbyMapId(mapId);
+        })
+        .then((results)=>{
+          return Promise.map(results, result => {
+            var marker = {
+              'position': {'lat': result['lat'], 'lng': result['lng']},
+              'icon': {
+                'path': result['icon_path'],
+                'fillOpacity': 1.0,
+                'fillColor': result['fill_color'],
+                'strokeColor': result['stroke_color'],
+                'strokeOpacity': 0.0,
+                'anchor': {
+                  x: 10,
+                  y: 10
+                }
+              },
+              'info': result['info']
+            };
+            state.markers.push(marker);
+          })
+            .then((result)=>{
+              return Promise.resolve(state);
+            });
 
-      });
+        });
     },
     update: function ({mapId, userId, zoom, currentCenter}) {
       return db.query(

@@ -61,13 +61,13 @@ export class MapContainer extends React.Component {
     this.props.updateCenter(window.map.getCenter());
     this.props.updateZoom(window.map.getZoom());
   }
-  handleMarkerClicker(props, marker, e, index){
+  handleMarkerClicker(props, marker, e, index) {
     this.props.setCurrPin(index);
   }
 
   handleClick(mapProps, map, clickEvent) {
     if (this.state.markerOn) {
-      console.log("The lat long is:",clickEvent.latLng);
+      console.log('The lat long is:', clickEvent.latLng);
       var marker = {
         position: clickEvent.latLng,
         icon: this.state.currentIcon,
@@ -138,7 +138,7 @@ export class MapContainer extends React.Component {
           {this.props.markers.map((marker, index, markers) => {
             return (
               <Marker
-                onClick={(props, marker, e) => {this.handleMarkerClicker(props, marker, e, index);}}
+                onClick={(props, marker, e) => { this.handleMarkerClicker(props, marker, e, index); }}
                 key={index}
                 position={marker.position}
                 icon={marker.icon}
