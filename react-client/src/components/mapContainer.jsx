@@ -61,7 +61,8 @@ export class MapContainer extends React.Component {
     this.props.updateCenter(window.map.getCenter());
     this.props.updateZoom(window.map.getZoom());
   }
-  handleMarkerClicker(props, marker, e, index) {
+
+  handleMarkerClicker(index) {
     this.props.setCurrPin(index);
   }
 
@@ -135,13 +136,13 @@ export class MapContainer extends React.Component {
           onDragend={this.centerMoved.bind(this)}
           zoom={this.props.zoom}
         >
-          {this.props.markers.map((marker, index, markers) => {
+          {this.props.markers.map((marker, index) => {
             return (
               <Marker
-                onClick={(props, marker, e) => { this.handleMarkerClicker(props, marker, e, index); }}
+                onClick={(props, marker, e) => { this.handleMarkerClicker(index); }}
                 key={index}
                 position={marker.position}
-                icon={marker.icon}
+                iconStyle={marker.icon}
               />
             );
           })}
