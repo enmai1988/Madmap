@@ -10,9 +10,3 @@ GitHub.displayName = 'GitHub';
 GitHub.muiName = 'SvgIcon';
 
 export default GitHub;
-
-
-
-
-
-
