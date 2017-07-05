@@ -162,8 +162,6 @@ class mapView extends React.Component {
             git={this.github}
             currentUser={this.state.currentUser}
           />
-          <div style={{height: '0.5em'}}>
-          </div>
           <MapContainer
             currentCenter={this.state.currentCenter}
             updateCenter={this.updateCenter}

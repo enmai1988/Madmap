@@ -14,8 +14,8 @@ export default class Drawers extends Component {
     this.toggleDrawer = this.toggleDrawer.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.styles = {
-      button: { position: 'fixed', bottom: '1em' },
-      drawer: { backgroundColor: transparent, marginTop: '15em', height: '15em', width: 80 }
+      button: { position: 'fixed', bottom: '32px', left: '10px' },
+      drawer: { backgroundColor: '#fff', top: '173px', height: '240px', width: '91px' }
     };
   }
 

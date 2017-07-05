@@ -30,14 +30,6 @@ export class MapContainer extends React.Component {
       refresh: {
         position: 'relative'
       },
-      mapFlexBox: {
-        postition: 'relative',
-        display: 'flex',
-        width: '95%',
-        height: '25em',
-        paddingTop: '5em',
-        paddingRight: '2em'
-      },
       searchButton: {
         position: 'fixed',
         bottom: '1em',
@@ -125,31 +117,33 @@ export class MapContainer extends React.Component {
       );
     }
     return (
-      <div id="map_container" className="clearfix">
+      <div>
         <AutocompleteInput
           google={this.props.google}
           searchPlace={this.searchLocation.bind(this)}
         />
-        <Map google={this.props.google} style={this.styles.mapFlexBox}
-          onClick={this.handleClick.bind(this)}
-          onReady={this.mapReady.bind(this)}
-          onDragend={this.centerMoved.bind(this)}
-          zoom={this.props.zoom}
-        >
-          {this.props.markers.map((marker, index) => {
-            return (
-              <Marker
-                onClick={() => { this.handleMarkerClicker(index); }}
-                key={index}
-                position={marker.position}
-                iconStyle={marker.icon}
-              />
-            );
-          })}
-        </Map>
-        <PinSelection
-          onPinClick={this.selectPin.bind(this)}
-        />
+        <div id="map_container">
+          <Map google={this.props.google}
+            onClick={this.handleClick.bind(this)}
+            onReady={this.mapReady.bind(this)}
+            onDragend={this.centerMoved.bind(this)}
+            zoom={this.props.zoom}
+          >
+            {this.props.markers.map((marker, index) => {
+              return (
+                <Marker
+                  onClick={() => { this.handleMarkerClicker(index); }}
+                  key={index}
+                  position={marker.position}
+                  iconStyle={marker.icon}
+                />
+              );
+            })}
+          </Map>
+          <PinSelection
+            onPinClick={this.selectPin.bind(this)}
+          />
+        </div>
       </div>
     );
   }
