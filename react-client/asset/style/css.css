@@ -1,0 +1,14 @@
+#event_text_field {
+  margin-top: 500px;
+}
+
+#map_container {
+
+}
+
+.clearfix {
+  overflow: auto;
+  content: "";
+  display: table;
+  clear: both;
+}

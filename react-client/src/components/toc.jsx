@@ -15,7 +15,6 @@ class Toc extends Component {
   // }
 
   render() {
-    console.log('toc:', this.props);
     return (
       <IconMenu
         iconButtonElement={
