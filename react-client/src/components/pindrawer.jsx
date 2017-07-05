@@ -5,7 +5,7 @@ import FloatingButton from 'material-ui/FloatingActionButton';
 import {transparent, cyan500} from 'material-ui/styles/colors';
 import PinDrop from 'material-ui/svg-icons/maps/pin-drop';
 
-export default class Drawers extends Component { 
+export default class Drawers extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,7 +33,7 @@ export default class Drawers extends Component {
 
   render() {
     return (
-      <div>
+      <div id="pin_drawer">
         <FloatingButton
           onTouchTap={this.toggleDrawer}
           style={this.styles.button}

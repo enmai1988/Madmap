@@ -1,13 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MenuItem from 'material-ui/MenuItem';
+import AutoComplete from 'material-ui/AutoComplete';
 
-export class Autocomplete extends React.Component {
-
+class Autocomplete extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      locations: []
+    };
+    this.handleMapSearchInput.bind(this);
   }
-  
+
   componentDidUpdate(prevProps) {
     const {google} = this.props;
     const map = window.map;
@@ -15,36 +19,41 @@ export class Autocomplete extends React.Component {
       this.renderAutoComplete();
     }
   }
-  
+
   componentDidMount() {
     this.renderAutoComplete();
   }
-  
+
+  handleMapSearchInput(value) {
+    this.setState({
+      searchInput: value
+    });
+  }
+
   renderAutoComplete() {
     const {google} = this.props;
     const map = window.map;
     if (!google || !map) { return; }
-    
+
     const autocompleteRef = this.refs.autocomplete;
     const autocompleteNode = ReactDOM.findDOMNode(autocompleteRef);
     var autocomplete = new google.maps.places.Autocomplete(autocompleteNode);
     autocomplete.bindTo('bounds', map);
-    
+
     autocomplete.addListener('place_changed', () => {
       const place = autocomplete.getPlace();
       this.props.searchPlace(place, map);
     });
   }
-  
-  // textChange(event) {
-  //   console.log(event.target.value);
-  // }
-  
+
   render() {
     return (
-      <input
-        type="text" 
-        ref="autocomplete"/>
+      <div id="search_area">
+        <input
+          type="text"
+          ref="autocomplete"
+        />
+      </div>
     );
   }
 }
