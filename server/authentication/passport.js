@@ -1,6 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-var GitHubStrategy = require('passport-github').Strategy;
+// var GitHubStrategy = require('passport-github').Strategy;
+const Strategy = require('passport-google-oauth').OAuth2Strategy;
 var Models = require('../models');
 const createHash = require('crypto').createHash;
 
@@ -43,12 +44,14 @@ passport.use(new LocalStrategy((username, password, done) => {
     .catch(err => done(err, null));
 }));
 
-passport.use(new GitHubStrategy({
-  clientID: process.env.GITHUB_CLIENT_ID,
-  clientSecret: process.env.GITHUB_CLIENT_SECRET,
-  callbackURL: `${process.env.HOST_URL}/auth/github/callback`
+passport.use(new Strategy({
+  clientID: process.env.GOOGLE_CLIENTID,
+  clientSecret: process.env.GOOGLE_CLIENTSECRET,
+  callbackURL: `${process.env.HOST_URL}/auth/google/callback`
 },
 function(accessToken, refreshToken, profile, cb) {
+  console.log('google passport: ', profile);
+  console.log('email: ', profile.emails);
   Models.users.findOrCreate(profile.username)
     .then((result)=>{
       cb(null, result[0]);

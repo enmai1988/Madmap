@@ -15,28 +15,26 @@
 -- create database mad_map_db owner mad_map_db;
 -- \connect mad_map_db
 
-DROP TABLE if exists mad_map_users;
-DROP TABLE if exists mad_map_maps;
-DROP TABLE if exists mad_map_markers;
+DROP TABLE if exists users;
+DROP TABLE if exists maps;
+DROP TABLE if exists markers;
 
-CREATE TABLE mad_map_users
-(
+CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   user_name text,
   password text,
   salt text
 );
 
-CREATE TABLE mad_map_maps
-(
+CREATE TABLE maps (
   id SERIAL PRIMARY KEY,
+  name varchar(20),
   zoom int,
   current_center text,
-  user_id int REFERENCES mad_map_users (id)
+  user_id int REFERENCES users (id)
 );
 
-CREATE TABLE mad_map_markers
-(
+CREATE TABLE markers (
   id SERIAL PRIMARY KEY,
   lat double precision,
   lng double precision,
@@ -44,12 +42,18 @@ CREATE TABLE mad_map_markers
   info text,
   fill_color text,
   stroke_color text,
-  map_id int REFERENCES mad_map_maps (id)
+  map_id int REFERENCES maps (id)
 );
 
-ALTER TABLE mad_map_users OWNER TO mad_map_db;
-ALTER TABLE mad_map_maps OWNER TO mad_map_db;
-ALTER TABLE mad_map_markers OWNER TO mad_map_db;
+CREATE TABLE friends (
+  id int primary key unique,
+  user_id int REFERENCES users(id),
+  friend_id int REFERENCES users(id)
+)
+
+-- ALTER TABLE users OWNER TO mad_map_db;
+-- ALTER TABLE maps OWNER TO mad_map_db;
+-- ALTER TABLE markers OWNER TO mad_map_db;
 
 -- INSERT INTO mad_map_users (user_name) VALUES ('billy_bob69');
 -- INSERT INTO mad_map_users (user_name) VALUES ('hammy_pig1337');

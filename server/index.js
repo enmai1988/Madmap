@@ -113,15 +113,15 @@ app.put('/map/:mapId', (req, res) => {
 
 
 //---Github Authentication--
-app.get('/auth/github', function(req, res, next) {
+app.get('/auth/google', function(req, res, next) {
   console.log(req.headers);
   next();
 });
 
-app.get('/auth/github', passport.authenticate('github', { scope: [ 'user:email' ] }) );
+app.get('/auth/google', passport.authenticate('google', { scope: [ 'profile', 'email' ] }) );
 
-app.get('/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/' }),
+app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/' }),
   function(req, res) {
     console.log(req.headers);
     res.redirect('/');

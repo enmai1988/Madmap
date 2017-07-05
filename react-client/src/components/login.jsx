@@ -68,6 +68,11 @@ class Login extends Component {
   }
 
   render() {
+    const googleSigninIcon = <div id="google_signin">
+      <img src="https://developers.google.com/identity/images/g-logo.png"></img>
+      <span>Sign in with Google</span>
+    </div>;
+
     return (
       <div>
         <FlatButton onTouchTap={this.handleTouchTap} label="Login" />
@@ -89,10 +94,10 @@ class Login extends Component {
               <FlatButton label="Login" primary={true} onTouchTap={this.handleLogin}/>
               <FlatButton label="Sign Up" secondary={true} onTouchTap={this.handleSignUp}/>
               <FlatButton
-                href="/auth/github"
+                href="/auth/google"
                 target="_blank"
                 color={lightBlack}
-                icon={<GitHub />}
+                icon={googleSigninIcon}
                 style={{margin: 12}}
               />
             </MenuItem>
