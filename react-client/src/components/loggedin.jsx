@@ -15,7 +15,7 @@ const LoggedIn = (props) => (
     targetOrigin={{horizontal: 'right', vertical: 'top'}}
     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
   >
-    <Link to='/user'>
+    <Link to='/profile'>
       <MenuItem primaryText="Profile" />
     </Link>
     <MenuItem primaryText="Help" />
