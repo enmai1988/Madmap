@@ -8,6 +8,7 @@ import Header from './components/header.jsx';
 import MapContainer from './components/mapContainer.jsx';
 import UserPage from './components/userpage.jsx';
 import PinInfo from './components/pininfo.jsx';
+import Toc from './components/toc.jsx'; 
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 injectTapEventPlugin();
@@ -32,6 +33,7 @@ class mapView extends React.Component {
     this.replaceURL = (id) => props.history.push(`?=${id}`);
     this.setCurrPin = this.setCurrPin.bind(this);
     this.updateCurrPinInfo = this.updateCurrPinInfo.bind(this);
+    this.save = this.save.bind(this);
   }
 
   setCurrPin(index) {
@@ -84,6 +86,19 @@ class mapView extends React.Component {
         console.log('github response:', res);
       })
       .catch(err => console.log('ERROR:', err));
+  }
+
+  save() {
+    let state = JSON.stringify(this.state);
+    axios.post('/map', {state: state})
+      .then(res => {
+        this.setState({
+          mapId: res.data
+        });
+        console.log('Data is:', res.data);
+        this.replaceURL(res.data);
+      })
+      .catch(err => console.log(err));
   }
 
   update() {
@@ -146,6 +161,7 @@ class mapView extends React.Component {
     return (
       <MuiThemeProvider>
         <div>
+          <Toc save={this.save} />
           <MapContainer
             currentCenter={this.state.currentCenter}
             updateCenter={this.updateCenter}
@@ -173,7 +189,6 @@ class mapView extends React.Component {
               ]}
             />
           }
-
         </div>
       </MuiThemeProvider>
     );
@@ -207,19 +222,6 @@ class App extends Component {
       .catch(err => console.log('signedIn error:', err));
   }
 
-  save() {
-    let state = JSON.stringify(this.state);
-    axios.post('/map', {state: state})
-      .then(res => {
-        this.setState({
-          mapId: res.data
-        });
-        console.log('Data is:', res.data);
-        this.replaceURL(res.data);
-      })
-      .catch(err => console.log(err));
-  }
-
   render () {
     return (
       <MuiThemeProvider>
@@ -227,7 +229,6 @@ class App extends Component {
           <Router>
             <div>
               <Header
-                save={this.save}
                 git={this.github}
                 currentUser={this.state.currentUser}
               />
