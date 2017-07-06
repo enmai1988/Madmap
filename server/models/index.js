@@ -113,5 +113,20 @@ module.exports = {
         WHERE
          id = ${markerId};`);
     }
+  },
+  friends: {
+    get: function(userId) {
+      return db.query(`
+        select id, email, firstName, lastName
+        from mad_map_users inner join
+        (select * from mad_map_friends where mad_map_friends.user_id = ${userId}) as friends
+        on mad_map_users.id = friends.friends_id;
+      `);
+    },
+    addFriend: function(userId, friendEmail) {
+      return db.query(`
+
+      `);
+    }
   }
 };

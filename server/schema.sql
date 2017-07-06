@@ -14,27 +14,33 @@
 
 -- create database mad_map_db owner mad_map_db;
 -- \connect mad_map_db
+DROP DATABASE IF EXISTS mad_map_db;
 
-DROP TABLE if exists users;
-DROP TABLE if exists maps;
-DROP TABLE if exists markers;
+CREATE DATABASE IF NOT EXISTS mad_map_db;
 
-CREATE TABLE users (
+DROP TABLE if exists mad_map_users;
+DROP TABLE if exists mad_map_maps;
+DROP TABLE if exists mad_map_markers;
+DROP TABLE if exists mad_map_friends;
+
+CREATE TABLE mad_map_users (
   id SERIAL PRIMARY KEY,
-  user_name text,
+  email text,
+  firstName text,
+  lastName text,
   password text,
   salt text
 );
 
-CREATE TABLE maps (
+CREATE TABLE mad_map_maps (
   id SERIAL PRIMARY KEY,
   name varchar(20),
   zoom int,
   current_center text,
-  user_id int REFERENCES users (id)
+  user_id int REFERENCES mad_map_users (id)
 );
 
-CREATE TABLE markers (
+CREATE TABLE mad_map_markers (
   id SERIAL PRIMARY KEY,
   lat double precision,
   lng double precision,
@@ -42,14 +48,35 @@ CREATE TABLE markers (
   info text,
   fill_color text,
   stroke_color text,
-  map_id int REFERENCES maps (id)
+  map_id int REFERENCES mad_map_maps (id)
 );
 
-CREATE TABLE friends (
-  id int primary key unique,
-  user_id int REFERENCES users(id),
-  friend_id int REFERENCES users(id)
-)
+CREATE TABLE mad_map_friends (
+  id SERIAL primary key,
+  user_id int REFERENCES mad_map_users (id),
+  friends_id int REFERENCES mad_map_users (id)
+);
+
+INSERT INTO mad_map_users (email, firstName, lastName) VALUES ('enmai1988@gmail.com', 'Eric', 'Mai');
+INSERT INTO mad_map_users (email, firstName, lastName) VALUES ('david@davidvassett.com.au', 'David', 'Vassett');
+INSERT INTO mad_map_users (email, firstName, lastName) VALUES ('david.gould112@gmail.com', 'David', 'Gould');
+INSERT INTO mad_map_users (email, firstName, lastName) VALUES ('eviankwan@gmail.com', 'Evian', 'Kwan');
+
+INSERT INTO mad_map_friends (user_id, friends_id) VALUES (1, 2);
+INSERT INTO mad_map_friends (user_id, friends_id) VALUES (1, 3);
+INSERT INTO mad_map_friends (user_id, friends_id) VALUES (1, 4);
+INSERT INTO mad_map_friends (user_id, friends_id) VALUES (2, 1);
+INSERT INTO mad_map_friends (user_id, friends_id) VALUES (2, 3);
+INSERT INTO mad_map_friends (user_id, friends_id) VALUES (2, 4);
+INSERT INTO mad_map_friends (user_id, friends_id) VALUES (3, 1);
+INSERT INTO mad_map_friends (user_id, friends_id) VALUES (3, 2);
+INSERT INTO mad_map_friends (user_id, friends_id) VALUES (3, 4);
+INSERT INTO mad_map_friends (user_id, friends_id) VALUES (4, 1);
+INSERT INTO mad_map_friends (user_id, friends_id) VALUES (4, 2);
+INSERT INTO mad_map_friends (user_id, friends_id) VALUES (4, 3);
+
+
+
 
 -- ALTER TABLE users OWNER TO mad_map_db;
 -- ALTER TABLE maps OWNER TO mad_map_db;
