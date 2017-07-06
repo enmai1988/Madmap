@@ -21,7 +21,6 @@ class mapView extends React.Component {
         lng: -122.41941600000001
       },
       zoom: 15,
-      currentUser: null,
       markers: [],
       mapId: null,
       currPin: null
@@ -30,8 +29,6 @@ class mapView extends React.Component {
     this.updateCenter = this.updateCenter.bind(this);
     this.updateZoom = this.updateZoom.bind(this);
     this.addMarker = this.addMarker.bind(this);
-    this.save = this.save.bind(this);
-    this.github = this.github.bind(this);
     this.replaceURL = (id) => props.history.push(`?=${id}`);
     this.setCurrPin = this.setCurrPin.bind(this);
     this.updateCurrPinInfo = this.updateCurrPinInfo.bind(this);
@@ -63,16 +60,6 @@ class mapView extends React.Component {
     if (mapId) {
       this.fetch(mapId);
     }
-    axios.get('/user/signedIn')
-      .then((res) => {
-        console.log('user: ', res);
-        if (res.data.email) {
-          this.setState({
-            currentUser: res.data
-          });
-        }
-      })
-      .catch(err => console.log('signedIn error:', err));
   }
 
   // addMarker(position) {
@@ -91,7 +78,6 @@ class mapView extends React.Component {
     });
   }
 
-
   github() {
     axios.get('/auth/github')
       .then(res => {
@@ -108,19 +94,6 @@ class mapView extends React.Component {
         console.log(res);
       })
       .catch(err => console.log('put error:', err));
-  }
-
-  save() {
-    let state = JSON.stringify(this.state);
-    axios.post('/map', {state: state})
-      .then(res => {
-        this.setState({
-          mapId: res.data
-        });
-        console.log('Data is:', res.data);
-        this.replaceURL(res.data);
-      })
-      .catch(err => console.log(err));
   }
 
   fetch(id) {
@@ -173,11 +146,6 @@ class mapView extends React.Component {
     return (
       <MuiThemeProvider>
         <div>
-          <Header
-            save={this.save}
-            git={this.github}
-            currentUser={this.state.currentUser}
-          />
           <MapContainer
             currentCenter={this.state.currentCenter}
             updateCenter={this.updateCenter}
@@ -221,19 +189,56 @@ const userView = ({match}) => (
 class App extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      currentUser: null
+    };
+  }
+
+  componentDidMount() {
+    axios.get('/user/signedIn')
+      .then((res) => {
+        console.log('user: ', res);
+        if (res.data.email) {
+          this.setState({
+            currentUser: res.data
+          });
+        }
+      })
+      .catch(err => console.log('signedIn error:', err));
+  }
+
+  save() {
+    let state = JSON.stringify(this.state);
+    axios.post('/map', {state: state})
+      .then(res => {
+        this.setState({
+          mapId: res.data
+        });
+        console.log('Data is:', res.data);
+        this.replaceURL(res.data);
+      })
+      .catch(err => console.log(err));
   }
 
   render () {
     return (
-      <Router>
+      <MuiThemeProvider>
         <div>
-          <Route exact path='/' component={mapView} />
-          <Route path='/user' component={userView} />
+          <Router>
+            <div>
+              <Header
+                save={this.save}
+                git={this.github}
+                currentUser={this.state.currentUser}
+              />
+              <Route exact path='/' component={mapView} />
+              <Route path='/profile' component={userView} />
+            </div>
+          </Router>
         </div>
-      </Router>
+      </MuiThemeProvider>
     );
   }
 }
-
 
 render(<App />, document.getElementById('app'));
