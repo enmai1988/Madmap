@@ -24,7 +24,8 @@ class mapView extends React.Component {
       zoom: 15,
       markers: [],
       mapId: null,
-      currPin: null
+      currPin: null,
+      title: "untitled"
     };
     // this.MapContainer2;
     this.updateCenter = this.updateCenter.bind(this);
@@ -33,7 +34,11 @@ class mapView extends React.Component {
     this.replaceURL = (id) => props.history.push(`?=${id}`);
     this.setCurrPin = this.setCurrPin.bind(this);
     this.updateCurrPinInfo = this.updateCurrPinInfo.bind(this);
+<<<<<<< HEAD
     this.save = this.save.bind(this);
+=======
+    this.updateTitle = this.updateTitle.bind(this);
+>>>>>>> fixes db index.js to work with schema
   }
 
   setCurrPin(index) {
@@ -156,12 +161,25 @@ class mapView extends React.Component {
       .then(res => {})
       .catch(err => console.log(err));
   }
+  
+  updateTitle(e) {
+    this.setState({title: document.getElementById("map_name_input").value})
+  }
 
   render() {
     return (
       <MuiThemeProvider>
         <div>
+<<<<<<< HEAD
           <Toc save={this.save} />
+=======
+          <Header
+            save={this.save}
+            git={this.github}
+            currentUser={this.state.currentUser}
+            updateTitle={this.updateTitle}
+          />
+>>>>>>> fixes db index.js to work with schema
           <MapContainer
             currentCenter={this.state.currentCenter}
             updateCenter={this.updateCenter}

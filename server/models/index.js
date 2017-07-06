@@ -45,7 +45,7 @@ module.exports = {
       if (!currentUser.id) {
         currentUser.id = null;
       }
-      return db.query(
+      return db.query (
         `INSERT INTO mad_map_maps
             (name, zoom, current_center, user_id)
          VALUES ('${title}', ${zoom}, '${currentCenter}', ${currentUser.id});
