@@ -153,6 +153,19 @@ class mapView extends React.Component {
     });
   }
 
+  shareMap(emailAddress, mapUrl) {
+    axios({
+      method: 'post',
+      url: '/map/share',
+      data: {
+        emailAddress: emailAddress,
+        mapUrl: mapUrl
+      }
+    })
+      .then(res => {})
+      .catch(err => console.log(err));
+  }
+
   render() {
     return (
       <MuiThemeProvider>
