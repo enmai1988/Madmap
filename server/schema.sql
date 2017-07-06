@@ -25,7 +25,7 @@ DROP TABLE if exists mad_map_friends;
 
 CREATE TABLE mad_map_users (
   id SERIAL PRIMARY KEY,
-  email text,
+  email text unique,
   firstName text,
   lastName text,
   password text,
