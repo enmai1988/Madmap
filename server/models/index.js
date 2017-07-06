@@ -140,9 +140,11 @@ module.exports = {
         on mad_map_users.id = friends.friends_id;
       `);
     },
-    addFriend: function(userId, friendEmail) {
+    addFriend: function(userId, friendId) {
       return db.query(`
-
+        insert into mad_map_friends
+        (user_id, friends_id)
+        VALUES (${userId}, ${friendId});
       `);
     }
   }

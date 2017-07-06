@@ -3,7 +3,7 @@ import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import Divider from 'material-ui/Divider'; 
+import Divider from 'material-ui/Divider';
 import { Link } from 'react-router-dom';
 
 const LoggedIn = (props) => (
@@ -18,9 +18,10 @@ const LoggedIn = (props) => (
     <Link to='/profile'>
       <MenuItem primaryText="Profile" />
     </Link>
-    <MenuItem primaryText="Help" />
     <Divider />
-    <MenuItem primaryText="Sign out" />
+    <Link to='/logout'>
+      <MenuItem primaryText="Sign out" />
+    </Link>
   </IconMenu>
 );
 
