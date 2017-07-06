@@ -52,6 +52,16 @@ app.get('/user', (req, res) => {
     });
 });
 
+app.post('/friend/:id', (req, res) => {
+  Models.friends.addFriend(req.body.userId, req.body.friendId)
+    .then(result => {
+      if (!result) { throw result; }
+      res.sendStatus(201);
+    }).catch(() => {
+      res.sendStatus(500);
+    });
+});
+
 app.post('/map', (req, res) => {
   console.log('got to the post for map');
   var state = JSON.parse(req.body.state);
@@ -145,6 +155,11 @@ app.get('/auth/google/callback',
     // console.log(req.headers);
     res.redirect('/');
   });
+
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
 
 //--Passport--
 
