@@ -66,7 +66,7 @@
 
 
 
-const pgp = require('pg-promise')();
+const pgp = require('pg-promise')({ promiseLib: require('bluebird') });
 
 
 if (process.env.DATABASE_URL === 'localhost') {

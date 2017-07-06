@@ -65,8 +65,9 @@ class mapView extends React.Component {
     }
     axios.get('/user/signedIn')
       .then((res) => {
+        console.log('user: ', res);
         this.setState({
-          currentUser: res.data[0].user_name
+          currentUser: res.data
         });
       })
       .catch(err => console.log('signedIn error:', err));

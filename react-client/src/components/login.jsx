@@ -95,7 +95,6 @@ class Login extends Component {
               <FlatButton label="Sign Up" secondary={true} onTouchTap={this.handleSignUp}/>
               <FlatButton
                 href="/auth/google"
-                target="_blank"
                 color={lightBlack}
                 icon={googleSigninIcon}
                 style={{margin: 12}}

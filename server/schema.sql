@@ -25,7 +25,7 @@ DROP TABLE if exists mad_map_friends;
 
 CREATE TABLE mad_map_users (
   id SERIAL PRIMARY KEY,
-  email text,
+  email text unique,
   firstName text,
   lastName text,
   password text,
@@ -77,6 +77,9 @@ INSERT INTO mad_map_friends (user_id, friends_id) VALUES (4, 3);
 
 
 
+-- INSERT INTO mad_map_maps (zoom, current_center, user_id) VALUES (11, '49/-110', null);
+-- INSERT INTO mad_map_markers (lat, lng, icon_path, info, map_id) VALUES (50, -129, '3','some info about our pin', 1);
+-- INSERT INTO mad_map_markers (lat, lng, icon_path, info, map_id) VALUES (42, -118, '3','random string describing pin', 1);
 
 -- ALTER TABLE users OWNER TO mad_map_db;
 -- ALTER TABLE maps OWNER TO mad_map_db;
@@ -85,9 +88,6 @@ INSERT INTO mad_map_friends (user_id, friends_id) VALUES (4, 3);
 -- INSERT INTO mad_map_users (user_name) VALUES ('billy_bob69');
 -- INSERT INTO mad_map_users (user_name) VALUES ('hammy_pig1337');
 -- INSERT INTO mad_map_users (user_name) VALUES ('cool-bill9000');
--- INSERT INTO mad_map_maps (zoom, current_center, user_id) VALUES (11, '49/-110', null);
--- INSERT INTO mad_map_markers (lat, lng, icon_path, info, map_id) VALUES (50, -129, '3','some info about our pin', 1);
--- INSERT INTO mad_map_markers (lat, lng, icon_path, info, map_id) VALUES (42, -118, '3','random string describing pin', 1);
 
 -- * FOR Heroku DEPLOYMENT
 

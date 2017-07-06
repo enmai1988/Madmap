@@ -3,18 +3,28 @@ var Promise = require('bluebird');
 
 module.exports = {
   users: {
-    findOrCreate: function (githubId) {
-      return db.query(
-        `INSERT INTO mad_map_users
-            (user_name)
-        SELECT '${githubId}'
-        WHERE
-            NOT EXISTS (
-                SELECT user_name FROM mad_map_users WHERE user_name = '${githubId}'
-            );
-          SELECT *
-          FROM mad_map_users
-          WHERE user_name='${githubId}'`);
+    findOrCreate: function (profile) {
+      return db.query(`
+        insert into mad_map_users (email, firstName, lastName)
+        select email
+        where not exists (
+          select email from mad_map_users
+          where email = ${profile.emails[0].value}
+        );
+        select * from mad_map_users
+        where email = ${profile.emails[0].value};
+      `);
+      // return db.query(
+      //   `INSERT INTO mad_map_users
+      //       (user_name)
+      //   SELECT '${githubId}'
+      //   WHERE
+      //       NOT EXISTS (
+      //           SELECT user_name FROM mad_map_users WHERE user_name = '${githubId}'
+      //       );
+      //     SELECT *
+      //     FROM mad_map_users
+      //     WHERE user_name='${githubId}'`);
     },
     get: function () {
       return db.query('select * from mad_map_users');
@@ -23,8 +33,15 @@ module.exports = {
       return db.query(`insert into mad_map_users (user_name, password, salt)
       values ('${username}', '${password}', '${salt}');`);
     },
-    findByUserName: function(username) {
-      return db.query(`select * from mad_map_users where user_name='${username}';`);
+    findByEmail: function(email) {
+      return db.query(`select * from mad_map_users where email='${email}';`);
+    },
+    addUserWithGoogle: function(profile) {
+      return db.query(`
+        insert into mad_map_users
+        (email, firstName, lastName)
+        values (${profile.emails[0].value}, ${profile.name.givenName}, ${profile.name.familyName});
+      `);
     },
     findById: function (id) {
       return db.query(`select * from mad_map_users where id='${id}';`);

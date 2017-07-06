@@ -137,18 +137,12 @@ app.post('/map/share', (req, res) => {
     });
 });
 
-//---Github Authentication--
-app.get('/auth/google', function(req, res, next) {
-  console.log(req.headers);
-  next();
-});
-
 app.get('/auth/google', passport.authenticate('google', { scope: [ 'profile', 'email' ] }) );
 
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   function(req, res) {
-    console.log(req.headers);
+    // console.log(req.headers);
     res.redirect('/');
   });
 
@@ -156,7 +150,7 @@ app.get('/auth/google/callback',
 
 app.post('/login', passport.authenticate('local'),
   ((req, res) => {
-    res.send(req.body.username);
+    res.send(req.body.email);
   })
 );
 
