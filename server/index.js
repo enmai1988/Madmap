@@ -9,6 +9,7 @@ var morgan = require('morgan');
 var session = require('express-session');
 const randomBytes = Promise.promisify(require('crypto').randomBytes);
 const createHash = require('crypto').createHash;
+const request = require('request');
 
 var port = process.env.PORT || 3000;
 var app = express();
@@ -111,6 +112,30 @@ app.put('/map/:mapId', (req, res) => {
     });
 });
 
+app.post('/map/share', (req, res) => {
+  request({
+    method: 'POST',
+    url: 'https://api.mailgun.net/v3/sandbox3d24a85bbb724152b3cd16a95f41df52.mailgun.org/messages',
+    qs: {
+      from: 'notifications@madmap.io',
+      to: req.body.emailAddress,
+      subject: 'A map has been shared with you',
+      html: `
+        <h1>Mad Maps</h1>
+        <h3>A map has been shared with you.</h3>
+        <h5>To view the map simply click on the below link.<br><br>
+          ${req.body.mapUrl}
+        </h5>`
+    },
+    auth: {
+      user: 'api',
+      pass: process.env.MAILGUN_API_KEY
+    }
+  })
+    .on('response', function(response) {
+      res.send(response);
+    });
+});
 
 //---Github Authentication--
 app.get('/auth/google', function(req, res, next) {
