@@ -19,11 +19,13 @@ const LoggedIn = (props) => (
       <MenuItem primaryText="Profile" />
     </Link>
     <Divider />
-    <Link to='/logout'>
-      <MenuItem primaryText="Sign out" />
-    </Link>
+    <a href="/logout">
+      <MenuItem primaryText="Sign out"/>
+    </a>
   </IconMenu>
 );
+
+
 
 LoggedIn.muiName = 'IconMenu';
 
