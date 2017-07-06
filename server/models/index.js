@@ -125,7 +125,7 @@ module.exports = {
     },
     addFriend: function(userId, friendEmail) {
       return db.query(`
-
+        
       `);
     }
   }
