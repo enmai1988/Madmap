@@ -16,20 +16,22 @@ class Toc extends Component {
 
   render() {
     return (
-      <IconMenu
-        iconButtonElement={
-          <IconButton><TocIcon color={grey50}/></IconButton>
-        }
-        anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-        targetOrigin={{horizontal: 'left', vertical: 'top'}}
-      >
-        <MenuItem onTouchTap={this.props.save}>
-          <SaveIcon /> &nbsp;Save
-        </MenuItem>
-        <MenuItem>
-          <CreateIcon /> &nbsp;New
-        </MenuItem>
-      </IconMenu>
+      <div className="icon">
+        <IconMenu
+          iconButtonElement={
+            <IconButton><TocIcon color={grey50} /></IconButton>
+          }
+          anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+          targetOrigin={{horizontal: 'left', vertical: 'top'}}
+        >
+          <MenuItem onTouchTap={this.props.save}>
+            <SaveIcon /> &nbsp;Save
+          </MenuItem>
+          <MenuItem>
+            <CreateIcon /> &nbsp;New
+          </MenuItem>
+        </IconMenu>
+      </div>
     );
   }
 }

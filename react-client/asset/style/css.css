@@ -59,3 +59,12 @@ body {
   display: table;
   clear: both;
 }
+
+.icon {
+  position: absolute;
+  top: 8px;
+  z-index: 1400;
+  background-color: rgb(0, 188, 212);
+  left: 8px;
+}
+
