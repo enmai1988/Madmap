@@ -4,16 +4,6 @@ var Promise = require('bluebird');
 module.exports = {
   users: {
     findOrCreate: function (profile) {
-      return db.query(`
-        insert into mad_map_users (email, firstName, lastName)
-        select email
-        where not exists (
-          select email from mad_map_users
-          where email = ${profile.emails[0].value}
-        );
-        select * from mad_map_users
-        where email = ${profile.emails[0].value};
-      `);
       // return db.query(
       //   `INSERT INTO mad_map_users
       //       (user_name)
@@ -34,13 +24,15 @@ module.exports = {
       values ('${username}', '${password}', '${salt}');`);
     },
     findByEmail: function(email) {
-      return db.query(`select * from mad_map_users where email='${email}';`);
+      return db.any(`select * from mad_map_users where email='${email}';`);
     },
     addUserWithGoogle: function(profile) {
+      console.log('addUserWithGoogle: ', `${profile.emails[0].value}`);
       return db.query(`
-        insert into mad_map_users
-        (email, firstName, lastName)
-        values (${profile.emails[0].value}, ${profile.name.givenName}, ${profile.name.familyName});
+        INSERT INTO mad_map_users
+        (email, firstName, lastName, avatar)
+        VALUES ('${profile.emails[0].value}', '${profile.name.givenName}', '${profile.name.familyName}', '${profile.photos[0].value}')
+        RETURNING *;
       `);
     },
     findById: function (id) {

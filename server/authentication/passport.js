@@ -50,29 +50,19 @@ passport.use(new Strategy({
   callbackURL: `${process.env.HOST_URL}/auth/google/callback`
 },
 function(accessToken, refreshToken, profile, cb) {
-  console.log('google passport: ', profile);
-  console.log('email: ', profile.emails);
   Models.users.findByEmail(profile.emails[0].value)
     .then(result => {
-      if (!result) {
-        return Models.users.addUserWithGoogle(profile);
+      if (!result) { throw result; }
+      if (!result.length) {
+        return Promise.resolve(Models.users.addUserWithGoogle(profile));
       }
       return result;
     }).then(user => {
-      console.log('inside passport: ', user[0]);
       if (!user) { throw user; }
       cb(null, user[0]);
     }).catch(() => {
       cb(null, false);
     });
-  // Models.users.findOrCreate(profile)
-  //   .then((result)=>{
-  //     console.log('passport: ', result);
-  //     cb(null, result[0]);
-  //   })
-  //   .catch((err)=>{
-  //     cb(err, null);
-  //   });
 }
 ));
 
