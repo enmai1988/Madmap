@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import FriendsList from './friendsList.jsx';
+import MapsList from './mapsList.jsx';
 
 export default class UserPage extends Component {
   constructor(props) {
@@ -46,7 +47,10 @@ export default class UserPage extends Component {
 
   render() {
     return (
-      <FriendsList currentUser={this.props.currentUser} getFriends={this.getFriends.bind(this)} friends={this.state.friends} users={this.state.users} />
+      <div id="user_page_components">
+        <FriendsList friends={this.state.friends} />
+        <MapsList maps={this.state.maps} />
+      </div>
     );
   }
 }
