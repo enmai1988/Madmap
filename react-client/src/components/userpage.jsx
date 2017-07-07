@@ -9,6 +9,7 @@ export default class UserPage extends Component {
     this.state = {
       friends: [],
       users: []
+      maps: []
     };
   }
 
@@ -30,6 +31,15 @@ export default class UserPage extends Component {
         this.setState({
           friends: res.data
         });
+      })
+      .catch(err => console.log('error:', err));
+
+    axios.get(`/maps/${this.props.currentUser.id}`)
+      .then((res) => {
+        console.log('maps response data: ', res.data);
+        this.setState({
+          maps: res.data
+        })
       })
       .catch(err => console.log('error:', err));
   }

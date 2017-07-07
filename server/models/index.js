@@ -90,6 +90,14 @@ module.exports = {
 
         });
     },
+    userGet: function(userId) {
+      return db.query(`select * from mad_map_maps where user_id = ${userId}`)
+        .then((result) => {
+          console.log('DB RESULT ', result);
+          return Promise.resolve(result);
+        })
+        .catch(err => console.log('error: ', err));
+    },
     update: function ({mapId, userId, zoom, currentCenter}) {
       return db.query(
         `UPDATE mad_map_apps

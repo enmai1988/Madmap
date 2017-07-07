@@ -18,10 +18,12 @@ const LoggedIn = (props) => (
       targetOrigin={{horizontal: 'right', vertical: 'top'}}
       anchorOrigin={{horizontal: 'right', vertical: 'top'}}
     >
+      <Link to='/'>
+        <MenuItem primaryText="Home" />
+      </Link>
       <Link to='/profile'>
         <MenuItem primaryText="Profile" />
       </Link>
-      <MenuItem primaryText="Help" />
       <Divider />
       <MenuItem primaryText="Sign out" />
     </IconMenu>
