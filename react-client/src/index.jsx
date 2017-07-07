@@ -13,7 +13,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 injectTapEventPlugin();
 
-class mapView extends React.Component {
+class MapView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,11 +21,12 @@ class mapView extends React.Component {
         lat: 37.774929,
         lng: -122.41941600000001
       },
+      currentUser: null,
       zoom: 15,
       markers: [],
       mapId: null,
       currPin: null,
-      title: "untitled"
+      title: ''
     };
     // this.MapContainer2;
     this.updateCenter = this.updateCenter.bind(this);
@@ -34,11 +35,7 @@ class mapView extends React.Component {
     this.replaceURL = (id) => props.history.push(`?=${id}`);
     this.setCurrPin = this.setCurrPin.bind(this);
     this.updateCurrPinInfo = this.updateCurrPinInfo.bind(this);
-<<<<<<< HEAD
     this.save = this.save.bind(this);
-=======
-    this.updateTitle = this.updateTitle.bind(this);
->>>>>>> fixes db index.js to work with schema
   }
 
   setCurrPin(index) {
@@ -67,6 +64,13 @@ class mapView extends React.Component {
     if (mapId) {
       this.fetch(mapId);
     }
+  }
+  
+  componentWillMount() {
+    this.setState({
+      currentUser: this.props.currentUser,
+      title: this.props.title
+    })
   }
 
   // addMarker(position) {
@@ -161,25 +165,12 @@ class mapView extends React.Component {
       .then(res => {})
       .catch(err => console.log(err));
   }
-  
-  updateTitle(e) {
-    this.setState({title: document.getElementById("map_name_input").value})
-  }
 
   render() {
     return (
       <MuiThemeProvider>
         <div>
-<<<<<<< HEAD
           <Toc save={this.save} />
-=======
-          <Header
-            save={this.save}
-            git={this.github}
-            currentUser={this.state.currentUser}
-            updateTitle={this.updateTitle}
-          />
->>>>>>> fixes db index.js to work with schema
           <MapContainer
             currentCenter={this.state.currentCenter}
             updateCenter={this.updateCenter}
@@ -223,8 +214,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: null
+      currentUser: null,
+      title: 'untitled'
     };
+    this.updateTitle = this.updateTitle.bind(this);
   }
 
   componentDidMount() {
@@ -240,6 +233,11 @@ class App extends Component {
       .catch(err => console.log('signedIn error:', err));
   }
 
+  updateTitle(e) {
+    console.log("HEY!", document.getElementById("map_name_input").value)
+    this.setState({title: document.getElementById("map_name_input").value})
+  }
+
   render () {
     return (
       <MuiThemeProvider>
@@ -249,8 +247,11 @@ class App extends Component {
               <Header
                 git={this.github}
                 currentUser={this.state.currentUser}
+                updateTitle={this.updateTitle}
               />
-              <Route exact path='/' component={mapView} />
+              <Route exact path='/' component={(props) => (
+                <MapView currentUser={this.state.currentUser} title={this.state.title}/>
+              )}/>
               <Route path='/profile' component={userView} />
             </div>
           </Router>
@@ -259,5 +260,7 @@ class App extends Component {
     );
   }
 }
-
+<Route exact path='/' render={(props) => (
+  <PageContent {...props} pass_to_page_content='hi' />
+)}/>
 render(<App />, document.getElementById('app'));

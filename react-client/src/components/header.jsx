@@ -6,9 +6,10 @@ import Login from './login.jsx';
 
 const Header = (props) => (
   <div>
+  {console.log('PROPS ',props)}
     <AppBar
       title="Mad Maps"
-      iconElementRight={props.currentUser ? <LoggedIn /> : <Login git={props.git}/>}
+      iconElementRight={props.currentUser ? <LoggedIn updateTitle={props.updateTitle}/> : <Login git={props.git}/>}
     />
   </div>
 );
