@@ -23,6 +23,11 @@ class Login extends Component {
     this.handleSignUp = this.handleSignUp.bind(this);
     this.textChangePassword = this.textChangePassword.bind(this);
     this.textChangeUsername = this.textChangeUsername.bind(this);
+
+    this.style = {
+      'marginTop': '5px',
+      'color': 'white'
+    };
   }
   textChangeUsername (e) {
     e.preventDefault();
@@ -75,7 +80,7 @@ class Login extends Component {
 
     return (
       <div>
-        <FlatButton onTouchTap={this.handleTouchTap} label="Login" />
+        <FlatButton onTouchTap={this.handleTouchTap} label="Login" style={this.style}/>
         <Popover
           open={this.state.open}
           anchorEl={this.state.anchorEl}

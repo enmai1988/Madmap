@@ -19,11 +19,11 @@ class PinInfo extends React.Component {
       timePicked: null
     };
 
-    this.handleEventNameChange.bind(this);
-    this.handleFriendSelection.bind(this);
-    this.handleChangeDatePicker.bind(this);
-    this.handleChangeTimePicker.bind(this);
-    this.handleCreateButton.bind(this);
+    this.handleEventNameChange = this.handleEventNameChange.bind(this);
+    this.handleFriendSelection = this.handleFriendSelection.bind(this);
+    this.handleChangeDatePicker = this.handleChangeDatePicker.bind(this);
+    this.handleChangeTimePicker = this.handleChangeTimePicker.bind(this);
+    this.handleCreateButton = this.handleCreateButton.bind(this);
   }
 
   handleEventNameChange(e) {

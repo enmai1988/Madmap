@@ -9,7 +9,6 @@ class Autocomplete extends React.Component {
     this.state = {
       locations: []
     };
-    this.handleMapSearchInput.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -22,12 +21,6 @@ class Autocomplete extends React.Component {
 
   componentDidMount() {
     this.renderAutoComplete();
-  }
-
-  handleMapSearchInput(value) {
-    this.setState({
-      searchInput: value
-    });
   }
 
   renderAutoComplete() {
