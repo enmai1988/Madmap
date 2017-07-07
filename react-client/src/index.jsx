@@ -8,7 +8,7 @@ import Header from './components/header.jsx';
 import MapContainer from './components/mapContainer.jsx';
 import UserPage from './components/userpage.jsx';
 import PinInfo from './components/pininfo.jsx';
-import Toc from './components/toc.jsx'; 
+import Toc from './components/toc.jsx';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 injectTapEventPlugin();
@@ -32,7 +32,7 @@ class MapView extends React.Component {
     this.updateCenter = this.updateCenter.bind(this);
     this.updateZoom = this.updateZoom.bind(this);
     this.addMarker = this.addMarker.bind(this);
-    this.replaceURL = (id) => props.history.push(`?=${id}`);
+    // this.replaceURL = (id) => props.history.push(`?=${id}`);
     this.setCurrPin = this.setCurrPin.bind(this);
     this.updateCurrPinInfo = this.updateCurrPinInfo.bind(this);
     this.save = this.save.bind(this);
@@ -65,12 +65,12 @@ class MapView extends React.Component {
       this.fetch(mapId);
     }
   }
-  
-  componentWillMount() {
+
+  componentWillReceiveProps(props) {
     this.setState({
       currentUser: this.props.currentUser,
       title: this.props.title
-    })
+    });
   }
 
   // addMarker(position) {
@@ -101,11 +101,9 @@ class MapView extends React.Component {
     let state = JSON.stringify(this.state);
     axios.post('/map', {state: state})
       .then(res => {
-        this.setState({
-          mapId: res.data
-        });
-        console.log('Data is:', res.data);
-        this.replaceURL(res.data);
+        this.setState({ mapId: res.data });
+        // console.log('Data is:', res.data);
+        // this.replaceURL(res.data);
       })
       .catch(err => console.log(err));
   }
@@ -215,7 +213,7 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: null,
-      title: 'untitled'
+      title: ''
     };
     this.updateTitle = this.updateTitle.bind(this);
   }
@@ -234,8 +232,8 @@ class App extends Component {
   }
 
   updateTitle(e) {
-    console.log("HEY!", document.getElementById("map_name_input").value)
-    this.setState({title: document.getElementById("map_name_input").value})
+    console.log('update title: ', e.target.value);
+    this.setState({title: e.target.value});
   }
 
   render () {
@@ -249,9 +247,7 @@ class App extends Component {
                 currentUser={this.state.currentUser}
                 updateTitle={this.updateTitle}
               />
-              <Route exact path='/' component={(props) => (
-                <MapView currentUser={this.state.currentUser} title={this.state.title}/>
-              )}/>
+              <MapView currentUser={this.state.currentUser} title={this.state.title}/>
               <Route path='/profile' component={userView} />
             </div>
           </Router>
@@ -260,7 +256,4 @@ class App extends Component {
     );
   }
 }
-<Route exact path='/' render={(props) => (
-  <PageContent {...props} pass_to_page_content='hi' />
-)}/>
 render(<App />, document.getElementById('app'));
