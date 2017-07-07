@@ -37,7 +37,6 @@ export default class UserPage extends Component {
 
     axios.get(`/maps/${this.props.currentUser.id}`)
       .then((res) => {
-        console.log('maps response data: ', res.data);
         this.setState({
           maps: res.data
         });
@@ -47,9 +46,9 @@ export default class UserPage extends Component {
 
   render() {
     return (
-      <div id="user_page_components">
-        <FriendsList users={this.state.friends} />
+      <div className="user_page">
         <MapsList maps={this.state.maps} />
+        <FriendsList currentUser={this.props.currentUser} getFriends={this.getFriends.bind(this)} friends={this.state.friends} users={this.state.users} />
       </div>
     );
   }
