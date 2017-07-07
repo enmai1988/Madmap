@@ -16,12 +16,12 @@
 -- \connect mad_map_db
 DROP DATABASE IF EXISTS mad_map_db;
 
-CREATE DATABASE IF NOT EXISTS mad_map_db;
+CREATE DATABASE mad_map_db;
 
-DROP TABLE if exists mad_map_users;
-DROP TABLE if exists mad_map_maps;
-DROP TABLE if exists mad_map_markers;
-DROP TABLE if exists mad_map_friends;
+DROP TABLE if exists mad_map_users CASCADE;
+DROP TABLE if exists mad_map_maps CASCADE;
+DROP TABLE if exists mad_map_markers CASCADE;
+DROP TABLE if exists mad_map_friends CASCADE;
 
 CREATE TABLE mad_map_users (
   id SERIAL PRIMARY KEY,

@@ -75,7 +75,7 @@ app.post('/map', (req, res) => {
   console.log('got to the post for map');
   var state = JSON.parse(req.body.state);
   state.currentCenter = `${state.currentCenter.lat}/${state.currentCenter.lng}`;
-  console.log(state);
+  console.log("STATE: ", state);
   var mapId = null;
   Models.maps.create(state)
     .then((result) => {

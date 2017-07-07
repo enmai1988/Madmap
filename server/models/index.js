@@ -40,14 +40,15 @@ module.exports = {
     }
   },
   maps: {
-    create: function ({userId, zoom, currentCenter}) {
-      if (!userId) {
-        userId = null;
+    create: function ({title, zoom, currentCenter, currentUser}) {
+      console.log('currentUser.id ', currentUser.id);
+      if (!currentUser.id) {
+        currentUser.id = null;
       }
-      return db.query(
+      return db.query (
         `INSERT INTO mad_map_maps
-            (zoom, current_center, user_id)
-         VALUES (${zoom}, '${currentCenter}', ${userId});
+            (name, zoom, current_center, user_id)
+         VALUES ('${title}', ${zoom}, '${currentCenter}', ${currentUser.id});
          SELECT currval('mad_map_maps_id_seq');`);
     },
     get: function (mapId) {
