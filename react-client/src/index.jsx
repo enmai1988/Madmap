@@ -64,9 +64,6 @@ class MapView extends React.Component {
     if (mapId) {
       this.fetch(mapId);
     }
-  }
-  
-  componentWillMount() {
     this.setState({
       currentUser: this.props.currentUser,
       title: this.props.title
@@ -254,5 +251,4 @@ class App extends Component {
     );
   }
 }
-
 render(<App />, document.getElementById('app'));

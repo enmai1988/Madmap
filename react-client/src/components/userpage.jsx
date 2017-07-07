@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import FriendsList from './friendsList.jsx';
+import MapsList from './mapsList.jsx';
 
 export default class UserPage extends Component {
   constructor(props) {
@@ -9,6 +10,7 @@ export default class UserPage extends Component {
     this.state = {
       friends: [],
       users: []
+      maps: []
     };
   }
 
@@ -32,11 +34,23 @@ export default class UserPage extends Component {
         });
       })
       .catch(err => console.log('error:', err));
+
+    axios.get(`/maps/${this.props.currentUser.id}`)
+      .then((res) => {
+        console.log('maps response data: ', res.data);
+        this.setState({
+          maps: res.data
+        })
+      })
+      .catch(err => console.log('error:', err));
   }
 
   render() {
     return (
-      <FriendsList currentUser={this.props.currentUser} getFriends={this.getFriends.bind(this)} friends={this.state.friends} users={this.state.users} />
+      <div id="user_page_components">
+        <FriendsList friends={this.state.friends} />
+        <MapsList maps={this.state.maps} />
+      </div>
     );
   }
 }

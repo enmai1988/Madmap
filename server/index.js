@@ -131,6 +131,18 @@ app.put('/map/:mapId', (req, res) => {
     });
 });
 
+app.get('/maps/:userId', (req, res) => {
+  // console.log('User ID from req.params ', req.params.userId)
+  Models.maps.userGet(req.params.userId)
+    .then((result) => {
+      console.log('SERVER RESULT ', result);
+      res.send(result);
+    })
+    .catch((err) => {
+      res.end();
+    });
+});
+
 app.post('/map/share', (req, res) => {
   request({
     method: 'POST',

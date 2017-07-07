@@ -11,17 +11,18 @@ const LoggedIn = (props) => (
   <div>
     <TextField id="map_name_input" onChange={props.updateTitle} hintText="Add Title"/>
     <IconMenu
-      {...props}
       iconButtonElement={
         <IconButton><MoreVertIcon /></IconButton>
       }
       targetOrigin={{horizontal: 'right', vertical: 'top'}}
       anchorOrigin={{horizontal: 'right', vertical: 'top'}}
     >
+      <Link to='/'>
+        <MenuItem primaryText="Home" />
+      </Link>
       <Link to='/profile'>
         <MenuItem primaryText="Profile" />
       </Link>
-      <MenuItem primaryText="Help" />
       <Divider />
       <MenuItem primaryText="Sign out" />
     </IconMenu>
