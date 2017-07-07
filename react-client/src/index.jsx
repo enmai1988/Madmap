@@ -204,12 +204,6 @@ class MapView extends React.Component {
   }
 }
 
-const userView = ({match}) => (
-  <MuiThemeProvider>
-    <UserPage />
-  </MuiThemeProvider>
-);
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -223,7 +217,6 @@ class App extends Component {
   componentDidMount() {
     axios.get('/user/signedIn')
       .then((res) => {
-        console.log('user: ', res);
         if (res.data.email) {
           this.setState({
             currentUser: res.data
@@ -234,8 +227,7 @@ class App extends Component {
   }
 
   updateTitle(e) {
-    console.log("HEY!", document.getElementById("map_name_input").value)
-    this.setState({title: document.getElementById("map_name_input").value})
+    this.setState({title: document.getElementById('map_name_input').value});
   }
 
   render () {
@@ -252,7 +244,9 @@ class App extends Component {
               <Route exact path='/' component={(props) => (
                 <MapView currentUser={this.state.currentUser} title={this.state.title}/>
               )}/>
-              <Route path='/profile' component={userView} />
+              <Route exact path='/profile' component={() => (
+                <UserPage currentUser={this.state.currentUser} />
+              )}/>
             </div>
           </Router>
         </div>
@@ -260,7 +254,5 @@ class App extends Component {
     );
   }
 }
-<Route exact path='/' render={(props) => (
-  <PageContent {...props} pass_to_page_content='hi' />
-)}/>
+
 render(<App />, document.getElementById('app'));
