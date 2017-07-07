@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 const LoggedIn = (props) => (
   <div>
-    <TextField id="map_name_input" onChange={props.updateTitle} hintText="Add Title"/>
+    {/* <TextField type="text" onChange={props.updateTitle} hintText="Add Title"/> */}
     <IconMenu
       iconButtonElement={
         <IconButton><MoreVertIcon /></IconButton>
@@ -28,8 +28,6 @@ const LoggedIn = (props) => (
     </IconMenu>
   </div>
 );
-
-
 
 LoggedIn.muiName = 'IconMenu';
 

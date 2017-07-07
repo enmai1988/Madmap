@@ -8,7 +8,7 @@ import Header from './components/header.jsx';
 import MapContainer from './components/mapContainer.jsx';
 import UserPage from './components/userpage.jsx';
 import PinInfo from './components/pininfo.jsx';
-import Toc from './components/toc.jsx'; 
+import Toc from './components/toc.jsx';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 injectTapEventPlugin();
@@ -32,7 +32,7 @@ class MapView extends React.Component {
     this.updateCenter = this.updateCenter.bind(this);
     this.updateZoom = this.updateZoom.bind(this);
     this.addMarker = this.addMarker.bind(this);
-    this.replaceURL = (id) => props.history.push(`?=${id}`);
+    // this.replaceURL = (id) => props.history.push(`?=${id}`);
     this.setCurrPin = this.setCurrPin.bind(this);
     this.updateCurrPinInfo = this.updateCurrPinInfo.bind(this);
     this.save = this.save.bind(this);
@@ -64,10 +64,13 @@ class MapView extends React.Component {
     if (mapId) {
       this.fetch(mapId);
     }
+  }
+
+  componentWillReceiveProps(props) {
     this.setState({
       currentUser: this.props.currentUser,
       title: this.props.title
-    })
+    });
   }
 
   // addMarker(position) {
@@ -98,11 +101,9 @@ class MapView extends React.Component {
     let state = JSON.stringify(this.state);
     axios.post('/map', {state: state})
       .then(res => {
-        this.setState({
-          mapId: res.data
-        });
-        console.log('Data is:', res.data);
-        this.replaceURL(res.data);
+        this.setState({ mapId: res.data });
+        // console.log('Data is:', res.data);
+        // this.replaceURL(res.data);
       })
       .catch(err => console.log(err));
   }
@@ -205,10 +206,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: null,
-      title: 'untitled'
+      currentUser: null
+      // title: ''
     };
-    this.updateTitle = this.updateTitle.bind(this);
+    // this.updateTitle = this.updateTitle.bind(this);
   }
 
   componentDidMount() {
@@ -223,9 +224,10 @@ class App extends Component {
       .catch(err => console.log('signedIn error:', err));
   }
 
-  updateTitle(e) {
-    this.setState({title: document.getElementById('map_name_input').value});
-  }
+  // updateTitle(e) {
+  //   console.log('update title: ', e.target.value);
+  //   this.setState({title: e.target.value});
+  // }
 
   render () {
     return (
@@ -234,13 +236,13 @@ class App extends Component {
           <Router>
             <div>
               <Header
-                git={this.github}
+                // git={this.github}
                 currentUser={this.state.currentUser}
-                updateTitle={this.updateTitle}
+                // updateTitle={this.updateTitle}
               />
-              <Route exact path='/' component={(props) => (
-                <MapView currentUser={this.state.currentUser} title={this.state.title}/>
-              )}/>
+              <Route exact path='/' component={() => (
+                <MapView currentUser={this.state.currentUser}/>
+              )} />
               <Route exact path='/profile' component={() => (
                 <UserPage currentUser={this.state.currentUser} />
               )}/>

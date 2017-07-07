@@ -55,7 +55,7 @@ export default class FriendsList extends Component {
             onUpdateInput={this.setSearchText.bind(this)}
           />
           <RaisedButton label="Primary" primary={true} onClick={this.addFriend.bind(this)} />
-          {this.props.friends.map((friend, index) => {
+          {this.props.users.map((friend, index) => {
             return <ListItem
               leftAvatar={<Avatar src={friend.avatar} />}
               primaryText={`${friend.firstname} ${friend.lastname}`}
