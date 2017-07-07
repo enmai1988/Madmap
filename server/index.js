@@ -52,6 +52,15 @@ app.get('/user', (req, res) => {
     });
 });
 
+app.get('/friend/:id', (req, res) => {
+  Models.friends.get(req.params.id).then(list => {
+    if (!list) { throw list; }
+    res.send(list);
+  }).catch(() => {
+    res.sendStatus(404);
+  });
+});
+
 app.post('/friend/:id', (req, res) => {
   Models.friends.addFriend(req.body.userId, req.body.friendId)
     .then(result => {
