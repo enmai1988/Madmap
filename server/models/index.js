@@ -127,7 +127,7 @@ module.exports = {
   friends: {
     get: function(userId) {
       return db.query(`
-        select id, email, firstName, lastName
+        select mad_map_users.id, mad_map_users.email, mad_map_users.firstName, mad_map_users.lastName
         from mad_map_users inner join
         (select * from mad_map_friends where mad_map_friends.user_id = ${userId}) as friends
         on mad_map_users.id = friends.friends_id;

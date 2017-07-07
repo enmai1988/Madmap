@@ -204,12 +204,6 @@ class MapView extends React.Component {
   }
 }
 
-const userView = ({match}) => (
-  <MuiThemeProvider>
-    <UserPage />
-  </MuiThemeProvider>
-);
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -252,7 +246,9 @@ class App extends Component {
               <Route exact path='/' component={(props) => (
                 <MapView currentUser={this.state.currentUser} title={this.state.title}/>
               )}/>
-              <Route path='/profile' component={userView} />
+              <Route exact path='/profile' component={() => (
+                <UserPage currentUser={this.state.currentUser} />
+              )}/>
             </div>
           </Router>
         </div>

@@ -19,8 +19,8 @@ export default class FriendsList extends Component {
           {this.props.friends.map((friend, index) => {
             return <ListItem
               leftAvatar={<Avatar src={friend.avatar} />}
-              primaryText={friend.emailAddress}
-              key={'A' + index} />;
+              primaryText={`${friend.firstname} ${friend.lastname}`}
+              key={index} />;
           })}
         </List>
       </div>

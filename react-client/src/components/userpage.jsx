@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import FriendsList from './friendsList.jsx';
 
 export default class UserPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      friends: [
-        {
-          id: 1,
-          emailAddress: 'david@elovate.io',
-          avatar: 'http://placehold.it/50x50'
-        },
-        {
-          id: 2, 
-          emailAddress: 'david-1@elovate.io',
-          avatar: 'http://placehold.it/50x50'
-        }
-      ]
+      friends: []
     };
+  }
+
+  componentDidMount() {
+    axios.get(`/friend/${this.props.currentUser.id}`)
+      .then((res) => {
+        this.setState({
+          friends: res.data
+        });
+      })
+      .catch(err => console.log('error:', err));
   }
 
   render() {
