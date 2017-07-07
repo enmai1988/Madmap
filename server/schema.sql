@@ -28,8 +28,7 @@ CREATE TABLE mad_map_users (
   email text unique,
   firstName text,
   lastName text,
-  password text,
-  salt text
+  avatar text
 );
 
 CREATE TABLE mad_map_maps (
@@ -57,23 +56,23 @@ CREATE TABLE mad_map_friends (
   friends_id int REFERENCES mad_map_users (id)
 );
 
-INSERT INTO mad_map_users (email, firstName, lastName) VALUES ('enmai1988@gmail.com', 'Eric', 'Mai');
-INSERT INTO mad_map_users (email, firstName, lastName) VALUES ('david@davidvassett.com.au', 'David', 'Vassett');
-INSERT INTO mad_map_users (email, firstName, lastName) VALUES ('david.gould112@gmail.com', 'David', 'Gould');
-INSERT INTO mad_map_users (email, firstName, lastName) VALUES ('eviankwan@gmail.com', 'Evian', 'Kwan');
-
-INSERT INTO mad_map_friends (user_id, friends_id) VALUES (1, 2);
-INSERT INTO mad_map_friends (user_id, friends_id) VALUES (1, 3);
-INSERT INTO mad_map_friends (user_id, friends_id) VALUES (1, 4);
-INSERT INTO mad_map_friends (user_id, friends_id) VALUES (2, 1);
-INSERT INTO mad_map_friends (user_id, friends_id) VALUES (2, 3);
-INSERT INTO mad_map_friends (user_id, friends_id) VALUES (2, 4);
-INSERT INTO mad_map_friends (user_id, friends_id) VALUES (3, 1);
-INSERT INTO mad_map_friends (user_id, friends_id) VALUES (3, 2);
-INSERT INTO mad_map_friends (user_id, friends_id) VALUES (3, 4);
-INSERT INTO mad_map_friends (user_id, friends_id) VALUES (4, 1);
-INSERT INTO mad_map_friends (user_id, friends_id) VALUES (4, 2);
-INSERT INTO mad_map_friends (user_id, friends_id) VALUES (4, 3);
+-- INSERT INTO mad_map_users (email, firstName, lastName) VALUES ('enmai1988@gmail.com', 'Eric', 'Mai');
+-- INSERT INTO mad_map_users (email, firstName, lastName) VALUES ('david@davidvassett.com.au', 'David', 'Vassett');
+-- INSERT INTO mad_map_users (email, firstName, lastName) VALUES ('david.gould112@gmail.com', 'David', 'Gould');
+-- INSERT INTO mad_map_users (email, firstName, lastName) VALUES ('eviankwan@gmail.com', 'Evian', 'Kwan');
+--
+-- INSERT INTO mad_map_friends (user_id, friends_id) VALUES (1, 2);
+-- INSERT INTO mad_map_friends (user_id, friends_id) VALUES (1, 3);
+-- INSERT INTO mad_map_friends (user_id, friends_id) VALUES (1, 4);
+-- INSERT INTO mad_map_friends (user_id, friends_id) VALUES (2, 1);
+-- INSERT INTO mad_map_friends (user_id, friends_id) VALUES (2, 3);
+-- INSERT INTO mad_map_friends (user_id, friends_id) VALUES (2, 4);
+-- INSERT INTO mad_map_friends (user_id, friends_id) VALUES (3, 1);
+-- INSERT INTO mad_map_friends (user_id, friends_id) VALUES (3, 2);
+-- INSERT INTO mad_map_friends (user_id, friends_id) VALUES (3, 4);
+-- INSERT INTO mad_map_friends (user_id, friends_id) VALUES (4, 1);
+-- INSERT INTO mad_map_friends (user_id, friends_id) VALUES (4, 2);
+-- INSERT INTO mad_map_friends (user_id, friends_id) VALUES (4, 3);
 
 
 
