@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 const LoggedIn = (props) => (
   <div>
-    <TextField type="text" onChange={props.updateTitle} hintText="Add Title"/>
+    {/* <TextField type="text" onChange={props.updateTitle} hintText="Add Title"/> */}
     <IconMenu
       iconButtonElement={
         <IconButton><MoreVertIcon /></IconButton>

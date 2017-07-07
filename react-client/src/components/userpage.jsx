@@ -9,7 +9,7 @@ export default class UserPage extends Component {
     console.log(props);
     this.state = {
       friends: [],
-      users: []
+      users: [],
       maps: []
     };
   }
@@ -40,7 +40,7 @@ export default class UserPage extends Component {
         console.log('maps response data: ', res.data);
         this.setState({
           maps: res.data
-        })
+        });
       })
       .catch(err => console.log('error:', err));
   }
@@ -48,7 +48,7 @@ export default class UserPage extends Component {
   render() {
     return (
       <div id="user_page_components">
-        <FriendsList friends={this.state.friends} />
+        <FriendsList users={this.state.friends} />
         <MapsList maps={this.state.maps} />
       </div>
     );

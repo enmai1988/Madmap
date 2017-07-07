@@ -206,10 +206,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: null,
-      title: ''
+      currentUser: null
+      // title: ''
     };
-    this.updateTitle = this.updateTitle.bind(this);
+    // this.updateTitle = this.updateTitle.bind(this);
   }
 
   componentDidMount() {
@@ -224,10 +224,10 @@ class App extends Component {
       .catch(err => console.log('signedIn error:', err));
   }
 
-  updateTitle(e) {
-    console.log('update title: ', e.target.value);
-    this.setState({title: e.target.value});
-  }
+  // updateTitle(e) {
+  //   console.log('update title: ', e.target.value);
+  //   this.setState({title: e.target.value});
+  // }
 
   render () {
     return (
@@ -236,11 +236,13 @@ class App extends Component {
           <Router>
             <div>
               <Header
-                git={this.github}
+                // git={this.github}
                 currentUser={this.state.currentUser}
-                updateTitle={this.updateTitle}
+                // updateTitle={this.updateTitle}
               />
-              <MapView currentUser={this.state.currentUser} title={this.state.title}/>
+              <Route exact path='/' component={() => (
+                <MapView currentUser={this.state.currentUser}/>
+              )} />
               <Route exact path='/profile' component={() => (
                 <UserPage currentUser={this.state.currentUser} />
               )}/>
