@@ -12,7 +12,7 @@ const Header = (props) => (
     <AppBar
       title="Mad Maps"
       iconStyleLeft={style.header.iconStyleLeft}
-      iconElementRight={props.currentUser ? <LoggedIn /> : <Login />}
+      iconElementRight={props.currentUser ? <LoggedIn handleLogout={props.handleLogout}/> : <Login />}
     />
   </div>
 );
