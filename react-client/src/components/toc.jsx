@@ -10,13 +10,20 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 //import Divider from 'material-ui/Divider';
 import {grey50} from 'material-ui/styles/colors';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import style from './style.js';
 
 class Toc extends Component {
   constructor(props) {
     super(props);
-    this.state = { open: false };
+    this.state = {
+      open: false,
+      dialogValue: ''
+    };
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleOpen() {
@@ -25,6 +32,10 @@ class Toc extends Component {
 
   handleClose() {
     this.setState({ open: false });
+  }
+
+  handleChange(e) {
+    this.setState({ dialogValue: e.target.value });
   }
 
   render() {
@@ -39,15 +50,15 @@ class Toc extends Component {
         primary={true}
         keyboardFocused={true}
         onTouchTap={() => {
-          this.props.save();
+          this.props.save(this.state.dialogValue);
           this.handleClose();
         }}
       />
     ];
 
     return (
-      <div className="icon">
-        <IconMenu
+      <div>
+        {/* <IconMenu
           iconButtonElement={
             <IconButton><TocIcon color={grey50} /></IconButton>
           }
@@ -57,10 +68,14 @@ class Toc extends Component {
           <MenuItem onTouchTap={this.handleOpen}>
             <SaveIcon /> &nbsp;Save
           </MenuItem>
-          <MenuItem>
-            <CreateIcon /> &nbsp;New
-          </MenuItem>
-        </IconMenu>
+        </IconMenu> */}
+        <FloatingActionButton
+          mini={true}
+          style={style.saveMapIcon}
+          onTouchTap={this.handleOpen}
+        >
+          <ContentAdd />
+        </FloatingActionButton>
         <Dialog
           title="Map Title"
           actions={actions}
@@ -70,6 +85,8 @@ class Toc extends Component {
         >
           <TextField
             floatingLabelText="Enter map title"
+            value={this.state.dialogValue}
+            onChange={this.handleChange}
           /><br />
         </Dialog>
       </div>
