@@ -16,12 +16,23 @@ export default class MapsList extends Component {
   }
 
   shareMap(emailAddress, mapId) {
+    const protocol = window.location.protocol;
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    let mapUrl = null;
+
+    if (hostname === '127.0.0.1' || hostname === 'localhost') {
+      mapUrl = `${protocol}//${hostname}:${port}?=${mapId}`;
+    } else {
+      mapUrl = `${protocol}//${hostname}?=${mapId}`;
+    }
+
     axios({
       method: 'post',
       url: '/map/share',
       data: {
         emailAddress: emailAddress,
-        mapUrl: 'http://127.0.0.1:3000' + '?=' + mapId
+        mapUrl: mapUrl
       }
     })
       .then(res => {})
