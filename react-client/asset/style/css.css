@@ -6,6 +6,17 @@ body {
   margin: 0;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: rgba(0, 0, 0, 0.75);
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+}
+
 #event_text_field {
   margin-top: 500px;
 }
@@ -67,4 +78,23 @@ body {
   background-color: rgb(0, 188, 212);
   left: 8px;
 }
+
+.user_page {
+  padding: 25px;
+}
+
+.friend_component {
+  float: left;
+  padding: 0 10px 0 0;
+  width: 50%;
+}
+
+.friend_add {
+
+}
+
+.friend_list {
+  border: 1px solid #ccc;
+}
+
 

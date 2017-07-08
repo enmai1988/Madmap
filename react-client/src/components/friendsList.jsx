@@ -43,24 +43,29 @@ export default class FriendsList extends Component {
 
   render() {
     return (
-      <div className="friend_list">
+      <div className="friend_component">
         <List>
-          <Subheader>My Friends</Subheader>
-          <AutoComplete
-            floatingLabelText="Add friend"
-            filter={AutoComplete.fuzzyFilter}
-            dataSource={this.props.users}
-            dataSourceConfig={{value: 'id', text: 'email'}}
-            maxSearchResults={5}
-            onUpdateInput={this.setSearchText.bind(this)}
-          />
-          <RaisedButton label="Primary" primary={true} onClick={this.addFriend.bind(this)} />
-          {this.props.users.map((friend, index) => {
-            return <ListItem
-              leftAvatar={<Avatar src={friend.avatar} />}
-              primaryText={`${friend.firstname} ${friend.lastname}`}
-              key={index} />;
-          })}
+          <h3>My Friends</h3>
+          <div className="friend_add">
+            <AutoComplete
+              floatingLabelText="Add friend"
+              filter={AutoComplete.fuzzyFilter}
+              dataSource={this.props.users}
+              dataSourceConfig={{value: 'id', text: 'email'}}
+              maxSearchResults={5}
+              onUpdateInput={this.setSearchText.bind(this)}
+              style={{width: '75%'}}
+            />
+            <RaisedButton label="Add" primary={true} onClick={this.addFriend.bind(this)} style={{width: '25%'}} />
+          </div>
+          <div className="friend_list">
+            {this.props.friends.map((friend, index) => {
+              return <ListItem
+                leftAvatar={<Avatar src={friend.avatar} />}
+                primaryText={`${friend.firstname} ${friend.lastname}`}
+                key={index} />;
+            })}
+          </div>
         </List>
       </div>
     );
