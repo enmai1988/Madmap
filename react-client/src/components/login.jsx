@@ -88,12 +88,12 @@ class Login extends Component {
           targetOrigin={{'horizontal': 'right', 'vertical': 'top'}}
           onRequestClose={this.handleRequestClose}
         >
-          <Menu>
+          <Menu menuStyle={{width: 'auto'}} width='auto'>
             <MenuItem>
-              <TextField hintText="Username" onBlur={this.textChangeUsername}/>
+              <TextField fullWidth={true} hintText="Username" onBlur={this.textChangeUsername}/>
             </MenuItem>
             <MenuItem>
-              <TextField hintText="Password" type="password" onBlur={this.textChangePassword}/>
+              <TextField fullWidth={true} hintText="Password" type="password" onBlur={this.textChangePassword}/>
             </MenuItem>
             <MenuItem>
               <FlatButton label="Login" primary={true} onTouchTap={this.handleLogin}/>
@@ -102,7 +102,7 @@ class Login extends Component {
                 href="/auth/google"
                 color={lightBlack}
                 icon={googleSigninIcon}
-                style={{margin: 12}}
+                style={{padding: '0 10px'}}
               />
             </MenuItem>
           </Menu>

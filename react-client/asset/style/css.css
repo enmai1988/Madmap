@@ -43,7 +43,9 @@ h6 {
 #google_signin img {
   height: 20px;
   width: 20px;
-  margin: 5px;
+  margin: 0 5px 0 0;
+  position: relative;
+  top: 4px;
 }
 
 #search_area {
