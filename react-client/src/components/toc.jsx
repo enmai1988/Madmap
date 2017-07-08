@@ -48,7 +48,7 @@ class Toc extends Component {
       <FlatButton
         label="Submit"
         primary={true}
-        keyboardFocused={true}
+        keyboardFocused={false}
         onTouchTap={() => {
           this.props.save(this.state.dialogValue);
           this.handleClose();
@@ -58,17 +58,6 @@ class Toc extends Component {
 
     return (
       <div>
-        {/* <IconMenu
-          iconButtonElement={
-            <IconButton><TocIcon color={grey50} /></IconButton>
-          }
-          anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-          targetOrigin={{horizontal: 'left', vertical: 'top'}}
-        >
-          <MenuItem onTouchTap={this.handleOpen}>
-            <SaveIcon /> &nbsp;Save
-          </MenuItem>
-        </IconMenu> */}
         <FloatingActionButton
           mini={true}
           style={style.saveMapIcon}

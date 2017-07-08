@@ -24,7 +24,10 @@ const LoggedIn = (props) => (
         <MenuItem primaryText="Profile" />
       </Link>
       <Divider />
-      <MenuItem primaryText="Sign out" />
+      <MenuItem
+        primaryText="Sign out"
+        onTouchTap={props.handleLogout}
+      />
     </IconMenu>
   </div>
 );

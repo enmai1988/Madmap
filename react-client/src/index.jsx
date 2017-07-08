@@ -176,7 +176,7 @@ class App extends Component {
       currentUser: null
       // title: ''
     };
-    // this.updateTitle = this.updateTitle.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   componentWillMount() {
@@ -191,6 +191,12 @@ class App extends Component {
       .catch(err => console.log('signedIn error:', err));
   }
 
+  handleLogout() {
+    axios.get('/logout').then(res => {
+      this.setState({ currentUser: null });
+    });
+  }
+
   // updateTitle(e) {
   //   console.log('update title: ', e.target.value);
   //   this.setState({title: e.target.value});
@@ -203,9 +209,8 @@ class App extends Component {
           <Router history={history}>
             <div>
               <Header
-                // git={this.github}
+                handleLogout={this.handleLogout}
                 currentUser={this.state.currentUser}
-                // updateTitle={this.updateTitle}
               />
               <Route exact path='/' component={() => (
                 <MapView currentUser={this.state.currentUser}/>
