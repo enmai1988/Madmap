@@ -16,6 +16,7 @@ const LoggedIn = (props) => (
       }
       targetOrigin={{horizontal: 'right', vertical: 'top'}}
       anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+      iconStyle={{color: 'white'}}
     >
       <Link to='/'>
         <MenuItem primaryText="Home" />
