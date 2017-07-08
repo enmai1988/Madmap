@@ -57,8 +57,7 @@ export default class MapsList extends Component {
                     })}
                   </IconMenu>
                 }
-                primaryText={`${map.name}`}
-                onClick={() => this.renderMap(map.id)}
+                primaryText={<div onClick={() => this.renderMap(map.id)}> {map.name} </div>}
                 key={index} />;
             })}
           </div>
