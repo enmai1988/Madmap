@@ -21,12 +21,10 @@ class MapView extends React.Component {
         lat: 37.774929,
         lng: -122.41941600000001
       },
-      currentUser: null,
       zoom: 15,
       markers: [],
       mapId: null,
-      currPin: null,
-      title: ''
+      currPin: null
     };
     // this.MapContainer2;
     this.updateCenter = this.updateCenter.bind(this);
@@ -66,13 +64,6 @@ class MapView extends React.Component {
     }
   }
 
-  componentWillReceiveProps(props) {
-    this.setState({
-      currentUser: this.props.currentUser,
-      title: this.props.title
-    });
-  }
-
   // addMarker(position) {
   //   let markers = this.state.markers;
   //   markers.push({
@@ -97,9 +88,11 @@ class MapView extends React.Component {
       .catch(err => console.log('ERROR:', err));
   }
 
-  save() {
-    let state = JSON.stringify(this.state);
-    axios.post('/map', {state: state})
+  save(mapTitle) {
+    let state = this.state;
+    state.title = mapTitle;
+    state.currentUser = this.props.currentUser;
+    axios.post('/map', {state: JSON.stringify(state)})
       .then(res => {
         this.setState({ mapId: res.data });
         // console.log('Data is:', res.data);
@@ -168,19 +161,6 @@ class MapView extends React.Component {
           {this.state.currPin !== null &&
             <PinInfo text={this.state.markers[this.state.currPin].info}
               updateCurrPinInfo={this.updateCurrPinInfo}
-              friends={[{
-                id: 1,
-                firstName: 'David',
-                lastName: 'Vasset',
-                username: 'davidvasset'
-              },
-              {
-                id: 2,
-                firstName: 'David',
-                lastName: 'Gould',
-                username: 'david.gould112'
-              }
-              ]}
             />
           }
         </div>
@@ -199,7 +179,7 @@ class App extends Component {
     // this.updateTitle = this.updateTitle.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     axios.get('/user/signedIn')
       .then((res) => {
         if (res.data.email) {
@@ -220,7 +200,7 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div>
-          <Router>
+          <Router history={history}>
             <div>
               <Header
                 // git={this.github}

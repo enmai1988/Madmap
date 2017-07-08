@@ -47,7 +47,7 @@ h6 {
 }
 
 #search_area {
-  position: relative;;
+  position: relative;
   z-index: 100;
 }
 
@@ -71,13 +71,13 @@ h6 {
   clear: both;
 }
 
-.icon {
+/*.icon {
   position: absolute;
   top: 8px;
   z-index: 1400;
   background-color: rgb(0, 188, 212);
   left: 8px;
-}
+}*/
 
 .user_page {
   padding: 25px;
@@ -96,5 +96,3 @@ h6 {
 .friend_list {
   border: 1px solid #ccc;
 }
-
-

@@ -4,6 +4,7 @@ import PinCreator from './pincreator.jsx';
 import FloatingButton from 'material-ui/FloatingActionButton';
 import {transparent, cyan500} from 'material-ui/styles/colors';
 import PinDrop from 'material-ui/svg-icons/maps/pin-drop';
+import style from './style.js';
 
 export default class Drawers extends Component {
   constructor(props) {
@@ -13,10 +14,6 @@ export default class Drawers extends Component {
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.styles = {
-      button: { position: 'fixed', bottom: '32px', left: '10px' },
-      drawer: { backgroundColor: '#fff', top: '173px', height: '240px', width: '91px' }
-    };
   }
 
   toggleDrawer() {
@@ -36,7 +33,7 @@ export default class Drawers extends Component {
       <div id="pin_drawer">
         <FloatingButton
           onTouchTap={this.toggleDrawer}
-          style={this.styles.button}
+          style={style.pinDrawer.button}
           mini={true}
         >
           <PinDrop />
@@ -44,7 +41,7 @@ export default class Drawers extends Component {
         <Drawer
           open={this.state.isOpen}
           onRequestClose={this.handleClose}
-          containerStyle={this.styles.drawer}
+          containerStyle={style.pinDrawer.drawer}
         >
           <PinCreator
             onPinClick={this.props.onPinClick}
