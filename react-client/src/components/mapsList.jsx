@@ -11,6 +11,8 @@ export default class MapsList extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+
+    this.renderMap = this.renderMap.bind(this);
   }
 
   shareMap(emailAddress, mapId) {
@@ -24,6 +26,16 @@ export default class MapsList extends Component {
     })
       .then(res => {})
       .catch(err => console.log(err));
+  }
+
+  renderMap(mapId) {
+    var mapUrl;
+    if (window.location.hostname === '127.0.0.1') {
+      mapUrl = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/?=' + mapId;
+    } else {
+      mapUrl = window.location.protocol + '//' + window.location.hostname + '/?=' + mapId;
+    }
+    window.location.assign(mapUrl);
   }
 
   render() {
@@ -46,6 +58,7 @@ export default class MapsList extends Component {
                   </IconMenu>
                 }
                 primaryText={`${map.name}`}
+                onClick={() => this.renderMap(map.id)}
                 key={index} />;
             })}
           </div>
