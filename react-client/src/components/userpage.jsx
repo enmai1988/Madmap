@@ -47,7 +47,7 @@ export default class UserPage extends Component {
   render() {
     return (
       <div className="user_page">
-        <MapsList maps={this.state.maps} />
+        <MapsList friends={this.state.friends} maps={this.state.maps} />
         <FriendsList currentUser={this.props.currentUser} getFriends={this.getFriends.bind(this)} friends={this.state.friends} users={this.state.users} />
       </div>
     );
