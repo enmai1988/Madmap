@@ -6,6 +6,7 @@ import TimePicker from 'material-ui/TimePicker';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import style from './style.js';
 
 class PinInfo extends React.Component {
 
@@ -14,9 +15,7 @@ class PinInfo extends React.Component {
     // this.textChange = (e) => (this.props.updateCurrPinInfo(e.target.value));
     this.state = {
       friends: [],
-      textFieldValue: '',
-      datePicked: null,
-      timePicked: null
+      textFieldValue: ''
     };
 
     this.handleEventNameChange = this.handleEventNameChange.bind(this);
@@ -63,35 +62,14 @@ class PinInfo extends React.Component {
     const raisedButtonStyle = { margin: 8, height: '22px' };
 
     return (
-      <div id="event_text_field">
+      <div id="event_text_field" style={style.pinTextField}>
         <TextField
           floatingLabelText="Event name"
           value={this.state.textFieldValue}
+          fullWidth={false}
+          style={style.pinInfo}
           onChange={this.handleEventNameChange}
         />
-        <SelectField
-          multiple={true}
-          hintText="Invite friends"
-          value={this.state.friends}
-          onChange={(e, index, friends) => this.handleFriendSelection(e, index, friends)}
-        >
-          {this.menuItems(this.state.friends)}
-        </SelectField>
-        <DatePicker
-          hintText="Select a date"
-          container="inline"
-          autoOk={true}
-          value={this.state.datePicked}
-          onChange={(e, date) => this.handleChangeDatePicker(e, date)}
-        />
-        <TimePicker
-          format="ampm"
-          hintText="Pick a time"
-          autoOk={true}
-          value={this.state.timePicked}
-          onChange={(e, time) => this.handleChangeTimePicker(e, time)}
-        />
-        <RaisedButton label="Create" style={raisedButtonStyle} onClick={this.handleCreateButton}/>
       </div>
     );
   }

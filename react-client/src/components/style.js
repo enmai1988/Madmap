@@ -11,6 +11,21 @@ const style = {
   },
   header: {
     iconStyleLeft: { display: 'none' }
+  },
+  pinTextField: {
+    height: '80px',
+    backgroundColor: 'white',
+    borderRadius: '5px',
+    left: '50%',
+    marginLeft: '-250px',
+    position: 'absolute',
+    bottom: '20px',
+    width: '500px',
+    zIndex: 2000,
+    padding: '0 10px 10px 10px'
+  },
+  pinInfo: {
+    width: '100%'
   }
 };
 
