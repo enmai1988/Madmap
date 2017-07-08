@@ -28,25 +28,27 @@ export default class MapsList extends Component {
 
   render() {
     return (
-      <div className="maps_list">
+      <div className="map_component">
         <List>
-          <Subheader>My Maps</Subheader>
-          {this.props.maps.map((map, index) => {
-            return <ListItem
-              rightAvatar={
-                <IconMenu
-                  iconButtonElement={<IconButton><SocialShare /></IconButton>}
-                  anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-                  targetOrigin={{horizontal: 'left', vertical: 'top'}}
-                >
-                  {this.props.friends.map((friend, index) => {
-                    return <MenuItem primaryText={friend.email} key={index} onClick={() => this.shareMap(friend.email, map.id)} />;
-                  })}
-                </IconMenu>
-              }
-              primaryText={`${map.name}`}
-              key={index} />;
-          })}
+          <h3>My Maps</h3>
+          <div className="map_list">
+            {this.props.maps.map((map, index) => {
+              return <ListItem
+                rightAvatar={
+                  <IconMenu
+                    iconButtonElement={<IconButton><SocialShare /></IconButton>}
+                    anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+                    targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                  >
+                    {this.props.friends.map((friend, index) => {
+                      return <MenuItem primaryText={friend.email} key={index} onClick={() => this.shareMap(friend.email, map.id)} />;
+                    })}
+                  </IconMenu>
+                }
+                primaryText={`${map.name}`}
+                key={index} />;
+            })}
+          </div>
         </List>
       </div>
     );
