@@ -61,11 +61,11 @@ export class MapContainer extends React.Component {
 
   handleClick(mapProps, map, clickEvent) {
     if (this.state.markerOn) {
-      var marker = new google.maps.Marker({
+      var marker = {
         position: clickEvent.latLng,
-        info: 'this.props.markerInfo()'
-        // icon: this.state.currentIcon,
-      });
+        info: 'this is my info',
+        icon: {}
+      };
       this.props.addMarker(marker);
       this.setState({ markerOn: false });
     }

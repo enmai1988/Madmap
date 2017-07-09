@@ -54,7 +54,6 @@ class MapView extends React.Component {
   }
 
   addMarker(marker) {
-    console.log('Currently the marker list is:', this.state.markers);
     var markers = this.state.markers;
     markers.push(marker);
     this.setState({ markers: markers });
@@ -64,6 +63,7 @@ class MapView extends React.Component {
     let state = this.state;
     state.title = mapTitle;
     state.currentUser = this.props.currentUser;
+    console.log('save map: ', state);
     axios.post('/map', { state: _.omit(state, ['showInfoWindow', 'activeMarker', 'selectedPlace']) })
       .then(res => {
         this.setState({ mapId: res.data });
