@@ -88,7 +88,7 @@ class Login extends Component {
           targetOrigin={{'horizontal': 'right', 'vertical': 'top'}}
           onRequestClose={this.handleRequestClose}
         >
-          <Menu menuStyle={{width: 'auto'}} width='auto'>
+          <Menu style={{width: 'auto'}} width='auto'>
             <MenuItem>
               <TextField fullWidth={true} hintText="Username" onBlur={this.textChangeUsername}/>
             </MenuItem>

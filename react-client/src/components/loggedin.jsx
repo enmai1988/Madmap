@@ -6,6 +6,7 @@ import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Divider from 'material-ui/Divider';
 import { Link } from 'react-router-dom';
+import style from './style.js';
 
 const LoggedIn = (props) => (
   <div>
@@ -19,10 +20,10 @@ const LoggedIn = (props) => (
       iconStyle={{color: 'white'}}
     >
       <Link to='/'>
-        <MenuItem primaryText="Home" />
+        <MenuItem primaryText="Home"/>
       </Link>
       <Link to='/profile'>
-        <MenuItem primaryText="Profile" />
+        <MenuItem primaryText="Profile"/>
       </Link>
       <Divider />
       <MenuItem

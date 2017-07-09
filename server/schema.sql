@@ -44,7 +44,9 @@ CREATE TABLE mad_map_markers (
   lat double precision,
   lng double precision,
   icon_path text,
-  info text,
+  eventName text,
+  eventDate text,
+  eventTime text,
   fill_color text,
   stroke_color text,
   map_id int REFERENCES mad_map_maps (id)

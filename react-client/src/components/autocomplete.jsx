@@ -30,10 +30,10 @@ class Autocomplete extends React.Component {
 
     const autocompleteRef = this.refs.autocomplete;
     const autocompleteNode = ReactDOM.findDOMNode(autocompleteRef);
-    var autocomplete = new google.maps.places.Autocomplete(autocompleteNode);
-    autocomplete.bindTo('bounds', map);
+    this.autocomplete = new google.maps.places.Autocomplete(autocompleteNode);
+    this.autocomplete.bindTo('bounds', map);
 
-    autocomplete.addListener('place_changed', () => {
+    this.autocomplete.addListener('place_changed', () => {
       const place = autocomplete.getPlace();
       this.props.searchPlace(place, map);
     });
