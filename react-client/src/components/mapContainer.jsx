@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Map from 'google-maps-react';
 import AutocompleteInput from './autocomplete.jsx';
-import {GoogleApiWrapper, Marker} from 'google-maps-react';
+import {GoogleApiWrapper, Marker, InfoWindow} from 'google-maps-react';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import PinCreator from './pincreator.jsx';
 import Popover from 'material-ui/Popover';
@@ -24,7 +24,8 @@ export class MapContainer extends React.Component {
       pin: false,
       centerAroundCurrentLocation: true,
       currentPlace: {},
-      markerOn: false
+      markerOn: false,
+      content: ''
     };
     this.styles = {
       refresh: {
@@ -54,22 +55,19 @@ export class MapContainer extends React.Component {
     this.props.updateZoom(window.map.getZoom());
   }
 
-  handleMarkerClicker(index) {
-    this.props.setCurrPin(index);
-  }
+  // handleMarkerClicker(index) {
+  //   this.props.setCurrPin(index);
+  // }
 
   handleClick(mapProps, map, clickEvent) {
     if (this.state.markerOn) {
-      console.log('The lat long is:', clickEvent.latLng);
-      var marker = {
+      var marker = new google.maps.Marker({
         position: clickEvent.latLng,
-        icon: this.state.currentIcon,
-        info: ''
-      };
-      this.props.addMarker(marker);
-      this.setState({
-        markerOn: false
+        info: 'this.props.markerInfo()'
+        // icon: this.state.currentIcon,
       });
+      this.props.addMarker(marker);
+      this.setState({ markerOn: false });
     }
   }
 
@@ -132,13 +130,22 @@ export class MapContainer extends React.Component {
             {this.props.markers.map((marker, index) => {
               return (
                 <Marker
-                  onClick={() => { this.handleMarkerClicker(index); }}
+                  // onClick={() => { this.handleMarkerClicker(index); }}
                   key={index}
                   position={marker.position}
                   iconStyle={marker.icon}
+                  name={index}
+                  onMouseover={this.props.onMouseOverMarker}
                 />
               );
             })}
+            <InfoWindow
+              marker={this.props.activeMarker}
+              visible={this.props.showInfoWindow}
+              onClose={this.props.onInfoWindowClose}
+            >
+              <h1>{this.props.selectedPlace.name || 'No info'}</h1>
+            </InfoWindow>
           </Map>
           <PinSelection
             onPinClick={this.selectPin.bind(this)}
@@ -148,8 +155,6 @@ export class MapContainer extends React.Component {
     );
   }
 }
-
-
 
 // export default MapContainer;
 export default GoogleApiWrapper({

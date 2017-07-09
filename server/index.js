@@ -73,7 +73,7 @@ app.post('/friend/:id', (req, res) => {
 
 app.post('/map', (req, res) => {
   console.log('got to the post for map');
-  var state = JSON.parse(req.body.state);
+  var state = req.body.state;
   state.currentCenter = `${state.currentCenter.lat}/${state.currentCenter.lng}`;
   var mapId = null;
   Models.maps.create(state)

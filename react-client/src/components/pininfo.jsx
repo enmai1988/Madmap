@@ -12,10 +12,10 @@ class PinInfo extends React.Component {
 
   constructor(props) {
     super(props);
+    console.log('PinInfo: ', props);
     // this.textChange = (e) => (this.props.updateCurrPinInfo(e.target.value));
     this.state = {
-      friends: [],
-      textFieldValue: ''
+      friends: []
     };
 
     this.handleEventNameChange = this.handleEventNameChange.bind(this);
@@ -26,7 +26,8 @@ class PinInfo extends React.Component {
   }
 
   handleEventNameChange(e) {
-    this.setState({ textFieldValue: e.target.value });
+    // this.setState({ textFieldValue: e.target.value });
+    this.props.updateCurrPinInfo(e.target.value);
   }
 
   handleFriendSelection(event, index, friends) {

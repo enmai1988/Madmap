@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-// import {GoogleApiWrapper} from 'google-maps-react';
 import { render } from 'react-dom';
+import Map from 'google-maps-react';
 import axios from 'axios';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -10,6 +10,7 @@ import UserPage from './components/userpage.jsx';
 import PinInfo from './components/pininfo.jsx';
 import Toc from './components/toc.jsx';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import _ from 'underscore';
 
 injectTapEventPlugin();
 
@@ -24,7 +25,10 @@ class MapView extends React.Component {
       zoom: 15,
       markers: [],
       mapId: null,
-      currPin: null
+      currPin: null,
+      showInfoWindow: false,
+      activeMarker: {},
+      selectedPlace: {}
     };
     // this.MapContainer2;
     this.updateCenter = this.updateCenter.bind(this);
@@ -34,28 +38,13 @@ class MapView extends React.Component {
     this.setCurrPin = this.setCurrPin.bind(this);
     this.updateCurrPinInfo = this.updateCurrPinInfo.bind(this);
     this.save = this.save.bind(this);
+    this.onMouseOverMarker = this.onMouseOverMarker.bind(this);
+    this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
   }
 
   setCurrPin(index) {
-    this.setState({
-      currPin: index
-    });
+    this.setState({ currPin: index });
   }
-
-  // componentWillMount() {
-  //   axios.get('/api')
-  //     .then((res) => {
-  //       console.log("Setting window api key", window.GOOGLE_API_KEY);
-  //       //window.GOOGLE_API_KEY = res.data.GOOGLE_API_KEY;
-  //       // import MapContainer from './components/mapContainer.jsx';
-  //       // this.MapContainer2 = GoogleApiWrapper({
-  //       //   apiKey: window.GOOGLE_API_KEY
-  //       // })(MapContainer);
-  //     })
-  //     .catch(err => {
-  //       console.log('Cannot get api key:', err);
-  //     });
-  // }
 
   componentDidMount() {
     let mapId = window.location.href.split('=')[1];
@@ -64,38 +53,20 @@ class MapView extends React.Component {
     }
   }
 
-  // addMarker(position) {
-  //   let markers = this.state.markers;
-  //   markers.push({
-  //     position: position
-  //   });
-
-  // Changed this function to accept a marker object instead of only a position.
   addMarker(marker) {
     console.log('Currently the marker list is:', this.state.markers);
     var markers = this.state.markers;
     markers.push(marker);
-    this.setState({
-      markers: markers
-    });
-  }
-
-  github() {
-    axios.get('/auth/github')
-      .then(res => {
-        console.log('github response:', res);
-      })
-      .catch(err => console.log('ERROR:', err));
+    this.setState({ markers: markers });
   }
 
   save(mapTitle) {
     let state = this.state;
     state.title = mapTitle;
     state.currentUser = this.props.currentUser;
-    axios.post('/map', {state: JSON.stringify(state)})
+    axios.post('/map', { state: _.omit(state, ['showInfoWindow', 'activeMarker', 'selectedPlace']) })
       .then(res => {
         this.setState({ mapId: res.data });
-        // console.log('Data is:', res.data);
         // this.replaceURL(res.data);
       })
       .catch(err => console.log(err));
@@ -123,15 +94,11 @@ class MapView extends React.Component {
   }
 
   updateCenter(center) {
-    this.setState({
-      currentCenter: center
-    });
+    this.setState({ currentCenter: center });
   }
 
   updateZoom(zoom) {
-    this.setState( {
-      zoom: zoom
-    });
+    this.setState( { zoom: zoom });
   }
 
   updateCurrPinInfo(text) {
@@ -141,6 +108,23 @@ class MapView extends React.Component {
     markers[this.state.currPin].info = text;
     this.setState({
       markers: markers
+    });
+  }
+
+  onMouseOverMarker(props, marker, e) {
+    console.log('onMouseover: ', props);
+    this.setState({
+      showInfoWindow: true,
+      activeMarker: marker,
+      selectedPlace: props
+    }, () => console.log(this.state));
+  }
+
+  onInfoWindowClose(e) {
+    this.setState({
+      showInfoWindow: false,
+      activeMarker: {},
+      selectedPlace: {}
     });
   }
 
@@ -154,6 +138,11 @@ class MapView extends React.Component {
             updateCenter={this.updateCenter}
             updateZoom={this.updateZoom}
             markers={this.state.markers}
+            activeMarker={this.state.activeMarker}
+            selectedPlace={this.state.selectedPlace}
+            showInfoWindow={this.state.showInfoWindow}
+            onMouseOverMarker={this.onMouseOverMarker}
+            onInfoWindowClose={this.onInfoWindowClose}
             addMarker={this.addMarker}
             zoom={this.state.zoom}
             setCurrPin={this.setCurrPin}
@@ -174,7 +163,6 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: null
-      // title: ''
     };
     this.handleLogout = this.handleLogout.bind(this);
   }
@@ -196,11 +184,6 @@ class App extends Component {
       this.setState({ currentUser: null });
     });
   }
-
-  // updateTitle(e) {
-  //   console.log('update title: ', e.target.value);
-  //   this.setState({title: e.target.value});
-  // }
 
   render () {
     return (
