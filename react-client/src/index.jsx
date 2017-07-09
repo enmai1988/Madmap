@@ -30,11 +30,9 @@ class MapView extends React.Component {
       activeMarker: {},
       selectedPlace: {}
     };
-    // this.MapContainer2;
     this.updateCenter = this.updateCenter.bind(this);
     this.updateZoom = this.updateZoom.bind(this);
     this.addMarker = this.addMarker.bind(this);
-    // this.replaceURL = (id) => props.history.push(`?=${id}`);
     this.setCurrPin = this.setCurrPin.bind(this);
     this.updateCurrPinInfo = this.updateCurrPinInfo.bind(this);
     this.save = this.save.bind(this);
@@ -138,14 +136,14 @@ class MapView extends React.Component {
             updateCenter={this.updateCenter}
             updateZoom={this.updateZoom}
             markers={this.state.markers}
+            addMarker={this.addMarker}
+            zoom={this.state.zoom}
+            setCurrPin={this.setCurrPin}
             activeMarker={this.state.activeMarker}
             selectedPlace={this.state.selectedPlace}
             showInfoWindow={this.state.showInfoWindow}
             onMouseOverMarker={this.onMouseOverMarker}
             onInfoWindowClose={this.onInfoWindowClose}
-            addMarker={this.addMarker}
-            zoom={this.state.zoom}
-            setCurrPin={this.setCurrPin}
           />
           {this.state.currPin !== null &&
             <PinInfo text={this.state.markers[this.state.currPin].info}

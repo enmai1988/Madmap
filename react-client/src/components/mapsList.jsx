@@ -32,7 +32,8 @@ export default class MapsList extends Component {
       url: '/map/share',
       data: {
         emailAddress: emailAddress,
-        mapUrl: mapUrl
+        mapUrl: mapUrl,
+        user: this.props.currentUser
       }
     })
       .then(res => {})

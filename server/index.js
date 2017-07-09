@@ -72,30 +72,27 @@ app.post('/friend/:id', (req, res) => {
 });
 
 app.post('/map', (req, res) => {
-  console.log('got to the post for map');
   var state = req.body.state;
   state.currentCenter = `${state.currentCenter.lat}/${state.currentCenter.lng}`;
   var mapId = null;
   Models.maps.create(state)
     .then((result) => {
       mapId = result[0]['currval'];
-      console.log('markers are:', state.markers);
-      return Promise.map(state.markers, (marker)=>{
+      return Promise.map(state.markers, marker => {
         var mark = {
           'lat': marker.position.lat,
           'lng': marker.position.lng,
           'mapId': parseInt(mapId),
-          'info': marker.info,
+          'eventName': marker.eventName,
+          'eventDate': marker.eventDate,
+          'eventTime': marker.eventTime,
           'iconPath': marker.icon.path,
           'fillColor': marker.icon.fillColor,
           'strokeColor': marker.icon.strokeColor
         };
-        console.log('the mark is:', mark);
         return Models.markers.create(mark);
       })
         .then((result) => {
-          console.log('results from marker create', result);
-          console.log('mapId: ', mapId);
           res.end(mapId);
         });
     })
@@ -106,8 +103,6 @@ app.post('/map', (req, res) => {
 });
 
 app.get('/map/:mapId', (req, res) => {
-  console.log('got to the post for map');
-  console.log('Map Id should be:', req.params.mapId);
   Models.maps.get(req.params.mapId)
     .then((result) => {
       console.log('The state is,', result);
@@ -143,16 +138,17 @@ app.get('/maps/:userId', (req, res) => {
 });
 
 app.post('/map/share', (req, res) => {
+  console.log('share map: ', req.body);
   request({
     method: 'POST',
     url: 'https://api.mailgun.net/v3/sandbox3d24a85bbb724152b3cd16a95f41df52.mailgun.org/messages',
     qs: {
       from: 'notifications@madmap.io',
       to: req.body.emailAddress,
-      subject: 'A map has been shared with you',
+      subject: `${req.body.user.firstname} ${req.body.user.lastname} has shared a map with you`,
       html: `
         <h1>Mad Maps</h1>
-        <h3>A map has been shared with you.</h3>
+        <h3>${req.body.user.firstname} ${req.body.user.lastname} has shared a map with you.</h3>
         <h5>To view the map simply click on the below link.<br><br>
           ${req.body.mapUrl}
         </h5>`

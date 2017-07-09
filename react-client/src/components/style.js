@@ -26,6 +26,14 @@ const style = {
   },
   pinInfo: {
     width: '100%'
+  },
+  mapContainer: {
+    refresh: {
+      position: 'relative'
+    }
+  },
+  link: {
+    textDecoration: 'none'
   }
 };
 

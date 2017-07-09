@@ -27,7 +27,6 @@ module.exports = {
       return db.any(`select * from mad_map_users where email='${email}';`);
     },
     addUserWithGoogle: function(profile) {
-      console.log('addUserWithGoogle: ', `${profile.emails[0].value}`);
       return db.query(`
         INSERT INTO mad_map_users
         (email, firstName, lastName, avatar)
@@ -41,7 +40,6 @@ module.exports = {
   },
   maps: {
     create: function ({title, zoom, currentCenter, currentUser}) {
-      console.log('currentUser.id ', currentUser.id);
       if (!currentUser.id) {
         currentUser.id = null;
       }
@@ -80,7 +78,9 @@ module.exports = {
                   y: 10
                 }
               },
-              'info': result['info']
+              'eventName': result.eventname,
+              'eventDate': result.eventdate,
+              'eventTime': result.eventtime
             };
             state.markers.push(marker);
           })
@@ -93,7 +93,6 @@ module.exports = {
     userGet: function(userId) {
       return db.query(`select * from mad_map_maps where user_id = ${userId}`)
         .then((result) => {
-          console.log('DB RESULT ', result);
           return Promise.resolve(result);
         })
         .catch(err => console.log('error: ', err));
@@ -109,11 +108,11 @@ module.exports = {
     }
   },
   markers: {
-    create: function ({lat, lng, iconPath, fillColor, strokeColor, info, mapId}) {
+    create: function ({lat, lng, iconPath, fillColor, strokeColor, eventName, eventDate, eventTime, mapId}) {
       return db.query(
         `INSERT INTO mad_map_markers
-            (lat, lng, icon_path, info, fill_color, stroke_color, map_id)
-         VALUES (${lat}, ${lng}, '${iconPath}', '${info}', '${fillColor}', '${strokeColor}', ${mapId});`);
+            (lat, lng, icon_path, eventName, eventDate, eventTime, fill_color, stroke_color, map_id)
+         VALUES (${lat}, ${lng}, '${iconPath}', '${eventName}', '${eventDate}', '${eventTime}', '${fillColor}', '${strokeColor}', ${mapId});`);
     },
     //INSERT INTO mad_map_markers (lat, lng, icon, info, map_id) VALUES (50, -129, 3,'some info about our pin', 1);
     getbyMapId: function(mapId) {
