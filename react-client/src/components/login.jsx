@@ -9,7 +9,6 @@ import {lightBlack} from 'material-ui/styles/colors';
 import axios from 'axios';
 
 class Login extends Component {
-  // static muiName = 'FlatButton';
   constructor(props) {
     super(props);
     this.state = {
@@ -73,9 +72,9 @@ class Login extends Component {
   }
 
   render() {
-    const googleSigninIcon = <div id="google_signin">
-      <img src="https://developers.google.com/identity/images/g-logo.png"></img>
-      <span>Sign in with Google</span>
+    const facebookIcon = <div id="facebook_signin">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/F_icon.svg/768px-F_icon.svg.png"></img>
+      <span>Sign in with Facebook</span>
     </div>;
 
     return (
@@ -90,18 +89,10 @@ class Login extends Component {
         >
           <Menu style={{width: 'auto'}} width='auto'>
             <MenuItem>
-              <TextField fullWidth={true} hintText="Username" onBlur={this.textChangeUsername}/>
-            </MenuItem>
-            <MenuItem>
-              <TextField fullWidth={true} hintText="Password" type="password" onBlur={this.textChangePassword}/>
-            </MenuItem>
-            <MenuItem>
-              <FlatButton label="Login" primary={true} onTouchTap={this.handleLogin}/>
-              <FlatButton label="Sign Up" secondary={true} onTouchTap={this.handleSignUp}/>
               <FlatButton
-                href="/auth/google"
+                href="/auth/facebook"
                 color={lightBlack}
-                icon={googleSigninIcon}
+                icon={facebookIcon}
                 style={{padding: '0 10px'}}
               />
             </MenuItem>

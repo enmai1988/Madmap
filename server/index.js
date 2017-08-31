@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 var express = require('express');
 var bodyParser = require('body-parser');
 var Promise = require('bluebird');
@@ -10,6 +8,7 @@ var session = require('express-session');
 const randomBytes = Promise.promisify(require('crypto').randomBytes);
 const createHash = require('crypto').createHash;
 const request = require('request');
+const config = require('config')['mailgun'];
 
 var port = process.env.PORT || 3000;
 var app = express();
@@ -19,7 +18,7 @@ app.use(express.static(process.env.PWD + '/react-client/'));
 app.use(bodyParser.json());
 
 app.use(morgan('combined'));
-app.use(session({ secret: process.env.SESSION_SECRET, resave: true, saveUninitialized: true }));
+app.use(session({ secret: 'mad cat', resave: true, saveUninitialized: true }));
 //---PASSPORT----
 
 app.use(passport.initialize());
@@ -155,7 +154,7 @@ app.post('/map/share', (req, res) => {
     },
     auth: {
       user: 'api',
-      pass: process.env.MAILGUN_API_KEY
+      pass: config.api_key
     }
   })
     .on('response', function(response) {
@@ -163,12 +162,11 @@ app.post('/map/share', (req, res) => {
     });
 });
 
-app.get('/auth/google', passport.authenticate('google', { scope: [ 'profile', 'email' ] }) );
+app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'public_profile', 'email' ] }) );
 
-app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/' }),
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/' }),
   function(req, res) {
-    // console.log(req.headers);
     res.redirect('/');
   });
 

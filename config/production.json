@@ -1,0 +1,27 @@
+{
+  "pg": {
+    "connection": {
+      "database": "mad_map_db",
+      "user": "user",
+      "password": "password",
+      "host": "postgres",
+      "port": 5432
+    },
+    "pool": {
+      "min": 1,
+      "max": 2
+    }
+  },
+
+  "passport": {
+    "facebook": {
+      "clientID": "265933077244844",
+      "clientSecret": "ca6f3445c8bc94fa8acaaa548ad97f77",
+      "callbackURL": "http://192.241.207.111/auth/facebook/callback"
+    }
+  },
+
+  "mailgun": {
+    "api_key": "key-486fddfc8831c2eb48e02f6f9c43f537"
+  }
+}

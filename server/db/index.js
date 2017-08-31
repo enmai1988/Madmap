@@ -1,14 +1,9 @@
 const pgp = require('pg-promise')({ promiseLib: require('bluebird') });
+const config = require('config')['pg'];
 
-
-if (process.env.DATABASE_URL === 'localhost') {
-  const connection = {
-    host: 'localhost',
-    database: 'mad_map_db',
-    user: '',
-  };
-  db = pgp(connection);
-} else {
-  db = pgp(process.env.DATABASE_URL);
-}
-module.exports = db;
+module.exports = pgp(process.env.DATABASE_URL = {
+  host: config.connection.host,
+  database: config.connection.database,
+  user: config.connection.user,
+  password: config.connection.password
+});
